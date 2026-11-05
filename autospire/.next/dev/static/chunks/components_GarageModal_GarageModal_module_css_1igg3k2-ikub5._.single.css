@@ -1,0 +1,140 @@
+/* [project]/components/GarageModal/GarageModal.module.css [app-client] (css) */
+.GarageModal-module__Xokaxa__img {
+  background-position: center;
+  background-size: cover;
+  height: 200px;
+}
+
+.GarageModal-module__Xokaxa__body {
+  gap: 14px;
+  padding: 22px 30px 28px;
+  display: grid;
+}
+
+.GarageModal-module__Xokaxa__body h3 {
+  font-size: 1.7rem;
+}
+
+.GarageModal-module__Xokaxa__body h4 {
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 8px;
+  font-size: .78rem;
+}
+
+.GarageModal-module__Xokaxa__top {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  display: flex;
+}
+
+.GarageModal-module__Xokaxa__ver {
+  color: var(--teal);
+  border: 1px solid var(--teal);
+  background: #14e8cf1f;
+  border-radius: 999px;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  font-size: .72rem;
+  font-weight: 700;
+  display: inline-flex;
+}
+
+.GarageModal-module__Xokaxa__meta {
+  color: var(--grey);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: .9rem;
+  display: flex;
+}
+
+.GarageModal-module__Xokaxa__meta b {
+  color: #f5a623;
+}
+
+.GarageModal-module__Xokaxa__mtxt {
+  color: var(--grey);
+  line-height: 1.65;
+}
+
+.GarageModal-module__Xokaxa__cols {
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  display: grid;
+}
+
+.GarageModal-module__Xokaxa__cols .GarageModal-module__Xokaxa__mtxt {
+  margin-bottom: 12px;
+}
+
+.GarageModal-module__Xokaxa__mpts {
+  gap: 8px;
+  display: grid;
+}
+
+.GarageModal-module__Xokaxa__mpts li {
+  color: var(--white);
+  align-items: center;
+  gap: 10px;
+  font-size: .95rem;
+  display: flex;
+}
+
+.GarageModal-module__Xokaxa__mpts svg {
+  color: var(--teal);
+  flex: none;
+}
+
+.GarageModal-module__Xokaxa__two {
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  display: grid;
+}
+
+.GarageModal-module__Xokaxa__opt {
+  background: #06142b99;
+  border: 1px solid #14e8cf40;
+  border-radius: 14px;
+  align-content: start;
+  justify-items: start;
+  gap: 8px;
+  padding: 16px;
+  display: grid;
+}
+
+.GarageModal-module__Xokaxa__opt p {
+  color: var(--slate);
+  font-size: .86rem;
+}
+
+.GarageModal-module__Xokaxa__opt .btn {
+  margin-top: 4px;
+  padding: 10px 20px;
+  font-size: .9rem;
+}
+
+.GarageModal-module__Xokaxa__mico {
+  width: 32px;
+  height: 32px;
+  color: var(--teal);
+  background: #14e8cf26;
+  border-radius: 10px;
+  place-items: center;
+  display: inline-grid;
+}
+
+@media (max-width: 640px) {
+  .GarageModal-module__Xokaxa__body {
+    padding: 20px;
+  }
+
+  .GarageModal-module__Xokaxa__cols, .GarageModal-module__Xokaxa__two {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*# sourceMappingURL=components_GarageModal_GarageModal_module_css_1igg3k2-ikub5._.single.css.map*/

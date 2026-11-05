@@ -1,0 +1,59 @@
+/* [project]/components/Modal/Modal.module.css [app-client] (css) */
+.Modal-module__sR2AWG__ovl {
+  z-index: 100;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  background: #020a18d9;
+  place-items: center;
+  padding: 18px;
+  display: grid;
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+}
+
+.Modal-module__sR2AWG__modal {
+  background: linear-gradient(160deg, #0d2a52, #0a1d3d);
+  border: 1px solid #14e8cf55;
+  border-radius: 20px;
+  width: min(560px, 100%);
+  max-height: 92vh;
+  padding: 34px;
+  position: relative;
+  overflow-y: auto;
+  box-shadow: 0 30px 80px #000a;
+}
+
+.Modal-module__sR2AWG__modal.Modal-module__sR2AWG__wide {
+  width: min(760px, 100%);
+  padding: 0;
+  overflow: hidden auto;
+}
+
+.Modal-module__sR2AWG__mclose {
+  width: 36px;
+  height: 36px;
+  color: var(--white);
+  z-index: 2;
+  background: #06142bcc;
+  border: 1px solid #fff4;
+  border-radius: 50%;
+  place-items: center;
+  display: grid;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+
+.Modal-module__sR2AWG__mclose:hover {
+  background: var(--teal);
+  color: var(--navy);
+}
+
+@media (max-width: 640px) {
+  .Modal-module__sR2AWG__modal {
+    padding: 26px 20px;
+  }
+}
+
+/*# sourceMappingURL=components_Modal_Modal_module_css_1igg3k2-ikub5._.single.css.map*/

@@ -1,0 +1,52 @@
+/* [project]/components/ServiceModal/ServiceModal.module.css [app-client] (css) */
+.ServiceModal-module__Iue1ra__sm {
+  gap: 14px;
+  display: grid;
+}
+
+.ServiceModal-module__Iue1ra__sm h3 {
+  font-size: 1.7rem;
+}
+
+.ServiceModal-module__Iue1ra__mico {
+  width: 78px;
+  height: 78px;
+  color: var(--teal);
+  background: #14e8cf14;
+  border: 1px solid #14e8cf55;
+  border-radius: 20px;
+  place-items: center;
+  display: grid;
+}
+
+.ServiceModal-module__Iue1ra__mtxt {
+  color: var(--grey);
+  line-height: 1.65;
+}
+
+.ServiceModal-module__Iue1ra__mpts {
+  gap: 8px;
+  display: grid;
+}
+
+.ServiceModal-module__Iue1ra__mpts li {
+  color: var(--white);
+  align-items: center;
+  gap: 10px;
+  font-size: .95rem;
+  display: flex;
+}
+
+.ServiceModal-module__Iue1ra__mpts svg {
+  color: var(--teal);
+  flex: none;
+}
+
+.ServiceModal-module__Iue1ra__mbtns {
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 6px;
+  display: flex;
+}
+
+/*# sourceMappingURL=components_ServiceModal_ServiceModal_module_css_1igg3k2-ikub5._.single.css.map*/

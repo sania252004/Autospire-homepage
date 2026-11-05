@@ -1,0 +1,240 @@
+/* [project]/components/HowItWorks/HowItWorks.module.css [app-client] (css) */
+.HowItWorks-module__oom_6W__how {
+  background: linear-gradient(#071a35, #06142b);
+  border-top: 1px solid #1cf4f01f;
+  padding: 38px 0;
+}
+
+.HowItWorks-module__oom_6W__hwrow {
+  grid-template-columns: 200px minmax(0, 1fr) 300px;
+  align-items: center;
+  gap: 36px;
+  display: grid;
+}
+
+.HowItWorks-module__oom_6W__hwintro h2 {
+  margin-bottom: 10px;
+  font-size: 2rem;
+}
+
+.HowItWorks-module__oom_6W__hwintro p {
+  color: var(--grey);
+}
+
+.HowItWorks-module__oom_6W__steps {
+  justify-content: space-between;
+  align-items: flex-start;
+  display: flex;
+  position: relative;
+}
+
+.HowItWorks-module__oom_6W__step {
+  text-align: center;
+  color: var(--white);
+  flex: 1;
+  justify-items: center;
+  gap: 12px;
+  font-weight: 500;
+  display: grid;
+  position: relative;
+}
+
+.HowItWorks-module__oom_6W__stxt {
+  white-space: nowrap;
+  font-size: .86rem;
+  line-height: 1.4;
+}
+
+.HowItWorks-module__oom_6W__sico {
+  width: 62px;
+  height: 62px;
+  color: var(--teal);
+  border: 1.5px solid var(--teal);
+  background: #0d2a52;
+  border-radius: 50%;
+  place-items: center;
+  display: grid;
+  position: relative;
+  box-shadow: 0 0 22px #1cf4f033;
+}
+
+.HowItWorks-module__oom_6W__snum {
+  background: var(--teal);
+  width: 20px;
+  height: 20px;
+  color: var(--navy);
+  text-align: center;
+  border-radius: 50%;
+  font-family: inherit;
+  font-size: .72rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.HowItWorks-module__oom_6W__step:not(:last-child):after {
+  content: "";
+  background: var(--teal);
+  width: calc(100% - 84px);
+  height: 1.5px;
+  position: absolute;
+  top: 31px;
+  left: calc(50% + 42px);
+}
+
+.HowItWorks-module__oom_6W__step:not(:last-child):before {
+  content: "";
+  border-top: 1.5px solid var(--teal);
+  border-right: 1.5px solid var(--teal);
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  top: 27px;
+  left: calc(150% - 52px);
+  transform: rotate(45deg);
+}
+
+.HowItWorks-module__oom_6W__rev-box {
+  border-left: 1px solid #ffffff2a;
+  min-width: 0;
+  padding-left: 28px;
+}
+
+.HowItWorks-module__oom_6W__rtitle {
+  color: var(--white);
+  margin: 0 0 14px;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.HowItWorks-module__oom_6W__rev {
+  color: var(--teal);
+  flex: 0 0 100%;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  display: grid;
+}
+
+.HowItWorks-module__oom_6W__rt {
+  justify-items: start;
+  gap: 8px;
+  display: grid;
+}
+
+.HowItWorks-module__oom_6W__rt blockquote {
+  color: var(--white);
+  font-size: .94rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.HowItWorks-module__oom_6W__rn {
+  color: var(--white);
+  font-size: .88rem;
+}
+
+.HowItWorks-module__oom_6W__stars {
+  gap: 2px;
+  display: flex;
+}
+
+.HowItWorks-module__oom_6W__av {
+  width: 72px;
+  height: 72px;
+  color: var(--navy);
+  background: linear-gradient(135deg, #25f2d8, #0fa8c0);
+  border-radius: 50%;
+  place-items: center;
+  font-size: 1.7rem;
+  font-weight: 800;
+  display: grid;
+}
+
+@media (max-width: 1240px) {
+  .HowItWorks-module__oom_6W__hwrow {
+    grid-template-columns: 170px minmax(0, 1fr) 260px;
+    gap: 28px;
+  }
+
+  .HowItWorks-module__oom_6W__stxt {
+    white-space: normal;
+    font-size: .8rem;
+  }
+
+  .HowItWorks-module__oom_6W__sico {
+    width: 56px;
+    height: 56px;
+  }
+
+  .HowItWorks-module__oom_6W__step:not(:last-child):after {
+    width: calc(100% - 76px);
+    top: 28px;
+    left: calc(50% + 38px);
+  }
+
+  .HowItWorks-module__oom_6W__step:not(:last-child):before {
+    top: 24px;
+    left: calc(150% - 48px);
+  }
+}
+
+@media (max-width: 1080px) {
+  .HowItWorks-module__oom_6W__hwrow {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .HowItWorks-module__oom_6W__rev-box {
+    border-top: 1px solid #ffffff2a;
+    border-left: 0;
+    padding-top: 24px;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .HowItWorks-module__oom_6W__steps {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+  }
+
+  .HowItWorks-module__oom_6W__step {
+    text-align: left;
+    flex: none;
+    justify-items: start;
+    gap: 16px;
+    width: 100%;
+    display: flex;
+  }
+
+  .HowItWorks-module__oom_6W__stxt {
+    white-space: normal;
+  }
+
+  .HowItWorks-module__oom_6W__step:not(:last-child):before {
+    display: none;
+  }
+
+  .HowItWorks-module__oom_6W__step:not(:last-child):after {
+    background: var(--teal);
+    width: 1.5px;
+    height: 22px;
+    top: 64px;
+    left: 31px;
+    right: auto;
+  }
+
+  .HowItWorks-module__oom_6W__av {
+    width: 58px;
+    height: 58px;
+    font-size: 1.4rem;
+  }
+}
+
+/*# sourceMappingURL=components_HowItWorks_HowItWorks_module_css_1igg3k2-ikub5._.single.css.map*/

@@ -1,0 +1,19 @@
+:root{--navy:#011631;--navy2:#002745;--card:#0d2a52;--teal:#00F5E9;--grey:#f4f6fa;--slate:#9db2c9;--white:#fff;--max:1240px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{background:var(--navy);color:var(--grey);line-height:1.55;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0;text-align:inherit}
+ul{list-style:none}
+h1,h2,h3,h4{color:var(--white);line-height:1.12}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.teal{color:var(--teal)}
+
+/* shared buttons (used by every component) */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 26px;border-radius:12px;font-weight:700;background:linear-gradient(135deg,#18f8e8,#1cf4f0);color:#011631;border:0;transition:filter .2s,box-shadow .2s;text-align:center}
+.btn:hover{filter:brightness(1.08);box-shadow:0 0 24px #1cf4f055}
+.btn.line{background:transparent;color:var(--teal);border:1.5px solid var(--teal);border-radius:999px;padding:11px 24px}
+.btn.line:hover{background:#1cf4f01a}
+.btn.sm{padding:11px 20px;font-size:.92rem}
+@media(max-width:640px){.wrap{padding:0 16px}}

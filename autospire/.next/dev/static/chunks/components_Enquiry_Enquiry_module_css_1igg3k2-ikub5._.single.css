@@ -1,0 +1,125 @@
+/* [project]/components/Enquiry/Enquiry.module.css [app-client] (css) */
+.Enquiry-module__OzUj7q__enq {
+  background: linear-gradient(#06142b, #071d3a);
+  border-top: 1px solid #14e8cf1f;
+  padding: 64px 0;
+}
+
+.Enquiry-module__OzUj7q__erow {
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  align-items: start;
+  gap: 48px;
+  display: grid;
+}
+
+.Enquiry-module__OzUj7q__eintro h2 {
+  margin-bottom: 10px;
+  font-size: 2.2rem;
+}
+
+.Enquiry-module__OzUj7q__eintro > p {
+  color: var(--slate);
+  margin-bottom: 26px;
+}
+
+.Enquiry-module__OzUj7q__cinfo {
+  gap: 18px;
+  display: grid;
+}
+
+.Enquiry-module__OzUj7q__cinfo li {
+  align-items: flex-start;
+  gap: 14px;
+  display: flex;
+}
+
+.Enquiry-module__OzUj7q__cinfo li > span {
+  width: 42px;
+  height: 42px;
+  color: var(--teal);
+  background: #14e8cf1f;
+  border-radius: 12px;
+  flex: none;
+  place-items: center;
+  display: grid;
+}
+
+.Enquiry-module__OzUj7q__cinfo small {
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: .7rem;
+  font-weight: 700;
+  display: block;
+}
+
+.Enquiry-module__OzUj7q__cinfo a:hover {
+  color: var(--teal);
+}
+
+.Enquiry-module__OzUj7q__eform {
+  background: linear-gradient(160deg, #0d2a52, #0a1d3d);
+  border: 1px solid #14e8cf33;
+  border-radius: 18px;
+  gap: 16px;
+  padding: 28px;
+  display: grid;
+}
+
+.Enquiry-module__OzUj7q__eform label {
+  color: var(--slate);
+  gap: 6px;
+  font-size: .82rem;
+  font-weight: 600;
+  display: grid;
+}
+
+.Enquiry-module__OzUj7q__eform input, .Enquiry-module__OzUj7q__eform select, .Enquiry-module__OzUj7q__eform textarea {
+  width: 100%;
+  color: var(--white);
+  background: #0a1d3d;
+  border: 1px solid #14e8cf33;
+  border-radius: 10px;
+  outline: 0;
+  padding: 12px;
+}
+
+.Enquiry-module__OzUj7q__eform option {
+  background: var(--navy2);
+  color: var(--white);
+}
+
+.Enquiry-module__OzUj7q__eform input:focus, .Enquiry-module__OzUj7q__eform select:focus, .Enquiry-module__OzUj7q__eform textarea:focus {
+  border-color: var(--teal);
+}
+
+.Enquiry-module__OzUj7q__f2 {
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  display: grid;
+}
+
+.Enquiry-module__OzUj7q__eform.Enquiry-module__OzUj7q__done {
+  text-align: center;
+  color: var(--teal);
+  place-items: center;
+  padding: 50px 28px;
+}
+
+.Enquiry-module__OzUj7q__eform.Enquiry-module__OzUj7q__done p {
+  color: var(--slate);
+}
+
+@media (max-width: 1080px) {
+  .Enquiry-module__OzUj7q__erow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .Enquiry-module__OzUj7q__f2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*# sourceMappingURL=components_Enquiry_Enquiry_module_css_1igg3k2-ikub5._.single.css.map*/

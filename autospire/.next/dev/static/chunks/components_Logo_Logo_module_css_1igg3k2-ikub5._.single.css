@@ -1,0 +1,27 @@
+/* [project]/components/Logo/Logo.module.css [app-client] (css) */
+.Logo-module__MSOgda__logo {
+  color: var(--white);
+  letter-spacing: -.6px;
+  flex: none;
+  align-items: center;
+  gap: 12px;
+  font-size: 2.1rem;
+  font-weight: 600;
+  line-height: 1;
+  display: inline-flex;
+}
+
+.Logo-module__MSOgda__logo svg {
+  filter: drop-shadow(0 0 10px #1cf4f044);
+  flex: none;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .Logo-module__MSOgda__logo {
+    gap: 9px;
+    font-size: 1.55rem;
+  }
+}
+
+/*# sourceMappingURL=components_Logo_Logo_module_css_1igg3k2-ikub5._.single.css.map*/

@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/components/Modal/Modal.module.css"],"sourcesContent":[".ovl{position:fixed;inset:0;z-index:100;background:#020a18d9;backdrop-filter:blur(4px);display:grid;place-items:center;padding:18px;overflow-y:auto}\n.modal{position:relative;width:min(560px,100%);background:linear-gradient(160deg,#0d2a52,#0a1d3d);border:1px solid #14e8cf55;border-radius:20px;padding:34px;box-shadow:0 30px 80px #000a;max-height:92vh;overflow-y:auto}\n.modal.wide{width:min(760px,100%);padding:0;overflow:hidden auto}\n.mclose{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#06142bcc;color:var(--white);border:1px solid #ffffff44;z-index:2}\n.mclose:hover{background:var(--teal);color:var(--navy)}\n@media(max-width:640px){.modal{padding:26px 20px}}\n"],"names":[],"mappings":"AAAA;;;;;;;;;;;;;AACA;;;;;;;;;;;;AACA;;;;;;AACA;;;;;;;;;;;;;;;AACA;;;;;AACA;EAAwB"}}]
+}

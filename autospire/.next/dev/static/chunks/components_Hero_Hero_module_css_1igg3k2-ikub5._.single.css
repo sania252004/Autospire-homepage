@@ -1,0 +1,238 @@
+/* [project]/components/Hero/Hero.module.css [app-client] (css) */
+.Hero-module__PgAKtG__hero {
+  background: linear-gradient(90deg,#011631 30%,#011631b8 58%,#01163140 100%),
+  url("/images/hero.jpg") right center/cover no-repeat,
+  radial-gradient(900px 520px at 85% 35%,#0fb5c455,transparent 62%),
+  radial-gradient(700px 400px at 0% 100%,#1d54d433,transparent 60%),var(--navy);
+  padding: 54px 0 0;
+}
+
+.Hero-module__PgAKtG__hero h1 {
+  letter-spacing: -1.2px;
+  font-size: clamp(2.2rem, 4.3vw, 3.7rem);
+  font-weight: 800;
+  line-height: 1.06;
+}
+
+.Hero-module__PgAKtG__sub {
+  color: var(--grey);
+  margin: 22px 0 34px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.Hero-module__PgAKtG__tabs {
+  z-index: 2;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: -1px;
+  display: flex;
+  position: relative;
+}
+
+.Hero-module__PgAKtG__tab {
+  white-space: nowrap;
+  background: linear-gradient(#0d2a52cc, #0a2342cc);
+  border: 1px solid #1cf4f040;
+  border-bottom: 0;
+  border-radius: 14px 14px 0 0;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px 10px 12px;
+  font-size: .9rem;
+  transition: all .2s;
+  display: flex;
+}
+
+.Hero-module__PgAKtG__tab b {
+  color: var(--white);
+  font-weight: 700;
+  display: block;
+}
+
+.Hero-module__PgAKtG__tico {
+  width: 36px;
+  height: 36px;
+  color: var(--teal);
+  background: #1cf4f01f;
+  border-radius: 10px;
+  flex: none;
+  place-items: center;
+  display: grid;
+}
+
+.Hero-module__PgAKtG__tab:hover {
+  border-color: var(--teal);
+}
+
+.Hero-module__PgAKtG__tab.Hero-module__PgAKtG__on {
+  box-shadow: none;
+  background: #18f8e8;
+  border-color: #18f8e8;
+}
+
+.Hero-module__PgAKtG__tab.Hero-module__PgAKtG__on b {
+  color: #011631;
+}
+
+.Hero-module__PgAKtG__tab.Hero-module__PgAKtG__on .Hero-module__PgAKtG__tico {
+  color: #011631;
+  background: #01163122;
+}
+
+.Hero-module__PgAKtG__panel {
+  background: var(--white);
+  color: var(--navy);
+  z-index: 5;
+  border-radius: 0 16px 16px;
+  max-width: 900px;
+  padding: 14px;
+  position: relative;
+  box-shadow: 0 20px 60px #0007;
+}
+
+.Hero-module__PgAKtG__srow {
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 12px;
+  display: grid;
+}
+
+.Hero-module__PgAKtG__go.Hero-module__PgAKtG__go {
+  color: #fff;
+  background: #00adb3;
+  height: 54px;
+  padding: 0 36px;
+  font-size: 1.05rem;
+}
+
+.Hero-module__PgAKtG__go.Hero-module__PgAKtG__go:hover {
+  filter: brightness(1.1);
+}
+
+.Hero-module__PgAKtG__trust {
+  grid-template-columns: repeat(5, 1fr);
+  margin-top: 10px;
+  padding: 34px 0 40px;
+  display: grid;
+}
+
+.Hero-module__PgAKtG__ti {
+  color: var(--white);
+  border-left: 1px solid #ffffff2a;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  font-size: .88rem;
+  font-weight: 500;
+  line-height: 1.25;
+  display: flex;
+}
+
+.Hero-module__PgAKtG__ti:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.Hero-module__PgAKtG__ti svg {
+  color: var(--teal);
+  flex: none;
+}
+
+@media (max-width: 1080px) {
+  .Hero-module__PgAKtG__trust {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 22px;
+  }
+
+  .Hero-module__PgAKtG__ti:nth-child(4) {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .Hero-module__PgAKtG__srow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .Hero-module__PgAKtG__go.Hero-module__PgAKtG__go {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .Hero-module__PgAKtG__hero {
+    padding-top: 34px;
+  }
+
+  .Hero-module__PgAKtG__hero h1 br, .Hero-module__PgAKtG__sub br {
+    display: none;
+  }
+
+  .Hero-module__PgAKtG__sub {
+    font-size: 1.02rem;
+  }
+
+  .Hero-module__PgAKtG__tabs {
+    flex-wrap: nowrap;
+    gap: 4px;
+  }
+
+  .Hero-module__PgAKtG__tab {
+    text-align: center;
+    white-space: normal;
+    border-radius: 12px 12px 0 0;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 4px;
+    font-size: .72rem;
+  }
+
+  .Hero-module__PgAKtG__tico {
+    width: 32px;
+    height: 32px;
+  }
+
+  .Hero-module__PgAKtG__panel {
+    border-radius: 0 0 16px 16px;
+    padding: 12px;
+  }
+
+  .Hero-module__PgAKtG__plate-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .Hero-module__PgAKtG__plate {
+    justify-content: center;
+  }
+
+  .Hero-module__PgAKtG__plate .Hero-module__PgAKtG__pn {
+    flex: 1;
+  }
+
+  .Hero-module__PgAKtG__srow {
+    grid-template-columns: 1fr;
+  }
+
+  .Hero-module__PgAKtG__trust {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .Hero-module__PgAKtG__ti, .Hero-module__PgAKtG__ti:first-child {
+    border-left: 0;
+    padding: 0 8px;
+  }
+
+  .Hero-module__PgAKtG__ti svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .Hero-module__PgAKtG__ti:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/*# sourceMappingURL=components_Hero_Hero_module_css_1igg3k2-ikub5._.single.css.map*/
