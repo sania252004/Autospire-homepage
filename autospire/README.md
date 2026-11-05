@@ -1,11 +1,9 @@
-Autospire — one-page Next.js site
-Run: npm install && npm run dev
-
 Project structure (each component has its own folder: Name.jsx + Name.module.css)
   app/
     layout.jsx        fonts + page title
     page.jsx          the one page; holds shared state and lists the sections in order
     globals.css       colours, reset, shared .btn buttons only
+    
   components/
     Header/           Header.jsx, Header.module.css     menu, location dropdown, mobile menu
     Logo/             Logo.jsx, Logo.module.css
