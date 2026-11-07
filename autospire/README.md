@@ -21,7 +21,6 @@ Project structure (each component has its own folder: Name.jsx + Name.module.css
     Icon/             Icon.jsx                           all icons
   lib/
     data.js           contact details, 9 services + paragraphs, garages (SAMPLE), reviews (SAMPLE)
-    cx.js             helper that maps class names to each component's CSS module
 
 Images (public/images): hero.jpg, garage-1.jpg ... garage-6.jpg
 Colours: :root in app/globals.css

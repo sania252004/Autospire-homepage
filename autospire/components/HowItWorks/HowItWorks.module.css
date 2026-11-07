@@ -1,47 +1,63 @@
-.how{background:linear-gradient(180deg,#071a35,#06142b);padding:38px 0;border-top:1px solid #1cf4f01f}
+/* ---------- 1. Dark blue band and the 3 columns ---------- */
+.section{background:linear-gradient(180deg,#071a35,#06142b);padding:38px 0;border-top:1px solid #1cf4f01f}
 
-/* column widths follow the reference: title | wide steps | reviews */
-.hwrow{display:grid;grid-template-columns:200px minmax(0,1fr) 300px;gap:36px;align-items:center}
-.hwintro h2{font-size:2rem;margin-bottom:10px}.hwintro p{color:var(--grey)}
+/* column widths: title (200px) | steps (fills the space) | reviews (300px) */
+.layout{display:grid;grid-template-columns:200px minmax(0,1fr) 300px;gap:36px;align-items:center}
 
-/* steps: evenly spaced, each text kept on its own lines */
+/* ---------- 2. Column 1: title ---------- */
+.title h2{font-size:2rem;margin-bottom:10px}
+.title p{color:var(--grey)}
+
+/* ---------- 3. Column 2: the 4 steps ---------- */
 .steps{display:flex;align-items:flex-start;justify-content:space-between;position:relative}
 .step{display:grid;justify-items:center;gap:12px;text-align:center;font-weight:500;color:var(--white);flex:1;position:relative}
-.stxt{font-size:.86rem;line-height:1.4;white-space:nowrap}
-.sico{position:relative;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;color:var(--teal);background:#0d2a52;border:1.5px solid var(--teal);box-shadow:0 0 22px #1cf4f033}
-.snum{position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;background:var(--teal);color:var(--navy);font-family:inherit;font-style:normal;font-weight:700;font-size:.72rem;line-height:20px;text-align:center}
+.label{font-size:.86rem;line-height:1.4;white-space:nowrap}
 
-/* connector line + arrowhead between circles */
+/* round circle holding the icon */
+.circle{position:relative;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;color:var(--teal);background:#0d2a52;border:1.5px solid var(--teal);box-shadow:0 0 22px #1cf4f033}
+
+/* small numbered badge on top of the circle */
+.number{position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;background:var(--teal);color:var(--navy);font-family:inherit;font-style:normal;font-weight:700;font-size:.72rem;line-height:20px;text-align:center}
+
+/* ---------- 4. Line and arrowhead between the circles ---------- */
 .step:not(:last-child):after{content:"";position:absolute;top:31px;left:calc(50% + 42px);width:calc(100% - 84px);height:1.5px;background:var(--teal)}
 .step:not(:last-child):before{content:"";position:absolute;top:27px;left:calc(150% - 52px);width:8px;height:8px;border-top:1.5px solid var(--teal);border-right:1.5px solid var(--teal);transform:rotate(45deg)}
 
-/* reviews */
-.rev-box{border-left:1px solid #ffffff2a;padding-left:28px;min-width:0}
-.rtitle{margin:0 0 14px;font-size:1.15rem;font-weight:700;color:var(--white)}
-.rev{flex:0 0 100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;color:var(--teal)}
-.rt{display:grid;gap:8px;justify-items:start}
-.rt blockquote{color:var(--white);font-weight:600;font-size:.94rem;line-height:1.45}
-.rn{color:var(--white);font-size:.88rem}
-.stars{display:flex;gap:2px}
-.av{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#25f2d8,#0fa8c0);color:var(--navy);font-weight:800;font-size:1.7rem}
+/* ---------- 5. Column 3: reviews ---------- */
+.reviewBox{border-left:1px solid #ffffff2a;padding-left:28px;min-width:0}
+.reviewsTitle{margin:0 0 14px;font-size:1.15rem;font-weight:700;color:var(--white)}
 
-/* narrower screens: smaller columns, text may wrap */
+/* one review: text on the left, round letter on the right */
+.review{flex:0 0 100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;color:var(--teal)}
+.reviewText{display:grid;gap:8px;justify-items:start}
+.reviewText blockquote{color:var(--white);font-weight:600;font-size:.94rem;line-height:1.45}
+.reviewerName{color:var(--white);font-size:.88rem}
+.stars{display:flex;gap:2px}
+
+/* round circle with the first letter of the name */
+.avatar{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#25f2d8,#0fa8c0);color:var(--navy);font-weight:800;font-size:1.7rem}
+
+/* ---------- 6. Smaller laptop screens ---------- */
 @media(max-width:1240px){
-  .hwrow{grid-template-columns:170px minmax(0,1fr) 260px;gap:28px}
-  .stxt{white-space:normal;font-size:.8rem}
-  .sico{width:56px;height:56px}
+  .layout{grid-template-columns:170px minmax(0,1fr) 260px;gap:28px}
+  .label{white-space:normal;font-size:.8rem}
+  .circle{width:56px;height:56px}
   .step:not(:last-child):after{top:28px;left:calc(50% + 38px);width:calc(100% - 76px)}
   .step:not(:last-child):before{top:24px;left:calc(150% - 48px)}
 }
+
+/* ---------- 7. Tablets: everything stacks in one column ---------- */
 @media(max-width:1080px){
-  .hwrow{grid-template-columns:1fr;gap:28px}
-  .rev-box{border-left:0;padding-left:0;border-top:1px solid #ffffff2a;padding-top:24px}
+  .layout{grid-template-columns:1fr;gap:28px}
+  .reviewBox{border-left:0;padding-left:0;border-top:1px solid #ffffff2a;padding-top:24px}
 }
+
+/* ---------- 8. Phones: steps go top to bottom ---------- */
 @media(max-width:640px){
   .steps{flex-direction:column;gap:22px;align-items:flex-start}
   .step{display:flex;justify-items:start;text-align:left;gap:16px;width:100%;flex:none}
-  .stxt{white-space:normal}
+  .label{white-space:normal}
   .step:not(:last-child):before{display:none}
   .step:not(:last-child):after{top:64px;left:31px;right:auto;width:1.5px;height:22px;background:var(--teal)}
-  .av{width:58px;height:58px;font-size:1.4rem}
+  .avatar{width:58px;height:58px;font-size:1.4rem}
 }

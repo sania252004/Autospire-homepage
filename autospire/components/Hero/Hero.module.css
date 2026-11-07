@@ -1,46 +1,67 @@
-.hero{padding:54px 0 0;background:
+/* ---------- 1. COLOUR AND BACKGROUND ---------- */
+/* --brand-teal is the teal used for the headline, the open tab and the
+   Search button. Change this ONE value to recolour all three. */
+.hero{--brand-teal:#2fe3d3;padding:54px 0 0;background:
   linear-gradient(90deg,#011631 30%,#011631b8 58%,#01163140 100%),
   url(/images/hero.jpg) right center/cover no-repeat,
   radial-gradient(900px 520px at 85% 35%,#0fb5c455,transparent 62%),
   radial-gradient(700px 400px at 0% 100%,#1d54d433,transparent 60%),var(--navy)}
-.hero h1{font-size:clamp(2.2rem,4.3vw,3.7rem);font-weight:800;letter-spacing:-1.2px;line-height:1.06}
-.sub{margin:22px 0 34px;font-size:1.2rem;color:var(--grey);font-weight:500}
 
-/* the three entry points */
-.tabs{display:flex;gap:6px;position:relative;z-index:2;margin-bottom:-1px;flex-wrap:wrap}
+/* ---------- 2. HEADLINE ---------- */
+.hero h1{font-size:clamp(2.2rem,4.3vw,3.7rem);font-weight:800;letter-spacing:-1.2px;line-height:1.06}
+.highlight{color:var(--brand-teal)}                 /* the teal words */
+.subtitle{margin:22px 0 34px;font-size:1.2rem;color:var(--grey);font-weight:500}
+
+/* ---------- 3. THE THREE TABS ---------- */
+/* The row sits 1px behind the white box (z-index 4 vs 5), so the box
+   covers the tabs' bottom edge and nothing sticks out. */
+.tabs{display:flex;gap:6px;position:relative;z-index:4;margin-bottom:-1px;flex-wrap:wrap}
 .tab{display:flex;align-items:center;gap:10px;padding:10px 20px 10px 12px;border-radius:14px 14px 0 0;background:linear-gradient(180deg,#0d2a52cc,#0a2342cc);border:1px solid #1cf4f040;border-bottom:0;font-size:.9rem;transition:.2s;white-space:nowrap}
 .tab b{display:block;font-weight:700;color:var(--white)}
-.tico{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex:none;background:#1cf4f01f;color:var(--teal)}
-.tab:hover{border-color:var(--teal)}
-.tab.on{background:#18f8e8;border-color:#18f8e8;box-shadow:none}
-.tab.on b{color:#011631}
-.tab.on .tico{background:#01163122;color:#011631}
+.tab:hover{border-color:var(--brand-teal)}
+.tabIcon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex:none;background:#1cf4f01f;color:var(--teal)}
 
-/* search panel */
-.panel{background:var(--white);border-radius:0 16px 16px 16px;padding:14px;color:var(--navy);box-shadow:0 20px 60px #0007;max-width:900px;position:relative;z-index:5}
-.srow{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px}
-.go.go{height:54px;padding:0 36px;font-size:1.05rem;background:#00adb3;color:#fff}
-.go.go:hover{filter:brightness(1.1)}
+/* the tab that is open: solid teal, sits flush on top of the white box */
+.tab.active{background:var(--brand-teal);border:1px solid var(--brand-teal);border-bottom:0}
+.tab.active b{color:#011631}
+.tab.active .tabIcon{background:#01163122;color:#011631}
 
-/* trust row */
-.trust{display:grid;grid-template-columns:repeat(5,1fr);padding:34px 0 40px;margin-top:10px}
-.ti{display:flex;align-items:center;gap:16px;padding:0 20px;border-left:1px solid #ffffff2a;font-size:.88rem;font-weight:500;color:var(--white);line-height:1.25}
-.ti:first-child{border-left:0;padding-left:0}.ti svg{color:var(--teal);flex:none}
+/* ---------- 4. THE WHITE SEARCH BOX ---------- */
+.searchBox{background:var(--white);border-radius:0 16px 16px 16px;padding:14px;color:var(--navy);box-shadow:0 20px 60px #0007;max-width:900px;position:relative;z-index:5}
 
+/* the row: vehicle | service | location | Search button */
+.searchRow{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px}
+
+/* the Search button (the doubled name makes this style win over the shared .btn style) */
+.searchButton.searchButton{height:54px;padding:0 36px;font-size:1.05rem;font-weight:700;background:var(--brand-teal);color:#011631}
+.searchButton.searchButton:hover{filter:brightness(.93)}
+
+/* ---------- 5. THE TRUST ROW (5 points under the box) ---------- */
+.trustRow{display:grid;grid-template-columns:repeat(5,1fr);padding:34px 0 40px;margin-top:10px}
+.trustPoint{display:flex;align-items:center;gap:16px;padding:0 20px;border-left:1px solid #ffffff2a;font-size:.88rem;font-weight:500;color:var(--white);line-height:1.25}
+.trustPoint:first-child{border-left:0;padding-left:0}
+.trustPoint svg{color:var(--teal);flex:none}
+
+/* ---------- 6. TABLETS ---------- */
 @media(max-width:1080px){
-  .trust{grid-template-columns:repeat(3,1fr);row-gap:22px}
-  .ti:nth-child(4){border-left:0;padding-left:0}
-  .srow{grid-template-columns:1fr 1fr}.go.go{grid-column:1/-1;width:100%}
+  .trustRow{grid-template-columns:repeat(3,1fr);row-gap:22px}
+  .trustPoint:nth-child(4){border-left:0;padding-left:0}
+  .searchRow{grid-template-columns:1fr 1fr}
+  .searchButton.searchButton{grid-column:1/-1;width:100%}
 }
+
+/* ---------- 7. PHONES ---------- */
 @media(max-width:640px){
   .hero{padding-top:34px}
-  .hero h1 br,.sub br{display:none}.sub{font-size:1.02rem}
+  .hero h1 br,.subtitle br{display:none}
+  .subtitle{font-size:1.02rem}
   .tabs{flex-wrap:nowrap;gap:4px}
   .tab{flex:1;flex-direction:column;justify-content:center;text-align:center;padding:10px 4px;gap:6px;font-size:.72rem;white-space:normal;border-radius:12px 12px 0 0}
-  .tico{width:32px;height:32px}
-  .panel{border-radius:0 0 16px 16px;padding:12px}
-  .plate-row{flex-direction:column;align-items:stretch}.plate{justify-content:center}.plate .pn{flex:1}
-  .srow{grid-template-columns:1fr}
-  .trust{grid-template-columns:1fr 1fr}.ti,.ti:first-child{padding:0 8px;border-left:0}.ti svg{width:32px;height:32px}
-  .ti:last-child{grid-column:1/-1}
+  .tabIcon{width:32px;height:32px}
+  .searchBox{border-radius:0 0 16px 16px;padding:12px}
+  .searchRow{grid-template-columns:1fr}
+  .trustRow{grid-template-columns:1fr 1fr}
+  .trustPoint,.trustPoint:first-child{padding:0 8px;border-left:0}
+  .trustPoint svg{width:32px;height:32px}
+  .trustPoint:last-child{grid-column:1/-1}
 }

@@ -1,22 +1,35 @@
 "use client";
+
 import Modal from "@/components/Modal/Modal";
 import Icon from "@/components/Icon/Icon";
-import { makeCx } from "@/lib/cx";
 import styles from "./ServiceModal.module.css";
-const cx = makeCx(styles);
 
-export default function ServiceModal({ svc, onClose, goTab }) {
+// service = the service being shown (from lib/data.js)
+// onClose = closes the pop-up
+// goTab   = switches the Hero tab and scrolls to the top (from page.jsx)
+export default function ServiceModal({ service, onClose, goTab }) {
   return (
     <Modal onClose={onClose}>
-      <div className={cx("sm")}>
-        <span className={cx("mico")}><Icon name={svc.icon} size={44} sw={1.4} /></span>
-        <h3>{svc.title}</h3>
-        <p className={cx("mtxt")}>{svc.long}</p>
-        <ul className={cx("mpts")}>{svc.points.map((p) => <li key={p}><Icon name="check" size={16} sw={3} />{p}</li>)}</ul>
-        <div className={cx("mbtns")}>
-          <button className="btn" onClick={() => goTab("book", svc.title)}>Book This Service</button>
-          <button className="btn line" onClick={() => goTab("quote", svc.title)}>Request Quotes</button>
+      <div className={styles.content}>
+
+        {/* icon, name and description */}
+        <span className={styles.iconBox}><Icon name={service.icon} size={44} sw={1.4} /></span>
+        <h3>{service.title}</h3>
+        <p className={styles.description}>{service.long}</p>
+
+        {/* list of what the service includes (each with a tick) */}
+        <ul className={styles.points}>
+          {service.points.map((point) => (
+            <li key={point}><Icon name="check" size={16} sw={3} />{point}</li>
+          ))}
+        </ul>
+
+        {/* the two buttons: both close the pop-up and fill in this service in the Hero */}
+        <div className={styles.buttons}>
+          <button className="btn" onClick={() => goTab("book", service.title)}>Book This Service</button>
+          <button className="btn line" onClick={() => goTab("quote", service.title)}>Request Quotes</button>
         </div>
+
       </div>
     </Modal>
   );

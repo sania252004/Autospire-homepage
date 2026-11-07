@@ -1,5 +1,5 @@
 /* [project]/components/Modal/Modal.module.css [app-client] (css) */
-.Modal-module__sR2AWG__ovl {
+.Modal-module__sR2AWG__overlay {
   z-index: 100;
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
@@ -30,7 +30,7 @@
   overflow: hidden auto;
 }
 
-.Modal-module__sR2AWG__mclose {
+.Modal-module__sR2AWG__closeButton {
   width: 36px;
   height: 36px;
   color: var(--white);
@@ -45,7 +45,7 @@
   right: 14px;
 }
 
-.Modal-module__sR2AWG__mclose:hover {
+.Modal-module__sR2AWG__closeButton:hover {
   background: var(--teal);
   color: var(--navy);
 }

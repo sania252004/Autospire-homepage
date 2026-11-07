@@ -1,32 +1,41 @@
-.hdr{position:sticky;top:0;z-index:60;background:#011631ee;backdrop-filter:blur(12px);border-bottom:1px solid #1cf4f01f}
+/* ---------- 1. The bar (sticks to the top while scrolling) ---------- */
+.header{position:sticky;top:0;z-index:60;background:#011631ee;backdrop-filter:blur(12px);border-bottom:1px solid #1cf4f01f}
 
-/* full-width header like the reference: logo near the left edge, My Account near the right edge */
-.hrow.hrow{display:flex;align-items:center;gap:28px;height:84px;max-width:none;padding:0 clamp(16px,3.3vw,48px)}
+/* full-width bar: logo near the left edge, My Account near the right edge */
+.bar.bar{display:flex;align-items:center;gap:28px;height:84px;max-width:none;padding:0 clamp(16px,3.3vw,48px)}
 
-/* menu sits close to the logo, no longer pushed toward the right */
+/* ---------- 2. Desktop menu ---------- */
 .nav{display:flex;gap:30px;margin-left:clamp(32px,6vw,90px);align-items:center;font-weight:600;font-size:.95rem}
-.nav>button,.dd>a{display:inline-flex;gap:5px;align-items:center;padding:30px 0;font-weight:600}
-.nav>a:hover,.nav>button:hover,.dd:hover>a{color:var(--teal)}
-.dd{position:relative}
-.menu{display:none;position:absolute;top:calc(100% - 8px);left:-14px;min-width:250px;background:var(--navy2);border:1px solid #1cf4f033;border-radius:12px;padding:8px;box-shadow:0 18px 40px #0009}
-.dd:hover .menu,.dd:focus-within .menu{display:block}
-.menu a,.menu button{display:block;width:100%;padding:10px 12px;border-radius:8px;font-weight:500}
-.menu a:hover,.menu button:hover{background:#1cf4f01a;color:var(--teal)}
+.nav>button,.dropdown>a{display:inline-flex;gap:5px;align-items:center;padding:30px 0;font-weight:600}
+.nav>a:hover,.nav>button:hover,.dropdown:hover>a{color:var(--teal)}
 
-/* location + user + My Account pushed to the far right */
-.hright{display:flex;align-items:center;gap:16px;margin-left:auto}
-.vsep{width:1px;height:28px;background:#ffffff33}
-.usr{color:var(--white);display:grid;place-items:center}
-.acct{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--teal);color:var(--teal);border-radius:999px;padding:7px 16px;font-size:.78rem;font-weight:700}
-.acct:hover{background:#1cf4f01a}
+/* ---------- 3. Dropdown menus (appear when you hover a menu item) ---------- */
+.dropdown{position:relative}
+.dropdownMenu{display:none;position:absolute;top:calc(100% - 8px);left:-14px;min-width:250px;background:var(--navy2);border:1px solid #1cf4f033;border-radius:12px;padding:8px;box-shadow:0 18px 40px #0009}
+.dropdown:hover .dropdownMenu,.dropdown:focus-within .dropdownMenu{display:block}
+.dropdownMenu a,.dropdownMenu button{display:block;width:100%;padding:10px 12px;border-radius:8px;font-weight:500}
+.dropdownMenu a:hover,.dropdownMenu button:hover{background:#1cf4f01a;color:var(--teal)}
+
+/* ---------- 4. Right side: location, user icon, My Account ---------- */
+.right{display:flex;align-items:center;gap:16px;margin-left:auto}
+.divider{width:1px;height:28px;background:#ffffff33}
+.userIcon{color:var(--white);display:grid;place-items:center}
+.accountButton{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--teal);color:var(--teal);border-radius:999px;padding:7px 16px;font-size:.78rem;font-weight:700}
+.accountButton:hover{background:#1cf4f01a}
+
+/* ☰ button and phone menu are hidden on large screens */
 .burger{display:none;color:var(--white)}
-.mob{display:none}
+.mobileMenu{display:none}
 
+/* ---------- 5. Tablets and phones ---------- */
 @media(max-width:1080px){
-  .hrow.hrow{height:72px}
-  .nav,.vsep,.usr,.acct{display:none}
-  .burger{display:block}.hright{margin-left:auto}
-  .mob{display:grid;gap:4px;padding:10px 24px 20px;background:var(--navy);border-top:1px solid #1cf4f026}
-  .mob a:not(:global(.btn)),.mob button{padding:12px 4px;font-weight:600;border-bottom:1px solid #ffffff14}
-  .mob :global(.btn){margin-top:12px}
+  .bar.bar{height:72px}
+  .nav,.divider,.userIcon,.accountButton{display:none}   /* hide the desktop menu */
+  .burger{display:block}
+  .right{margin-left:auto}
+
+  /* the phone menu that opens under the bar */
+  .mobileMenu{display:grid;gap:4px;padding:10px 24px 20px;background:var(--navy);border-top:1px solid #1cf4f026}
+  .mobileMenu a:not(:global(.btn)),.mobileMenu button{padding:12px 4px;font-weight:600;border-bottom:1px solid #ffffff14}
+  .mobileMenu :global(.btn){margin-top:12px}
 }

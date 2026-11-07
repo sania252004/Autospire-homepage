@@ -1,0 +1,43 @@
+/* ==========================================================
+   "NOT SURE WHAT'S WRONG?" BOX STYLES
+   Sections below: box, title, buttons, recording state,
+   error, previews, phones.
+   ========================================================== */
+
+/* ---------- 1. The grey dashed box ---------- */
+.box{margin-top:14px;padding:14px 16px;border-radius:12px;background:#f1f7fa;border:1px dashed #0a234233}
+
+/* ---------- 2. Title and explanation ---------- */
+.heading{display:grid;gap:2px;margin-bottom:12px;font-size:.88rem;color:#2a3b52;line-height:1.4}
+.heading b{color:var(--navy);font-size:.98rem}
+
+/* ---------- 3. The two buttons ---------- */
+.buttons{display:flex;flex-wrap:wrap;gap:10px}
+.button{display:inline-flex;align-items:center;gap:9px;height:44px;padding:0 18px;border-radius:999px;background:#fff;color:#0a8f80;border:1.5px solid #14c8b8;font-weight:700;font-size:.9rem;transition:.2s;cursor:pointer}
+.button:hover{background:#14e8cf1f}
+
+/* ---------- 4. While recording: red button with a blinking dot ---------- */
+.recording{color:#c62828;border-color:#e57373;background:#fff5f5}
+.dot{width:9px;height:9px;border-radius:50%;background:#e53935;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.25}}
+
+/* ---------- 5. Error message ---------- */
+.error{margin-top:10px;font-size:.84rem;color:#c62828;font-weight:600}
+
+/* ---------- 6. Previews of the recording and video ---------- */
+.previews{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
+.preview{position:relative;display:grid;gap:6px;padding:10px 38px 10px 10px;border-radius:10px;background:#fff;border:1px solid #0a234226;max-width:100%}
+.preview audio{width:260px;max-width:100%;height:40px}
+.preview video{width:260px;max-width:100%;border-radius:8px;background:#000}
+.fileName{font-size:.78rem;color:#2a3b52;overflow-wrap:anywhere}
+
+/* the small × button that removes a recording or video */
+.removeButton{position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#0a234212;color:var(--navy);cursor:pointer}
+.removeButton:hover{background:#0a234226}
+
+/* ---------- 7. Phones: buttons and previews take the full width ---------- */
+@media(max-width:640px){
+  .buttons{flex-direction:column}
+  .button{justify-content:center;width:100%}
+  .preview,.preview audio,.preview video{width:100%}
+}

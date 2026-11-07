@@ -31,41 +31,55 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2e$js__$5b$app$2
 ;
 ;
 ;
-const jump = (id)=>setTimeout(()=>document.getElementById(id)?.scrollIntoView({
+// Smoothly scrolls to the section with this id.
+// The tiny delay lets the page finish updating first.
+function scrollToSection(id) {
+    setTimeout(()=>document.getElementById(id)?.scrollIntoView({
             behavior: "smooth"
         }), 30);
+}
 function Page() {
-    const [emirate, setEmirate] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("Dubai");
-    const [tab, setTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("book");
+    /* ---------- choices shared by the Hero search and the Enquiry form ---------- */ const [emirate, setEmirate] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("Dubai");
     const [vehicle, setVehicle] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
     const [service, setService] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
-    const [svcId, setSvcId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
-    const [garId, setGarId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
-    const [note, setNote] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
-    const svc = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["services"].find((s)=>s.id === svcId);
-    const gar = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["garages"].find((g)=>g.id === garId);
-    const goTab = (t, title)=>{
-        setTab(t);
-        if (title) setService(title);
-        setSvcId(null);
-        setGarId(null);
-        jump("top");
-    };
-    const search = ()=>{
-        if (tab === "quote") return jump("enquiry");
-        setNote(`Showing garages for ${service || "all services"} in ${emirate}.`);
-        jump("garages");
-    };
+    /* ---------- which Hero tab is open: "book" | "quote" | "garage" ---------- */ const [tab, setTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("book");
+    /* ---------- pop-ups: the id of the open service or garage (null = closed) ---------- */ const [openServiceId, setOpenServiceId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [openGarageId, setOpenGarageId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const openService = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["services"].find((s)=>s.id === openServiceId);
+    const openGarage = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["garages"].find((g)=>g.id === openGarageId);
+    /* ---------- message shown above the garages after a search ---------- */ const [garageNote, setGarageNote] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
+    /* ---------- car noise recording and video from the Hero "Book a Service" tab ---------- */ // { audio, video }. Send these with the booking once you add a backend.
+    const [issue, setIssue] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
+        audio: null,
+        video: null
+    });
+    // Opens a Hero tab (optionally pre-selecting a service), closes any pop-up, scrolls to the top
+    function goToTab(tabId, serviceTitle) {
+        setTab(tabId);
+        if (serviceTitle) setService(serviceTitle);
+        setOpenServiceId(null);
+        setOpenGarageId(null);
+        scrollToSection("top");
+    }
+    // Runs when the Hero search button is clicked
+    function handleSearch() {
+        if (tab === "quote") {
+            scrollToSection("enquiry");
+            return;
+        }
+        setGarageNote(`Showing garages for ${service || "all services"} in ${emirate}.`);
+        scrollToSection("garages");
+    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Header$2f$Header$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                 emirate: emirate,
                 setEmirate: setEmirate,
-                openService: setSvcId,
-                goTab: goTab
+                openService: setOpenServiceId,
+                goTab: goToTab
             }, void 0, false, {
                 fileName: "[project]/app/page.jsx",
-                lineNumber: 40,
+                lineNumber: 63,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -79,30 +93,31 @@ function Page() {
                         setService: setService,
                         emirate: emirate,
                         setEmirate: setEmirate,
-                        onSearch: search
+                        onSearch: handleSearch,
+                        onIssueChange: setIssue
                     }, void 0, false, {
                         fileName: "[project]/app/page.jsx",
-                        lineNumber: 42,
+                        lineNumber: 66,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Services$2f$Services$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                        open: setSvcId
+                        open: setOpenServiceId
                     }, void 0, false, {
                         fileName: "[project]/app/page.jsx",
-                        lineNumber: 43,
+                        lineNumber: 74,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                        open: setGarId,
-                        note: note
+                        open: setOpenGarageId,
+                        note: garageNote
                     }, void 0, false, {
                         fileName: "[project]/app/page.jsx",
-                        lineNumber: 44,
+                        lineNumber: 75,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                         fileName: "[project]/app/page.jsx",
-                        lineNumber: 45,
+                        lineNumber: 76,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Enquiry$2f$Enquiry$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -114,42 +129,42 @@ function Page() {
                         setEmirate: setEmirate
                     }, void 0, false, {
                         fileName: "[project]/app/page.jsx",
-                        lineNumber: 46,
+                        lineNumber: 77,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.jsx",
-                lineNumber: 41,
+                lineNumber: 65,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Footer$2f$Footer$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/app/page.jsx",
-                lineNumber: 48,
+                lineNumber: 84,
                 columnNumber: 7
             }, this),
-            svc && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ServiceModal$2f$ServiceModal$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                svc: svc,
-                onClose: ()=>setSvcId(null),
-                goTab: goTab
+            openService && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ServiceModal$2f$ServiceModal$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                svc: openService,
+                onClose: ()=>setOpenServiceId(null),
+                goTab: goToTab
             }, void 0, false, {
                 fileName: "[project]/app/page.jsx",
-                lineNumber: 49,
-                columnNumber: 15
+                lineNumber: 87,
+                columnNumber: 23
             }, this),
-            gar && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$GarageModal$2f$GarageModal$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                gar: gar,
-                onClose: ()=>setGarId(null),
-                goTab: goTab
+            openGarage && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$GarageModal$2f$GarageModal$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                gar: openGarage,
+                onClose: ()=>setOpenGarageId(null),
+                goTab: goToTab
             }, void 0, false, {
                 fileName: "[project]/app/page.jsx",
-                lineNumber: 50,
-                columnNumber: 15
+                lineNumber: 88,
+                columnNumber: 22
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.jsx",
-        lineNumber: 39,
+        lineNumber: 62,
         columnNumber: 5
     }, this);
 }
@@ -1390,31 +1405,186 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/Icon/Icon.jsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Slider$2f$Slider$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/Slider/Slider.jsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/data.js [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$cx$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/cx.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__ = __turbopack_context__.i("[project]/components/Garages/Garages.module.css [app-ssr] (css module)");
-"use client";
 ;
 ;
 ;
 ;
 ;
-;
-const cx = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$cx$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["makeCx"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"]);
+/* ---------- ONE GARAGE CARD ---------- */ // Shows the photo, name, "Verified" badge, rating, area and starting price.
+// Clicking the card opens that garage's pop-up.
+function GarageCard({ garage, photoNumber, onOpen }) {
+    // Photo file is /images/garage-1.jpg, garage-2.jpg, ...
+    // If the photo is missing, a blue gradient is shown instead.
+    const photo = `url(/images/garage-${photoNumber}.jpg), linear-gradient(135deg,#2a5aa0,#0a2342)`;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].card,
+        onClick: onOpen,
+        "aria-label": `Open ${garage.name} profile`,
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].photo,
+                style: {
+                    backgroundImage: photo
+                }
+            }, void 0, false, {
+                fileName: "[project]/components/Garages/Garages.jsx",
+                lineNumber: 17,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].details,
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].nameRow,
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("b", {
+                                children: garage.name
+                            }, void 0, false, {
+                                fileName: "[project]/components/Garages/Garages.jsx",
+                                lineNumber: 22,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].badge,
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                        name: "check",
+                                        size: 13,
+                                        sw: 3
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/Garages/Garages.jsx",
+                                        lineNumber: 24,
+                                        columnNumber: 13
+                                    }, this),
+                                    " Verified"
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/Garages/Garages.jsx",
+                                lineNumber: 23,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/Garages/Garages.jsx",
+                        lineNumber: 21,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].rating,
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                name: "star",
+                                size: 15,
+                                fill: "#f5a623",
+                                sw: 0
+                            }, void 0, false, {
+                                fileName: "[project]/components/Garages/Garages.jsx",
+                                lineNumber: 30,
+                                columnNumber: 11
+                            }, this),
+                            " ",
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("b", {
+                                children: garage.rating
+                            }, void 0, false, {
+                                fileName: "[project]/components/Garages/Garages.jsx",
+                                lineNumber: 30,
+                                columnNumber: 64
+                            }, this),
+                            " (",
+                            garage.reviews,
+                            " reviews)"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/Garages/Garages.jsx",
+                        lineNumber: 29,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].location,
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                name: "pin",
+                                size: 14,
+                                fill: "currentColor",
+                                sw: 0
+                            }, void 0, false, {
+                                fileName: "[project]/components/Garages/Garages.jsx",
+                                lineNumber: 35,
+                                columnNumber: 11
+                            }, this),
+                            " ",
+                            garage.area
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/Garages/Garages.jsx",
+                        lineNumber: 34,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].priceRow,
+                        children: [
+                            "From AED ",
+                            garage.from,
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].arrowButton,
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                    name: "arrow",
+                                    size: 16,
+                                    sw: 2.4
+                                }, void 0, false, {
+                                    fileName: "[project]/components/Garages/Garages.jsx",
+                                    lineNumber: 42,
+                                    columnNumber: 13
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/components/Garages/Garages.jsx",
+                                lineNumber: 41,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/Garages/Garages.jsx",
+                        lineNumber: 39,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/Garages/Garages.jsx",
+                lineNumber: 19,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/components/Garages/Garages.jsx",
+        lineNumber: 15,
+        columnNumber: 5
+    }, this);
+}
 function Garages({ open, note }) {
+    // The "View All Garages" button scrolls the cards back to the first one
+    function scrollToFirstGarage(event) {
+        event.preventDefault();
+        const row = event.currentTarget.closest("section")?.querySelector("[data-track]");
+        row?.scrollTo({
+            left: 0,
+            behavior: "smooth"
+        });
+    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         id: "garages",
-        className: cx("gar"),
+        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].section,
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: cx("wrap grow"),
+            className: `wrap ${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].layout}`,
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: cx("gintro"),
+                    className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].intro,
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                             children: "Featured Garages"
                         }, void 0, false, {
                             fileName: "[project]/components/Garages/Garages.jsx",
-                            lineNumber: 14,
+                            lineNumber: 67,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1422,26 +1592,20 @@ function Garages({ open, note }) {
                                 "Top-rated workshops,",
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                     fileName: "[project]/components/Garages/Garages.jsx",
-                                    lineNumber: 15,
+                                    lineNumber: 68,
                                     columnNumber: 34
                                 }, this),
                                 "verified for your peace of mind."
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/Garages/Garages.jsx",
-                            lineNumber: 15,
+                            lineNumber: 68,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                             href: "#garages",
-                            className: cx("btn line viewAll"),
-                            onClick: (e)=>{
-                                e.preventDefault();
-                                e.currentTarget.closest("section")?.querySelector("[data-track]")?.scrollTo({
-                                    left: 0,
-                                    behavior: "smooth"
-                                });
-                            },
+                            className: `btn line ${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].viewAllButton}`,
+                            onClick: scrollToFirstGarage,
                             children: [
                                 "View All Garages ",
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -1450,189 +1614,55 @@ function Garages({ open, note }) {
                                     sw: 2.2
                                 }, void 0, false, {
                                     fileName: "[project]/components/Garages/Garages.jsx",
-                                    lineNumber: 24,
+                                    lineNumber: 71,
                                     columnNumber: 30
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/Garages/Garages.jsx",
-                            lineNumber: 16,
+                            lineNumber: 70,
                             columnNumber: 11
                         }, this),
                         note && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: cx("gnote"),
+                            className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Garages$2f$Garages$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].note,
                             children: note
                         }, void 0, false, {
                             fileName: "[project]/components/Garages/Garages.jsx",
-                            lineNumber: 26,
+                            lineNumber: 75,
                             columnNumber: 20
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/Garages/Garages.jsx",
-                    lineNumber: 13,
+                    lineNumber: 66,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Slider$2f$Slider$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                     variant: "garages",
                     label: "garages",
-                    children: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["garages"].map((g, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            className: cx("gcard"),
-                            onClick: ()=>open(g.id),
-                            "aria-label": `Open ${g.name} profile`,
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: cx("gimg"),
-                                    style: {
-                                        backgroundImage: `url(/images/garage-${i + 1}.jpg), linear-gradient(135deg,#2a5aa0,#0a2342)`
-                                    }
-                                }, void 0, false, {
-                                    fileName: "[project]/components/Garages/Garages.jsx",
-                                    lineNumber: 31,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: cx("gbody"),
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: cx("gtop"),
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("b", {
-                                                    children: g.name
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/Garages/Garages.jsx",
-                                                    lineNumber: 33,
-                                                    columnNumber: 46
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: cx("ver"),
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                                            name: "check",
-                                                            size: 13,
-                                                            sw: 3
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/components/Garages/Garages.jsx",
-                                                            lineNumber: 33,
-                                                            columnNumber: 89
-                                                        }, this),
-                                                        " Verified"
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/components/Garages/Garages.jsx",
-                                                    lineNumber: 33,
-                                                    columnNumber: 61
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/components/Garages/Garages.jsx",
-                                            lineNumber: 33,
-                                            columnNumber: 17
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: cx("grate"),
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                                    name: "star",
-                                                    size: 15,
-                                                    fill: "#f5a623",
-                                                    sw: 0
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/Garages/Garages.jsx",
-                                                    lineNumber: 34,
-                                                    columnNumber: 47
-                                                }, this),
-                                                " ",
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("b", {
-                                                    children: g.rating
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/Garages/Garages.jsx",
-                                                    lineNumber: 34,
-                                                    columnNumber: 100
-                                                }, this),
-                                                " (",
-                                                g.reviews,
-                                                " reviews)"
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/components/Garages/Garages.jsx",
-                                            lineNumber: 34,
-                                            columnNumber: 17
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: cx("gloc"),
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                                    name: "pin",
-                                                    size: 14,
-                                                    fill: "currentColor",
-                                                    sw: 0
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/Garages/Garages.jsx",
-                                                    lineNumber: 35,
-                                                    columnNumber: 46
-                                                }, this),
-                                                " ",
-                                                g.area
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/components/Garages/Garages.jsx",
-                                            lineNumber: 35,
-                                            columnNumber: 17
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: cx("gfoot"),
-                                            children: [
-                                                "From AED ",
-                                                g.from,
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: cx("gar-go"),
-                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                                        name: "arrow",
-                                                        size: 16,
-                                                        sw: 2.4
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/components/Garages/Garages.jsx",
-                                                        lineNumber: 36,
-                                                        columnNumber: 95
-                                                    }, this)
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/Garages/Garages.jsx",
-                                                    lineNumber: 36,
-                                                    columnNumber: 64
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/components/Garages/Garages.jsx",
-                                            lineNumber: 36,
-                                            columnNumber: 17
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/components/Garages/Garages.jsx",
-                                    lineNumber: 32,
-                                    columnNumber: 15
-                                }, this)
-                            ]
-                        }, g.id, true, {
+                    children: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["garages"].map((garage, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(GarageCard, {
+                            garage: garage,
+                            photoNumber: index + 1,
+                            onOpen: ()=>open(garage.id)
+                        }, garage.id, false, {
                             fileName: "[project]/components/Garages/Garages.jsx",
-                            lineNumber: 30,
+                            lineNumber: 81,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/Garages/Garages.jsx",
-                    lineNumber: 28,
+                    lineNumber: 79,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/Garages/Garages.jsx",
-            lineNumber: 12,
+            lineNumber: 63,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/Garages/Garages.jsx",
-        lineNumber: 11,
+        lineNumber: 62,
         columnNumber: 5
     }, this);
 }
@@ -1640,20 +1670,20 @@ function Garages({ open, note }) {
 "[project]/components/Garages/Garages.module.css [app-ssr] (css module)", ((__turbopack_context__) => {
 
 __turbopack_context__.v({
-  "gar": "Garages-module__hYaoUW__gar",
-  "gar-go": "Garages-module__hYaoUW__gar-go",
-  "gbody": "Garages-module__hYaoUW__gbody",
-  "gcard": "Garages-module__hYaoUW__gcard",
-  "gfoot": "Garages-module__hYaoUW__gfoot",
-  "gimg": "Garages-module__hYaoUW__gimg",
-  "gintro": "Garages-module__hYaoUW__gintro",
-  "gloc": "Garages-module__hYaoUW__gloc",
-  "gnote": "Garages-module__hYaoUW__gnote",
-  "grate": "Garages-module__hYaoUW__grate",
-  "grow": "Garages-module__hYaoUW__grow",
-  "gtop": "Garages-module__hYaoUW__gtop",
-  "ver": "Garages-module__hYaoUW__ver",
-  "viewAll": "Garages-module__hYaoUW__viewAll",
+  "arrowButton": "Garages-module__hYaoUW__arrowButton",
+  "badge": "Garages-module__hYaoUW__badge",
+  "card": "Garages-module__hYaoUW__card",
+  "details": "Garages-module__hYaoUW__details",
+  "intro": "Garages-module__hYaoUW__intro",
+  "layout": "Garages-module__hYaoUW__layout",
+  "location": "Garages-module__hYaoUW__location",
+  "nameRow": "Garages-module__hYaoUW__nameRow",
+  "note": "Garages-module__hYaoUW__note",
+  "photo": "Garages-module__hYaoUW__photo",
+  "priceRow": "Garages-module__hYaoUW__priceRow",
+  "rating": "Garages-module__hYaoUW__rating",
+  "section": "Garages-module__hYaoUW__section",
+  "viewAllButton": "Garages-module__hYaoUW__viewAllButton",
 });
 }),
 "[project]/components/Header/Header.jsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
@@ -2413,209 +2443,224 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/Icon/Icon.jsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Slider$2f$Slider$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/Slider/Slider.jsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/data.js [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$cx$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/cx.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__ = __turbopack_context__.i("[project]/components/HowItWorks/HowItWorks.module.css [app-ssr] (css module)");
 ;
 ;
 ;
 ;
 ;
-;
-const cx = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$cx$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["makeCx"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"]);
+/* ---------- THE 4 NUMBERED STEPS ---------- */ // Each step in data.js is written as: [icon name, first line, second line]
+function Steps() {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].steps,
+        children: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["steps"].map(([iconName, line1, line2], index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].step,
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].circle,
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].number,
+                                children: index + 1
+                            }, void 0, false, {
+                                fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+                                lineNumber: 15,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                name: iconName,
+                                size: 30,
+                                sw: 1.5
+                            }, void 0, false, {
+                                fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+                                lineNumber: 16,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+                        lineNumber: 14,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].label,
+                        children: [
+                            line1,
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                                fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+                                lineNumber: 20,
+                                columnNumber: 49
+                            }, this),
+                            line2
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+                        lineNumber: 20,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, line1, true, {
+                fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+                lineNumber: 12,
+                columnNumber: 9
+            }, this))
+    }, void 0, false, {
+        fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+        lineNumber: 10,
+        columnNumber: 5
+    }, this);
+}
+/* ---------- ONE CUSTOMER REVIEW ---------- */ // Shows the review text, the name, 5 stars and a circle with the first letter of the name.
+function Review({ review }) {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("figure", {
+        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].review,
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].reviewText,
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("blockquote", {
+                        children: review.text
+                    }, void 0, false, {
+                        fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+                        lineNumber: 33,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("b", {
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].reviewerName,
+                        children: review.name
+                    }, void 0, false, {
+                        fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+                        lineNumber: 34,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].stars,
+                        children: [
+                            1,
+                            2,
+                            3,
+                            4,
+                            5
+                        ].map((number)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                name: "star",
+                                size: 15,
+                                fill: "#f5a623",
+                                sw: 0
+                            }, number, false, {
+                                fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+                                lineNumber: 38,
+                                columnNumber: 13
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+                        lineNumber: 36,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+                lineNumber: 32,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].avatar,
+                children: review.name[0]
+            }, void 0, false, {
+                fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+                lineNumber: 44,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
+        lineNumber: 31,
+        columnNumber: 5
+    }, this);
+}
 function HowItWorks() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         id: "how",
-        className: cx("how"),
+        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].section,
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: cx("wrap hwrow"),
+            className: `wrap ${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].layout}`,
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: cx("hwintro"),
+                    className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].title,
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                             children: "How It Works"
                         }, void 0, false, {
                             fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                            lineNumber: 11,
-                            columnNumber: 40
+                            lineNumber: 57,
+                            columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             children: [
                                 "Get your car serviced",
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                     fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                                    lineNumber: 11,
-                                    columnNumber: 85
+                                    lineNumber: 58,
+                                    columnNumber: 35
                                 }, this),
                                 "in just a few simple steps."
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                            lineNumber: 11,
-                            columnNumber: 61
+                            lineNumber: 58,
+                            columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                    lineNumber: 11,
+                    lineNumber: 56,
                     columnNumber: 9
                 }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: cx("steps"),
-                    children: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["steps"].map(([ic, a, b], i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: cx("step"),
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: cx("sico"),
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: cx("snum"),
-                                            children: i + 1
-                                        }, void 0, false, {
-                                            fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                                            lineNumber: 15,
-                                            columnNumber: 44
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                            name: ic,
-                                            size: 30,
-                                            sw: 1.5
-                                        }, void 0, false, {
-                                            fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                                            lineNumber: 15,
-                                            columnNumber: 87
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                                    lineNumber: 15,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: cx("stxt"),
-                                    children: [
-                                        a,
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
-                                            fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                                            lineNumber: 16,
-                                            columnNumber: 47
-                                        }, this),
-                                        b
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                                    lineNumber: 16,
-                                    columnNumber: 15
-                                }, this)
-                            ]
-                        }, a, true, {
-                            fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                            lineNumber: 14,
-                            columnNumber: 13
-                        }, this))
-                }, void 0, false, {
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Steps, {}, void 0, false, {
                     fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                    lineNumber: 12,
+                    lineNumber: 62,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: cx("rev-box"),
+                    className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].reviewBox,
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                            className: cx("rtitle"),
+                            className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$HowItWorks$2f$HowItWorks$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].reviewsTitle,
                             children: "Reviews"
                         }, void 0, false, {
                             fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                            lineNumber: 21,
+                            lineNumber: 66,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Slider$2f$Slider$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                             variant: "reviews",
                             label: "reviews",
-                            children: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["reviews"].map((r)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("figure", {
-                                    className: cx("rev"),
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: cx("rt"),
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("blockquote", {
-                                                    children: r.text
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                                                    lineNumber: 26,
-                                                    columnNumber: 19
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("b", {
-                                                    className: cx("rn"),
-                                                    children: r.name
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                                                    lineNumber: 27,
-                                                    columnNumber: 19
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: cx("stars"),
-                                                    children: [
-                                                        0,
-                                                        1,
-                                                        2,
-                                                        3,
-                                                        4
-                                                    ].map((n)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                                            name: "star",
-                                                            size: 15,
-                                                            fill: "#f5a623",
-                                                            sw: 0
-                                                        }, n, false, {
-                                                            fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                                                            lineNumber: 28,
-                                                            columnNumber: 77
-                                                        }, this))
-                                                }, void 0, false, {
-                                                    fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                                                    lineNumber: 28,
-                                                    columnNumber: 19
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                                            lineNumber: 25,
-                                            columnNumber: 17
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: cx("av"),
-                                            children: r.name[0]
-                                        }, void 0, false, {
-                                            fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                                            lineNumber: 30,
-                                            columnNumber: 17
-                                        }, this)
-                                    ]
-                                }, r.name, true, {
+                            children: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$data$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["reviews"].map((review)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Review, {
+                                    review: review
+                                }, review.name, false, {
                                     fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                                    lineNumber: 24,
+                                    lineNumber: 69,
                                     columnNumber: 15
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                            lineNumber: 22,
+                            lineNumber: 67,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-                    lineNumber: 20,
+                    lineNumber: 65,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-            lineNumber: 10,
+            lineNumber: 53,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/HowItWorks/HowItWorks.jsx",
-        lineNumber: 9,
+        lineNumber: 52,
         columnNumber: 5
     }, this);
 }
@@ -2623,21 +2668,21 @@ function HowItWorks() {
 "[project]/components/HowItWorks/HowItWorks.module.css [app-ssr] (css module)", ((__turbopack_context__) => {
 
 __turbopack_context__.v({
-  "av": "HowItWorks-module__oom_6W__av",
-  "how": "HowItWorks-module__oom_6W__how",
-  "hwintro": "HowItWorks-module__oom_6W__hwintro",
-  "hwrow": "HowItWorks-module__oom_6W__hwrow",
-  "rev": "HowItWorks-module__oom_6W__rev",
-  "rev-box": "HowItWorks-module__oom_6W__rev-box",
-  "rn": "HowItWorks-module__oom_6W__rn",
-  "rt": "HowItWorks-module__oom_6W__rt",
-  "rtitle": "HowItWorks-module__oom_6W__rtitle",
-  "sico": "HowItWorks-module__oom_6W__sico",
-  "snum": "HowItWorks-module__oom_6W__snum",
+  "avatar": "HowItWorks-module__oom_6W__avatar",
+  "circle": "HowItWorks-module__oom_6W__circle",
+  "label": "HowItWorks-module__oom_6W__label",
+  "layout": "HowItWorks-module__oom_6W__layout",
+  "number": "HowItWorks-module__oom_6W__number",
+  "review": "HowItWorks-module__oom_6W__review",
+  "reviewBox": "HowItWorks-module__oom_6W__reviewBox",
+  "reviewText": "HowItWorks-module__oom_6W__reviewText",
+  "reviewerName": "HowItWorks-module__oom_6W__reviewerName",
+  "reviewsTitle": "HowItWorks-module__oom_6W__reviewsTitle",
+  "section": "HowItWorks-module__oom_6W__section",
   "stars": "HowItWorks-module__oom_6W__stars",
   "step": "HowItWorks-module__oom_6W__step",
   "steps": "HowItWorks-module__oom_6W__steps",
-  "stxt": "HowItWorks-module__oom_6W__stxt",
+  "title": "HowItWorks-module__oom_6W__title",
 });
 }),
 "[project]/components/Icon/Icon.jsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
@@ -3623,79 +3668,79 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/Icon/Icon.jsx [app-ssr] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$cx$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/cx.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Slider$2f$Slider$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__ = __turbopack_context__.i("[project]/components/Slider/Slider.module.css [app-ssr] (css module)");
 "use client";
 ;
 ;
 ;
 ;
-;
-const cx = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$cx$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["makeCx"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Slider$2f$Slider$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"]);
-function Slider({ children, variant = "services", label }) {
-    const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const go = (dir)=>{
-        const el = ref.current;
-        if (!el || !el.firstChild) return;
-        const gap = parseFloat(getComputedStyle(el).columnGap || getComputedStyle(el).gap) || 0;
-        el.scrollBy({
-            left: dir * (el.firstChild.offsetWidth + gap),
+function Slider({ children, variant = "services", label = "" }) {
+    const trackRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
+    // Scrolls the track left (-1) or right (+1) by exactly one card
+    function scrollByOneCard(direction) {
+        const track = trackRef.current;
+        if (!track || !track.firstChild) return;
+        const trackStyle = getComputedStyle(track);
+        const gap = parseFloat(trackStyle.columnGap || trackStyle.gap) || 0;
+        const cardWidth = track.firstChild.offsetWidth;
+        track.scrollBy({
+            left: direction * (cardWidth + gap),
             behavior: "smooth"
         });
-    };
+    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: cx("slider", variant),
+        className: `${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Slider$2f$Slider$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].slider} ${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Slider$2f$Slider$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"][variant]}`,
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                className: cx("arr", "prev"),
-                onClick: ()=>go(-1),
-                "aria-label": `Previous ${label || ""}`,
+                className: `${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Slider$2f$Slider$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].arr} ${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Slider$2f$Slider$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].prev}`,
+                onClick: ()=>scrollByOneCard(-1),
+                "aria-label": `Previous ${label}`,
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                     name: "left",
                     size: 20,
                     sw: 2.2
                 }, void 0, false, {
                     fileName: "[project]/components/Slider/Slider.jsx",
-                    lineNumber: 18,
-                    columnNumber: 107
+                    lineNumber: 29,
+                    columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/Slider/Slider.jsx",
-                lineNumber: 18,
+                lineNumber: 24,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: cx("track"),
-                ref: ref,
+                className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Slider$2f$Slider$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].track,
+                ref: trackRef,
                 "data-track": true,
                 children: children
             }, void 0, false, {
                 fileName: "[project]/components/Slider/Slider.jsx",
-                lineNumber: 19,
+                lineNumber: 33,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                className: cx("arr", "next"),
-                onClick: ()=>go(1),
-                "aria-label": `Next ${label || ""}`,
+                className: `${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Slider$2f$Slider$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].arr} ${__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Slider$2f$Slider$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].next}`,
+                onClick: ()=>scrollByOneCard(1),
+                "aria-label": `Next ${label}`,
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Icon$2f$Icon$2e$jsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                     name: "right",
                     size: 20,
                     sw: 2.2
                 }, void 0, false, {
                     fileName: "[project]/components/Slider/Slider.jsx",
-                    lineNumber: 20,
-                    columnNumber: 102
+                    lineNumber: 42,
+                    columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/Slider/Slider.jsx",
-                lineNumber: 20,
+                lineNumber: 37,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/Slider/Slider.jsx",
-        lineNumber: 17,
+        lineNumber: 23,
         columnNumber: 5
     }, this);
 }
@@ -3753,7 +3798,7 @@ __turbopack_context__.s([
     "vehicles",
     ()=>vehicles
 ]);
-const BRAND = "Autospire";
+const BRAND = "Kareaze";
 const PHONE = "+971 4 000 0000";
 const TEL = "tel:+97140000000";
 const EMAIL = "hello@autospire.ae";

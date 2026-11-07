@@ -1,67 +1,105 @@
 "use client";
-import { useState } from "react";
 import Icon from "@/components/Icon/Icon";
 import Dropdown from "@/components/Dropdown/Dropdown";
-import { services, emirates, plates, vehicles } from "@/lib/data";
-import { makeCx } from "@/lib/cx";
+import IssueCapture from "./IssueCapture";
+import { services, emirates, vehicles } from "@/lib/data";
 import styles from "./Hero.module.css";
-const cx = makeCx(styles);
 
+/* ---------- THE THREE TABS ---------- */
+// id         = internal name (don't change)
+// icon       = icon shown on the tab
+// label      = text on the tab
+// buttonText = text on the teal search button when this tab is open
 const TABS = [
-  ["book", "calendar", "Book a Service", "Search"],
-  ["quote", "chat", "Request a Quotation", "Get Quotes"],
-  ["garage", "garage", "Find a Garage", "Find Garages"],
+  { id: "book",   icon: "calendar", label: "Book a Service",      buttonText: "Search" },
+  { id: "quote",  icon: "chat",     label: "Request a Quotation", buttonText: "Get Quotes" },
+  { id: "garage", icon: "garage",   label: "Find a Garage",       buttonText: "Find Garages" },
 ];
-const NOTE = {
-  book: ["tag", "Fixed-price booking:", "see the price upfront, pick a time and book instantly."],
-  quote: ["scale", "Competitive quotations:", "up to 5 verified garages compete with their best price."],
-  garage: ["garage", "Garage directory:", "browse verified, rated garages and open their full profiles."],
-};
-const TRUST = [["rta", "Verified", "Garages"], ["scale", "Compare", "Prices"], ["diagnostics", "Book Instantly", ""], ["headset", "24/7 Support", ""], ["star", "Trusted by", "100,000+ Drivers"]];
 
-export default function Hero({ tab, setTab, vehicle, setVehicle, service, setService, emirate, setEmirate, onSearch }) {
-  const [pEm, setPEm] = useState("Dubai");
-  const [pCode, setPCode] = useState("");
-  const [pNum, setPNum] = useState("");
-  const [found, setFound] = useState(false);
-  const cur = TABS.find((t) => t[0] === tab);
-  const note = NOTE[tab];
+/* ---------- THE 5 TRUST POINTS UNDER THE SEARCH BOX ---------- */
+// line1 and line2 are the two lines of text. Leave line2 empty ("") for one line.
+const TRUST_POINTS = [
+  { icon: "rta",         line1: "Verified",       line2: "Garages" },
+  { icon: "scale",       line1: "Compare",        line2: "Prices" },
+  { icon: "diagnostics", line1: "Book Instantly", line2: "" },
+  { icon: "headset",     line1: "24/7 Support",   line2: "" },
+  { icon: "star",        line1: "Trusted by",     line2: "100,000+ Drivers" },
+];
 
-  const lookup = () => {
-    if (!pNum.trim()) return;
-    setVehicle(`Plate: ${pEm} ${pCode.trim().toUpperCase()} ${pNum.trim()}`.replace(/\s+/g, " "));
-    setFound(true);
-  };
-  const vOptions = vehicle && !vehicles.includes(vehicle) ? [vehicle, ...vehicles] : vehicles;
+/* ---------- THE HERO ---------- */
+// All the values below (tab, vehicle, service, ...) come from page.jsx.
+// "set..." functions change them when the visitor picks something.
+export default function Hero({
+  tab, setTab,
+  vehicle, setVehicle,
+  service, setService,
+  emirate, setEmirate,
+  onSearch,       // runs when the search button is clicked
+  onIssueChange,  // receives the recorded noise / uploaded video
+}) {
+  // the tab that is currently open (used for the search button text)
+  const activeTab = TABS.find((t) => t.id === tab);
+
+  // list of service names for the "Select Service" dropdown
+  const serviceNames = services.map((s) => s.title);
+
+  // if the vehicle was chosen somewhere else and isn't in the list, add it so the dropdown can show it
+  const vehicleOptions = vehicle && !vehicles.includes(vehicle) ? [vehicle, ...vehicles] : vehicles;
 
   return (
-    <section id="top" className={cx("hero")}>
-      <div className={cx("wrap")}>
-        <h1>Your Complete<br /><span className={cx("teal")}>Automotive Services<br />Marketplace</span> in the UAE</h1>
-        <p className={cx("sub")}>Compare garages, get competitive quotes<br />and book with confidence.</p>
+    <section id="top" className={styles.hero}>
+      <div className="wrap">
 
-        <div className={cx("tabs")} role="tablist">
-          {TABS.map(([id, ic, label]) => (
-            <button key={id} role="tab" aria-selected={tab === id} className={cx("tab", tab === id && "on")} onClick={() => setTab(id)}>
-              <span className={cx("tico")}><Icon name={ic} size={22} /></span><b>{label}</b>
+        {/* HEADLINE: the teal words are inside <span className={styles.highlight}> */}
+        <h1>
+          Your Complete<br />
+          <span className={styles.highlight}>Automotive Services<br />Marketplace</span> in the UAE
+        </h1>
+        <p className={styles.subtitle}>Compare garages, get competitive quotes<br />and book with confidence.</p>
+
+        {/* THE THREE TABS */}
+        <div className={styles.tabs} role="tablist">
+          {TABS.map((t) => (
+            <button
+              key={t.id}
+              role="tab"
+              aria-selected={tab === t.id}
+              className={`${styles.tab} ${tab === t.id ? styles.active : ""}`}
+              onClick={() => setTab(t.id)}
+            >
+              <span className={styles.tabIcon}><Icon name={t.icon} size={22} /></span>
+              <b>{t.label}</b>
             </button>
           ))}
         </div>
 
-        <div className={cx("panel")}>
-          <div className={cx("srow")}>
-            <Dropdown icon="car" placeholder="Select Your Vehicle" value={vehicle} onChange={(v) => { setVehicle(v); setFound(false); }} options={vOptions} />
-            <Dropdown icon="servicing" placeholder="Select Service" value={service} onChange={setService} options={services.map((s) => s.title)} />
+        {/* THE WHITE SEARCH BOX */}
+        <div className={styles.searchBox}>
+          <div className={styles.searchRow}>
+            <Dropdown icon="car" placeholder="Select Your Vehicle" value={vehicle} onChange={setVehicle} options={vehicleOptions} />
+            <Dropdown icon="servicing" placeholder="Select Service" value={service} onChange={setService} options={serviceNames} />
             <Dropdown icon="pin" placeholder="Select Location" value={emirate} onChange={setEmirate} options={emirates} format={(e) => `${e}, UAE`} />
-            <button className={cx("btn go")} onClick={onSearch}><Icon name="search" size={22} sw={2.2} />{cur[3]}</button>
+
+            <button className={`btn ${styles.searchButton}`} onClick={onSearch}>
+              <Icon name="search" size={22} sw={2.2} />
+              {activeTab.buttonText}
+            </button>
           </div>
+
+          {/* "Record car noise / Upload video" box: only on the Book a Service tab */}
+          {tab === "book" && <IssueCapture onChange={onIssueChange} />}
         </div>
 
-        <div className={cx("trust")}>
-          {TRUST.map(([ic, a, b]) => (
-            <div key={a} className={cx("ti")}><Icon name={ic} size={42} sw={1.4} /><span>{a}<br />{b}</span></div>
+        {/* THE 5 TRUST POINTS */}
+        <div className={styles.trustRow}>
+          {TRUST_POINTS.map((point) => (
+            <div key={point.line1} className={styles.trustPoint}>
+              <Icon name={point.icon} size={42} sw={1.4} />
+              <span>{point.line1}<br />{point.line2}</span>
+            </div>
           ))}
         </div>
+
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 /* [project]/components/Header/Header.module.css [app-client] (css) */
-.Header-module__arFiJq__hdr {
+.Header-module__arFiJq__header {
   z-index: 60;
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
@@ -9,7 +9,7 @@
   top: 0;
 }
 
-.Header-module__arFiJq__hrow.Header-module__arFiJq__hrow {
+.Header-module__arFiJq__bar.Header-module__arFiJq__bar {
   align-items: center;
   gap: 28px;
   max-width: none;
@@ -27,7 +27,7 @@
   display: flex;
 }
 
-.Header-module__arFiJq__nav > button, .Header-module__arFiJq__dd > a {
+.Header-module__arFiJq__nav > button, .Header-module__arFiJq__dropdown > a {
   align-items: center;
   gap: 5px;
   padding: 30px 0;
@@ -35,15 +35,15 @@
   display: inline-flex;
 }
 
-.Header-module__arFiJq__nav > a:hover, .Header-module__arFiJq__nav > button:hover, .Header-module__arFiJq__dd:hover > a {
+.Header-module__arFiJq__nav > a:hover, .Header-module__arFiJq__nav > button:hover, .Header-module__arFiJq__dropdown:hover > a {
   color: var(--teal);
 }
 
-.Header-module__arFiJq__dd {
+.Header-module__arFiJq__dropdown {
   position: relative;
 }
 
-.Header-module__arFiJq__menu {
+.Header-module__arFiJq__dropdownMenu {
   background: var(--navy2);
   border: 1px solid #1cf4f033;
   border-radius: 12px;
@@ -56,11 +56,11 @@
   box-shadow: 0 18px 40px #0009;
 }
 
-.Header-module__arFiJq__dd:hover .Header-module__arFiJq__menu, .Header-module__arFiJq__dd:focus-within .Header-module__arFiJq__menu {
+.Header-module__arFiJq__dropdown:hover .Header-module__arFiJq__dropdownMenu, .Header-module__arFiJq__dropdown:focus-within .Header-module__arFiJq__dropdownMenu {
   display: block;
 }
 
-.Header-module__arFiJq__menu a, .Header-module__arFiJq__menu button {
+.Header-module__arFiJq__dropdownMenu a, .Header-module__arFiJq__dropdownMenu button {
   border-radius: 8px;
   width: 100%;
   padding: 10px 12px;
@@ -68,31 +68,31 @@
   display: block;
 }
 
-.Header-module__arFiJq__menu a:hover, .Header-module__arFiJq__menu button:hover {
+.Header-module__arFiJq__dropdownMenu a:hover, .Header-module__arFiJq__dropdownMenu button:hover {
   color: var(--teal);
   background: #1cf4f01a;
 }
 
-.Header-module__arFiJq__hright {
+.Header-module__arFiJq__right {
   align-items: center;
   gap: 16px;
   margin-left: auto;
   display: flex;
 }
 
-.Header-module__arFiJq__vsep {
+.Header-module__arFiJq__divider {
   background: #fff3;
   width: 1px;
   height: 28px;
 }
 
-.Header-module__arFiJq__usr {
+.Header-module__arFiJq__userIcon {
   color: var(--white);
   place-items: center;
   display: grid;
 }
 
-.Header-module__arFiJq__acct {
+.Header-module__arFiJq__accountButton {
   border: 1.5px solid var(--teal);
   color: var(--teal);
   border-radius: 999px;
@@ -104,7 +104,7 @@
   display: inline-flex;
 }
 
-.Header-module__arFiJq__acct:hover {
+.Header-module__arFiJq__accountButton:hover {
   background: #1cf4f01a;
 }
 
@@ -113,16 +113,16 @@
   display: none;
 }
 
-.Header-module__arFiJq__mob {
+.Header-module__arFiJq__mobileMenu {
   display: none;
 }
 
 @media (max-width: 1080px) {
-  .Header-module__arFiJq__hrow.Header-module__arFiJq__hrow {
+  .Header-module__arFiJq__bar.Header-module__arFiJq__bar {
     height: 72px;
   }
 
-  .Header-module__arFiJq__nav, .Header-module__arFiJq__vsep, .Header-module__arFiJq__usr, .Header-module__arFiJq__acct {
+  .Header-module__arFiJq__nav, .Header-module__arFiJq__divider, .Header-module__arFiJq__userIcon, .Header-module__arFiJq__accountButton {
     display: none;
   }
 
@@ -130,11 +130,11 @@
     display: block;
   }
 
-  .Header-module__arFiJq__hright {
+  .Header-module__arFiJq__right {
     margin-left: auto;
   }
 
-  .Header-module__arFiJq__mob {
+  .Header-module__arFiJq__mobileMenu {
     background: var(--navy);
     border-top: 1px solid #1cf4f026;
     gap: 4px;
@@ -142,19 +142,19 @@
     display: grid;
   }
 
-  .Header-module__arFiJq__mob button {
+  .Header-module__arFiJq__mobileMenu button {
     border-bottom: 1px solid #ffffff14;
     padding: 12px 4px;
     font-weight: 600;
   }
 
-  .Header-module__arFiJq__mob a:not(.btn) {
+  .Header-module__arFiJq__mobileMenu a:not(.btn) {
     border-bottom: 1px solid #ffffff14;
     padding: 12px 4px;
     font-weight: 600;
   }
 
-  .Header-module__arFiJq__mob .btn {
+  .Header-module__arFiJq__mobileMenu .btn {
     margin-top: 12px;
   }
 }

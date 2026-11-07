@@ -1,19 +1,37 @@
-.img{height:200px;background-size:cover;background-position:center}
+/* ---------- 1. Photo at the top (height = 200px) ---------- */
+.photo{height:200px;background-size:cover;background-position:center}
+
+/* ---------- 2. Text area under the photo ---------- */
 .body{display:grid;gap:14px;padding:22px 30px 28px}
 .body h3{font-size:1.7rem}
-.body h4{font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
-.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.ver{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:700;color:var(--teal);border:1px solid var(--teal);background:#14e8cf1f;border-radius:999px;padding:2px 9px}
-.meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;color:var(--grey);font-size:.9rem}.meta b{color:#f5a623}
-.mtxt{color:var(--grey);line-height:1.65}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.cols .mtxt{margin-bottom:12px}
-.mpts{display:grid;gap:8px}
-.mpts li{display:flex;gap:10px;align-items:center;color:var(--white);font-size:.95rem}
-.mpts svg{color:var(--teal);flex:none}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.opt{display:grid;gap:8px;align-content:start;justify-items:start;background:#06142b99;border:1px solid #14e8cf40;border-radius:14px;padding:16px}
-.opt p{color:var(--slate);font-size:.86rem}
-.opt :global(.btn){margin-top:4px;padding:10px 20px;font-size:.9rem}
-.mico{width:32px;height:32px;border-radius:10px;display:inline-grid;place-items:center;background:#14e8cf26;color:var(--teal)}
-@media(max-width:640px){.body{padding:20px}.cols,.two{grid-template-columns:1fr}}
+.body h4{font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:8px}   /* small teal headings */
+.description{color:var(--grey);line-height:1.65}
+
+/* ---------- 3. Name and Verified badge ---------- */
+.titleRow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:700;color:var(--teal);border:1px solid var(--teal);background:#14e8cf1f;border-radius:999px;padding:2px 9px}
+
+/* ---------- 4. Rating and address line ---------- */
+.meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;color:var(--grey);font-size:.9rem}
+.meta b{color:#f5a623}
+
+/* ---------- 5. Two columns: services offered | hours and price ---------- */
+.columns{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.columns .description{margin-bottom:12px}
+
+/* list with teal ticks */
+.checkList{display:grid;gap:8px}
+.checkList li{display:flex;gap:10px;align-items:center;color:var(--white);font-size:.95rem}
+.checkList svg{color:var(--teal);flex:none}
+
+/* ---------- 6. The two booking option boxes ---------- */
+.bookingOptions{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.option{display:grid;gap:8px;align-content:start;justify-items:start;background:#06142b99;border:1px solid #14e8cf40;border-radius:14px;padding:16px}
+.option p{color:var(--slate);font-size:.86rem}
+.option :global(.btn){margin-top:4px;padding:10px 20px;font-size:.9rem}
+
+/* small rounded square holding an icon */
+.iconBox{width:32px;height:32px;border-radius:10px;display:inline-grid;place-items:center;background:#14e8cf26;color:var(--teal)}
+
+/* ---------- 7. Phones: one column ---------- */
+@media(max-width:640px){.body{padding:20px}.columns,.bookingOptions{grid-template-columns:1fr}}

@@ -1,23 +1,23 @@
 /* [project]/components/HowItWorks/HowItWorks.module.css [app-client] (css) */
-.HowItWorks-module__oom_6W__how {
+.HowItWorks-module__oom_6W__section {
   background: linear-gradient(#071a35, #06142b);
   border-top: 1px solid #1cf4f01f;
   padding: 38px 0;
 }
 
-.HowItWorks-module__oom_6W__hwrow {
+.HowItWorks-module__oom_6W__layout {
   grid-template-columns: 200px minmax(0, 1fr) 300px;
   align-items: center;
   gap: 36px;
   display: grid;
 }
 
-.HowItWorks-module__oom_6W__hwintro h2 {
+.HowItWorks-module__oom_6W__title h2 {
   margin-bottom: 10px;
   font-size: 2rem;
 }
 
-.HowItWorks-module__oom_6W__hwintro p {
+.HowItWorks-module__oom_6W__title p {
   color: var(--grey);
 }
 
@@ -39,13 +39,13 @@
   position: relative;
 }
 
-.HowItWorks-module__oom_6W__stxt {
+.HowItWorks-module__oom_6W__label {
   white-space: nowrap;
   font-size: .86rem;
   line-height: 1.4;
 }
 
-.HowItWorks-module__oom_6W__sico {
+.HowItWorks-module__oom_6W__circle {
   width: 62px;
   height: 62px;
   color: var(--teal);
@@ -58,7 +58,7 @@
   box-shadow: 0 0 22px #1cf4f033;
 }
 
-.HowItWorks-module__oom_6W__snum {
+.HowItWorks-module__oom_6W__number {
   background: var(--teal);
   width: 20px;
   height: 20px;
@@ -98,20 +98,20 @@
   transform: rotate(45deg);
 }
 
-.HowItWorks-module__oom_6W__rev-box {
+.HowItWorks-module__oom_6W__reviewBox {
   border-left: 1px solid #ffffff2a;
   min-width: 0;
   padding-left: 28px;
 }
 
-.HowItWorks-module__oom_6W__rtitle {
+.HowItWorks-module__oom_6W__reviewsTitle {
   color: var(--white);
   margin: 0 0 14px;
   font-size: 1.15rem;
   font-weight: 700;
 }
 
-.HowItWorks-module__oom_6W__rev {
+.HowItWorks-module__oom_6W__review {
   color: var(--teal);
   flex: 0 0 100%;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -120,20 +120,20 @@
   display: grid;
 }
 
-.HowItWorks-module__oom_6W__rt {
+.HowItWorks-module__oom_6W__reviewText {
   justify-items: start;
   gap: 8px;
   display: grid;
 }
 
-.HowItWorks-module__oom_6W__rt blockquote {
+.HowItWorks-module__oom_6W__reviewText blockquote {
   color: var(--white);
   font-size: .94rem;
   font-weight: 600;
   line-height: 1.45;
 }
 
-.HowItWorks-module__oom_6W__rn {
+.HowItWorks-module__oom_6W__reviewerName {
   color: var(--white);
   font-size: .88rem;
 }
@@ -143,7 +143,7 @@
   display: flex;
 }
 
-.HowItWorks-module__oom_6W__av {
+.HowItWorks-module__oom_6W__avatar {
   width: 72px;
   height: 72px;
   color: var(--navy);
@@ -156,17 +156,17 @@
 }
 
 @media (max-width: 1240px) {
-  .HowItWorks-module__oom_6W__hwrow {
+  .HowItWorks-module__oom_6W__layout {
     grid-template-columns: 170px minmax(0, 1fr) 260px;
     gap: 28px;
   }
 
-  .HowItWorks-module__oom_6W__stxt {
+  .HowItWorks-module__oom_6W__label {
     white-space: normal;
     font-size: .8rem;
   }
 
-  .HowItWorks-module__oom_6W__sico {
+  .HowItWorks-module__oom_6W__circle {
     width: 56px;
     height: 56px;
   }
@@ -184,12 +184,12 @@
 }
 
 @media (max-width: 1080px) {
-  .HowItWorks-module__oom_6W__hwrow {
+  .HowItWorks-module__oom_6W__layout {
     grid-template-columns: 1fr;
     gap: 28px;
   }
 
-  .HowItWorks-module__oom_6W__rev-box {
+  .HowItWorks-module__oom_6W__reviewBox {
     border-top: 1px solid #ffffff2a;
     border-left: 0;
     padding-top: 24px;
@@ -213,7 +213,7 @@
     display: flex;
   }
 
-  .HowItWorks-module__oom_6W__stxt {
+  .HowItWorks-module__oom_6W__label {
     white-space: normal;
   }
 
@@ -230,7 +230,7 @@
     right: auto;
   }
 
-  .HowItWorks-module__oom_6W__av {
+  .HowItWorks-module__oom_6W__avatar {
     width: 58px;
     height: 58px;
     font-size: 1.4rem;

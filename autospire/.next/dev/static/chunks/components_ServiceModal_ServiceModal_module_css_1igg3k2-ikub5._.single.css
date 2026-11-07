@@ -1,14 +1,14 @@
 /* [project]/components/ServiceModal/ServiceModal.module.css [app-client] (css) */
-.ServiceModal-module__Iue1ra__sm {
+.ServiceModal-module__Iue1ra__content {
   gap: 14px;
   display: grid;
 }
 
-.ServiceModal-module__Iue1ra__sm h3 {
+.ServiceModal-module__Iue1ra__content h3 {
   font-size: 1.7rem;
 }
 
-.ServiceModal-module__Iue1ra__mico {
+.ServiceModal-module__Iue1ra__iconBox {
   width: 78px;
   height: 78px;
   color: var(--teal);
@@ -19,17 +19,17 @@
   display: grid;
 }
 
-.ServiceModal-module__Iue1ra__mtxt {
+.ServiceModal-module__Iue1ra__description {
   color: var(--grey);
   line-height: 1.65;
 }
 
-.ServiceModal-module__Iue1ra__mpts {
+.ServiceModal-module__Iue1ra__points {
   gap: 8px;
   display: grid;
 }
 
-.ServiceModal-module__Iue1ra__mpts li {
+.ServiceModal-module__Iue1ra__points li {
   color: var(--white);
   align-items: center;
   gap: 10px;
@@ -37,12 +37,12 @@
   display: flex;
 }
 
-.ServiceModal-module__Iue1ra__mpts svg {
+.ServiceModal-module__Iue1ra__points svg {
   color: var(--teal);
   flex: none;
 }
 
-.ServiceModal-module__Iue1ra__mbtns {
+.ServiceModal-module__Iue1ra__buttons {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 6px;

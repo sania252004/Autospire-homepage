@@ -311,6 +311,7 @@
 
 /* [project]/components/Hero/Hero.module.css [app-client] (css) */
 .Hero-module__PgAKtG__hero {
+  --brand-teal: #2fe3d3;
   background: linear-gradient(90deg,#011631 30%,#011631b8 58%,#01163140 100%),
   url("/images/hero.jpg") right center/cover no-repeat,
   radial-gradient(900px 520px at 85% 35%,#0fb5c455,transparent 62%),
@@ -325,7 +326,11 @@
   line-height: 1.06;
 }
 
-.Hero-module__PgAKtG__sub {
+.Hero-module__PgAKtG__highlight {
+  color: var(--brand-teal);
+}
+
+.Hero-module__PgAKtG__subtitle {
   color: var(--grey);
   margin: 22px 0 34px;
   font-size: 1.2rem;
@@ -333,10 +338,9 @@
 }
 
 .Hero-module__PgAKtG__tabs {
-  z-index: 2;
+  z-index: 6;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: -1px;
   display: flex;
   position: relative;
 }
@@ -361,7 +365,11 @@
   display: block;
 }
 
-.Hero-module__PgAKtG__tico {
+.Hero-module__PgAKtG__tab:hover {
+  border-color: var(--brand-teal);
+}
+
+.Hero-module__PgAKtG__tabIcon {
   width: 36px;
   height: 36px;
   color: var(--teal);
@@ -372,26 +380,33 @@
   display: grid;
 }
 
-.Hero-module__PgAKtG__tab:hover {
-  border-color: var(--teal);
+.Hero-module__PgAKtG__tab.Hero-module__PgAKtG__active {
+  background: var(--brand-teal);
+  border: 1px solid var(--brand-teal);
+  border-bottom: 0;
+  position: relative;
 }
 
-.Hero-module__PgAKtG__tab.Hero-module__PgAKtG__on {
-  box-shadow: none;
-  background: #18f8e8;
-  border-color: #18f8e8;
-}
-
-.Hero-module__PgAKtG__tab.Hero-module__PgAKtG__on b {
+.Hero-module__PgAKtG__tab.Hero-module__PgAKtG__active b {
   color: #011631;
 }
 
-.Hero-module__PgAKtG__tab.Hero-module__PgAKtG__on .Hero-module__PgAKtG__tico {
+.Hero-module__PgAKtG__tab.Hero-module__PgAKtG__active .Hero-module__PgAKtG__tabIcon {
   color: #011631;
   background: #01163122;
 }
 
-.Hero-module__PgAKtG__panel {
+.Hero-module__PgAKtG__tab.Hero-module__PgAKtG__active:after {
+  content: "";
+  background: var(--brand-teal);
+  height: 3px;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+}
+
+.Hero-module__PgAKtG__searchBox {
   background: var(--white);
   color: var(--navy);
   z-index: 5;
@@ -402,32 +417,33 @@
   box-shadow: 0 20px 60px #0007;
 }
 
-.Hero-module__PgAKtG__srow {
+.Hero-module__PgAKtG__searchRow {
   grid-template-columns: 1fr 1fr 1fr auto;
   gap: 12px;
   display: grid;
 }
 
-.Hero-module__PgAKtG__go.Hero-module__PgAKtG__go {
-  color: #fff;
-  background: #00adb3;
+.Hero-module__PgAKtG__searchButton.Hero-module__PgAKtG__searchButton {
+  background: var(--brand-teal);
+  color: #011631;
   height: 54px;
   padding: 0 36px;
   font-size: 1.05rem;
+  font-weight: 700;
 }
 
-.Hero-module__PgAKtG__go.Hero-module__PgAKtG__go:hover {
-  filter: brightness(1.1);
+.Hero-module__PgAKtG__searchButton.Hero-module__PgAKtG__searchButton:hover {
+  filter: brightness(.93);
 }
 
-.Hero-module__PgAKtG__trust {
+.Hero-module__PgAKtG__trustRow {
   grid-template-columns: repeat(5, 1fr);
   margin-top: 10px;
   padding: 34px 0 40px;
   display: grid;
 }
 
-.Hero-module__PgAKtG__ti {
+.Hero-module__PgAKtG__trustPoint {
   color: var(--white);
   border-left: 1px solid #ffffff2a;
   align-items: center;
@@ -439,32 +455,32 @@
   display: flex;
 }
 
-.Hero-module__PgAKtG__ti:first-child {
+.Hero-module__PgAKtG__trustPoint:first-child {
   border-left: 0;
   padding-left: 0;
 }
 
-.Hero-module__PgAKtG__ti svg {
+.Hero-module__PgAKtG__trustPoint svg {
   color: var(--teal);
   flex: none;
 }
 
 @media (max-width: 1080px) {
-  .Hero-module__PgAKtG__trust {
+  .Hero-module__PgAKtG__trustRow {
     grid-template-columns: repeat(3, 1fr);
     row-gap: 22px;
   }
 
-  .Hero-module__PgAKtG__ti:nth-child(4) {
+  .Hero-module__PgAKtG__trustPoint:nth-child(4) {
     border-left: 0;
     padding-left: 0;
   }
 
-  .Hero-module__PgAKtG__srow {
+  .Hero-module__PgAKtG__searchRow {
     grid-template-columns: 1fr 1fr;
   }
 
-  .Hero-module__PgAKtG__go.Hero-module__PgAKtG__go {
+  .Hero-module__PgAKtG__searchButton.Hero-module__PgAKtG__searchButton {
     grid-column: 1 / -1;
     width: 100%;
   }
@@ -475,11 +491,11 @@
     padding-top: 34px;
   }
 
-  .Hero-module__PgAKtG__hero h1 br, .Hero-module__PgAKtG__sub br {
+  .Hero-module__PgAKtG__hero h1 br, .Hero-module__PgAKtG__subtitle br {
     display: none;
   }
 
-  .Hero-module__PgAKtG__sub {
+  .Hero-module__PgAKtG__subtitle {
     font-size: 1.02rem;
   }
 
@@ -500,48 +516,35 @@
     font-size: .72rem;
   }
 
-  .Hero-module__PgAKtG__tico {
+  .Hero-module__PgAKtG__tabIcon {
     width: 32px;
     height: 32px;
   }
 
-  .Hero-module__PgAKtG__panel {
+  .Hero-module__PgAKtG__searchBox {
     border-radius: 0 0 16px 16px;
     padding: 12px;
   }
 
-  .Hero-module__PgAKtG__plate-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .Hero-module__PgAKtG__plate {
-    justify-content: center;
-  }
-
-  .Hero-module__PgAKtG__plate .Hero-module__PgAKtG__pn {
-    flex: 1;
-  }
-
-  .Hero-module__PgAKtG__srow {
+  .Hero-module__PgAKtG__searchRow {
     grid-template-columns: 1fr;
   }
 
-  .Hero-module__PgAKtG__trust {
+  .Hero-module__PgAKtG__trustRow {
     grid-template-columns: 1fr 1fr;
   }
 
-  .Hero-module__PgAKtG__ti, .Hero-module__PgAKtG__ti:first-child {
+  .Hero-module__PgAKtG__trustPoint, .Hero-module__PgAKtG__trustPoint:first-child {
     border-left: 0;
     padding: 0 8px;
   }
 
-  .Hero-module__PgAKtG__ti svg {
+  .Hero-module__PgAKtG__trustPoint svg {
     width: 32px;
     height: 32px;
   }
 
-  .Hero-module__PgAKtG__ti:last-child {
+  .Hero-module__PgAKtG__trustPoint:last-child {
     grid-column: 1 / -1;
   }
 }
@@ -815,45 +818,46 @@
 }
 
 /* [project]/components/Garages/Garages.module.css [app-client] (css) */
-.Garages-module__hYaoUW__gar {
+.Garages-module__hYaoUW__section {
   color: var(--navy);
   background: #fff;
   padding: 34px 0;
 }
 
-.Garages-module__hYaoUW__grow {
+.Garages-module__hYaoUW__layout {
   grid-template-columns: 290px minmax(0, 1fr);
   align-items: center;
   gap: 36px;
   display: grid;
 }
 
-.Garages-module__hYaoUW__gintro h2 {
+.Garages-module__hYaoUW__intro h2 {
   color: var(--navy);
   margin-bottom: 12px;
   font-size: 2.1rem;
 }
 
-.Garages-module__hYaoUW__gintro p {
+.Garages-module__hYaoUW__intro p {
   color: #2a3b52;
   margin-bottom: 20px;
 }
 
-.Garages-module__hYaoUW__viewAll.Garages-module__hYaoUW__viewAll {
+.Garages-module__hYaoUW__viewAllButton.Garages-module__hYaoUW__viewAllButton {
   color: #0a8f80;
   background: #14e8cf1f;
   border-color: #14c8b8;
 }
 
-.Garages-module__hYaoUW__gnote {
+.Garages-module__hYaoUW__note {
   margin-top: 16px;
   font-size: .88rem;
   font-weight: 600;
   color: #0a8f80 !important;
 }
 
-.Garages-module__hYaoUW__gcard {
+.Garages-module__hYaoUW__card {
   width: 300px;
+  height: auto;
   box-shadow: none;
   text-align: left;
   background: #fff;
@@ -861,7 +865,7 @@
   border-radius: 14px;
   flex-direction: column;
   justify-content: flex-start;
-  align-self: flex-start;
+  align-self: stretch;
   align-items: stretch;
   padding: 0;
   transition: border-color .25s;
@@ -869,11 +873,11 @@
   overflow: hidden;
 }
 
-.Garages-module__hYaoUW__gcard:hover {
+.Garages-module__hYaoUW__card:hover {
   border-color: #14c8b8;
 }
 
-.Garages-module__hYaoUW__gimg {
+.Garages-module__hYaoUW__photo {
   background-position: center;
   background-size: cover;
   flex: none;
@@ -882,25 +886,34 @@
   display: block;
 }
 
-.Garages-module__hYaoUW__gbody {
+.Garages-module__hYaoUW__details {
   color: var(--navy);
+  flex-direction: column;
+  flex: 1;
   gap: 5px;
   padding: 14px 16px 16px;
-  display: grid;
+  display: flex;
 }
 
-.Garages-module__hYaoUW__gtop {
+.Garages-module__hYaoUW__nameRow {
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   display: flex;
 }
 
-.Garages-module__hYaoUW__gtop b {
+.Garages-module__hYaoUW__nameRow b {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 2.6em;
   font-size: 1.02rem;
+  line-height: 1.3;
+  display: -webkit-box;
+  overflow: hidden;
 }
 
-.Garages-module__hYaoUW__ver {
+.Garages-module__hYaoUW__badge {
   color: #0a8f80;
   white-space: nowrap;
   background: #14e8cf1f;
@@ -914,7 +927,7 @@
   display: inline-flex;
 }
 
-.Garages-module__hYaoUW__grate, .Garages-module__hYaoUW__gloc {
+.Garages-module__hYaoUW__rating, .Garages-module__hYaoUW__location {
   color: #2a3b52;
   align-items: center;
   gap: 5px;
@@ -922,21 +935,22 @@
   display: flex;
 }
 
-.Garages-module__hYaoUW__grate b {
+.Garages-module__hYaoUW__rating b {
   color: #c77f00;
 }
 
-.Garages-module__hYaoUW__gfoot {
+.Garages-module__hYaoUW__priceRow {
   justify-content: flex-end;
   align-items: center;
   gap: 12px;
-  margin-top: 4px;
+  margin-top: auto;
+  padding-top: 8px;
   font-size: .9rem;
   font-weight: 700;
   display: flex;
 }
 
-.Garages-module__hYaoUW__gfoot .Garages-module__hYaoUW__gar-go {
+.Garages-module__hYaoUW__arrowButton {
   background: var(--navy);
   color: #fff;
   border-radius: 50%;
@@ -948,42 +962,42 @@
 }
 
 @media (max-width: 1080px) {
-  .Garages-module__hYaoUW__grow {
+  .Garages-module__hYaoUW__layout {
     grid-template-columns: 1fr;
     gap: 22px;
   }
 }
 
 @media (max-width: 640px) {
-  .Garages-module__hYaoUW__gcard {
+  .Garages-module__hYaoUW__card {
     width: 260px;
   }
 
-  .Garages-module__hYaoUW__gintro h2 {
+  .Garages-module__hYaoUW__intro h2 {
     font-size: 1.7rem;
   }
 }
 
 /* [project]/components/HowItWorks/HowItWorks.module.css [app-client] (css) */
-.HowItWorks-module__oom_6W__how {
+.HowItWorks-module__oom_6W__section {
   background: linear-gradient(#071a35, #06142b);
   border-top: 1px solid #1cf4f01f;
   padding: 38px 0;
 }
 
-.HowItWorks-module__oom_6W__hwrow {
+.HowItWorks-module__oom_6W__layout {
   grid-template-columns: 200px minmax(0, 1fr) 300px;
   align-items: center;
   gap: 36px;
   display: grid;
 }
 
-.HowItWorks-module__oom_6W__hwintro h2 {
+.HowItWorks-module__oom_6W__title h2 {
   margin-bottom: 10px;
   font-size: 2rem;
 }
 
-.HowItWorks-module__oom_6W__hwintro p {
+.HowItWorks-module__oom_6W__title p {
   color: var(--grey);
 }
 
@@ -1005,13 +1019,13 @@
   position: relative;
 }
 
-.HowItWorks-module__oom_6W__stxt {
+.HowItWorks-module__oom_6W__label {
   white-space: nowrap;
   font-size: .86rem;
   line-height: 1.4;
 }
 
-.HowItWorks-module__oom_6W__sico {
+.HowItWorks-module__oom_6W__circle {
   width: 62px;
   height: 62px;
   color: var(--teal);
@@ -1024,7 +1038,7 @@
   box-shadow: 0 0 22px #1cf4f033;
 }
 
-.HowItWorks-module__oom_6W__snum {
+.HowItWorks-module__oom_6W__number {
   background: var(--teal);
   width: 20px;
   height: 20px;
@@ -1064,20 +1078,20 @@
   transform: rotate(45deg);
 }
 
-.HowItWorks-module__oom_6W__rev-box {
+.HowItWorks-module__oom_6W__reviewBox {
   border-left: 1px solid #ffffff2a;
   min-width: 0;
   padding-left: 28px;
 }
 
-.HowItWorks-module__oom_6W__rtitle {
+.HowItWorks-module__oom_6W__reviewsTitle {
   color: var(--white);
   margin: 0 0 14px;
   font-size: 1.15rem;
   font-weight: 700;
 }
 
-.HowItWorks-module__oom_6W__rev {
+.HowItWorks-module__oom_6W__review {
   color: var(--teal);
   flex: 0 0 100%;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -1086,20 +1100,20 @@
   display: grid;
 }
 
-.HowItWorks-module__oom_6W__rt {
+.HowItWorks-module__oom_6W__reviewText {
   justify-items: start;
   gap: 8px;
   display: grid;
 }
 
-.HowItWorks-module__oom_6W__rt blockquote {
+.HowItWorks-module__oom_6W__reviewText blockquote {
   color: var(--white);
   font-size: .94rem;
   font-weight: 600;
   line-height: 1.45;
 }
 
-.HowItWorks-module__oom_6W__rn {
+.HowItWorks-module__oom_6W__reviewerName {
   color: var(--white);
   font-size: .88rem;
 }
@@ -1109,7 +1123,7 @@
   display: flex;
 }
 
-.HowItWorks-module__oom_6W__av {
+.HowItWorks-module__oom_6W__avatar {
   width: 72px;
   height: 72px;
   color: var(--navy);
@@ -1122,17 +1136,17 @@
 }
 
 @media (max-width: 1240px) {
-  .HowItWorks-module__oom_6W__hwrow {
+  .HowItWorks-module__oom_6W__layout {
     grid-template-columns: 170px minmax(0, 1fr) 260px;
     gap: 28px;
   }
 
-  .HowItWorks-module__oom_6W__stxt {
+  .HowItWorks-module__oom_6W__label {
     white-space: normal;
     font-size: .8rem;
   }
 
-  .HowItWorks-module__oom_6W__sico {
+  .HowItWorks-module__oom_6W__circle {
     width: 56px;
     height: 56px;
   }
@@ -1150,12 +1164,12 @@
 }
 
 @media (max-width: 1080px) {
-  .HowItWorks-module__oom_6W__hwrow {
+  .HowItWorks-module__oom_6W__layout {
     grid-template-columns: 1fr;
     gap: 28px;
   }
 
-  .HowItWorks-module__oom_6W__rev-box {
+  .HowItWorks-module__oom_6W__reviewBox {
     border-top: 1px solid #ffffff2a;
     border-left: 0;
     padding-top: 24px;
@@ -1179,7 +1193,7 @@
     display: flex;
   }
 
-  .HowItWorks-module__oom_6W__stxt {
+  .HowItWorks-module__oom_6W__label {
     white-space: normal;
   }
 
@@ -1196,7 +1210,7 @@
     right: auto;
   }
 
-  .HowItWorks-module__oom_6W__av {
+  .HowItWorks-module__oom_6W__avatar {
     width: 58px;
     height: 58px;
     font-size: 1.4rem;

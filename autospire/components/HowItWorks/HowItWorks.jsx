@@ -1,37 +1,75 @@
 import Icon from "@/components/Icon/Icon";
 import Slider from "@/components/Slider/Slider";
 import { steps, reviews } from "@/lib/data";
-import { makeCx } from "@/lib/cx";
 import styles from "./HowItWorks.module.css";
-const cx = makeCx(styles);
+
+/* ---------- THE 4 NUMBERED STEPS ---------- */
+function Steps() {
+  return (
+    <div className={styles.steps}>
+      {steps.map((step, index) => (
+        <div key={step.line1} className={styles.step}>
+          {/* round circle with the icon inside and the number on top */}
+          <span className={styles.circle}>
+            <span className={styles.number}>{index + 1}</span>
+            <Icon name={step.icon} size={30} sw={1.5} />
+          </span>
+
+          {/* text under the circle */}
+          <span className={styles.label}>{step.line1}<br />{step.line2}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ---------- ONE CUSTOMER REVIEW ---------- */
+// Shows the review text, the name, 5 stars and a circle with the first letter of the name.
+function Review({ review }) {
+  return (
+    <figure className={styles.review}>
+      <div className={styles.reviewText}>
+        <blockquote>{review.text}</blockquote>
+        <b className={styles.reviewerName}>{review.name}</b>
+
+        <span className={styles.stars}>
+          {[1, 2, 3, 4, 5].map((number) => (
+            <Icon key={number} name="star" size={15} fill="#f5a623" sw={0} />
+          ))}
+        </span>
+      </div>
+
+      {/* circle with the first letter of the name, e.g. "A" for Ahmed */}
+      <span className={styles.avatar}>{review.name[0]}</span>
+    </figure>
+  );
+}
+
+/* ---------- THE WHOLE SECTION ---------- */
 export default function HowItWorks() {
   return (
-    <section id="how" className={cx("how")}>
-      <div className={cx("wrap hwrow")}>
-        <div className={cx("hwintro")}><h2>How It Works</h2><p>Get your car serviced<br />in just a few simple steps.</p></div>
-        <div className={cx("steps")}>
-          {steps.map(([ic, a, b], i) => (
-            <div key={a} className={cx("step")}>
-              <span className={cx("sico")}><span className={cx("snum")}>{i + 1}</span><Icon name={ic} size={30} sw={1.5} /></span>
-              <span className={cx("stxt")}>{a}<br />{b}</span>
-            </div>
-          ))}
+    <section id="how" className={styles.section}>
+      <div className={`wrap ${styles.layout}`}>
+
+        {/* COLUMN 1: title and short text */}
+        <div className={styles.title}>
+          <h2>How It Works</h2>
+          <p>Get your car serviced<br />in just a few simple steps.</p>
         </div>
-        <div className={cx("rev-box")}>
-          <h3 className={cx("rtitle")}>Reviews</h3>
+
+        {/* COLUMN 2: the 4 steps */}
+        <Steps />
+
+        {/* COLUMN 3: reviews with < > arrows */}
+        <div className={styles.reviewBox}>
+          <h3 className={styles.reviewsTitle}>Reviews</h3>
           <Slider variant="reviews" label="reviews">
-            {reviews.map((r) => (
-              <figure key={r.name} className={cx("rev")}>
-                <div className={cx("rt")}>
-                  <blockquote>{r.text}</blockquote>
-                  <b className={cx("rn")}>{r.name}</b>
-                  <span className={cx("stars")}>{[0, 1, 2, 3, 4].map((n) => <Icon key={n} name="star" size={15} fill="#f5a623" sw={0} />)}</span>
-                </div>
-                <span className={cx("av")}>{r.name[0]}</span>
-              </figure>
+            {reviews.map((review) => (
+              <Review key={review.name} review={review} />
             ))}
           </Slider>
         </div>
+
       </div>
     </section>
   );

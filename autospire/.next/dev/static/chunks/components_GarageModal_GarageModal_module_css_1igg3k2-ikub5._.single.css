@@ -1,5 +1,5 @@
 /* [project]/components/GarageModal/GarageModal.module.css [app-client] (css) */
-.GarageModal-module__Xokaxa__img {
+.GarageModal-module__Xokaxa__photo {
   background-position: center;
   background-size: cover;
   height: 200px;
@@ -23,14 +23,19 @@
   font-size: .78rem;
 }
 
-.GarageModal-module__Xokaxa__top {
+.GarageModal-module__Xokaxa__description {
+  color: var(--grey);
+  line-height: 1.65;
+}
+
+.GarageModal-module__Xokaxa__titleRow {
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
   display: flex;
 }
 
-.GarageModal-module__Xokaxa__ver {
+.GarageModal-module__Xokaxa__badge {
   color: var(--teal);
   border: 1px solid var(--teal);
   background: #14e8cf1f;
@@ -56,27 +61,22 @@
   color: #f5a623;
 }
 
-.GarageModal-module__Xokaxa__mtxt {
-  color: var(--grey);
-  line-height: 1.65;
-}
-
-.GarageModal-module__Xokaxa__cols {
+.GarageModal-module__Xokaxa__columns {
   grid-template-columns: 1fr 1fr;
   gap: 24px;
   display: grid;
 }
 
-.GarageModal-module__Xokaxa__cols .GarageModal-module__Xokaxa__mtxt {
+.GarageModal-module__Xokaxa__columns .GarageModal-module__Xokaxa__description {
   margin-bottom: 12px;
 }
 
-.GarageModal-module__Xokaxa__mpts {
+.GarageModal-module__Xokaxa__checkList {
   gap: 8px;
   display: grid;
 }
 
-.GarageModal-module__Xokaxa__mpts li {
+.GarageModal-module__Xokaxa__checkList li {
   color: var(--white);
   align-items: center;
   gap: 10px;
@@ -84,18 +84,18 @@
   display: flex;
 }
 
-.GarageModal-module__Xokaxa__mpts svg {
+.GarageModal-module__Xokaxa__checkList svg {
   color: var(--teal);
   flex: none;
 }
 
-.GarageModal-module__Xokaxa__two {
+.GarageModal-module__Xokaxa__bookingOptions {
   grid-template-columns: 1fr 1fr;
   gap: 14px;
   display: grid;
 }
 
-.GarageModal-module__Xokaxa__opt {
+.GarageModal-module__Xokaxa__option {
   background: #06142b99;
   border: 1px solid #14e8cf40;
   border-radius: 14px;
@@ -106,18 +106,18 @@
   display: grid;
 }
 
-.GarageModal-module__Xokaxa__opt p {
+.GarageModal-module__Xokaxa__option p {
   color: var(--slate);
   font-size: .86rem;
 }
 
-.GarageModal-module__Xokaxa__opt .btn {
+.GarageModal-module__Xokaxa__option .btn {
   margin-top: 4px;
   padding: 10px 20px;
   font-size: .9rem;
 }
 
-.GarageModal-module__Xokaxa__mico {
+.GarageModal-module__Xokaxa__iconBox {
   width: 32px;
   height: 32px;
   color: var(--teal);
@@ -132,7 +132,7 @@
     padding: 20px;
   }
 
-  .GarageModal-module__Xokaxa__cols, .GarageModal-module__Xokaxa__two {
+  .GarageModal-module__Xokaxa__columns, .GarageModal-module__Xokaxa__bookingOptions {
     grid-template-columns: 1fr;
   }
 }

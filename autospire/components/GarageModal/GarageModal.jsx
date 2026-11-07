@@ -1,26 +1,75 @@
 "use client";
+
 import Modal from "@/components/Modal/Modal";
 import Icon from "@/components/Icon/Icon";
-import { makeCx } from "@/lib/cx";
 import styles from "./GarageModal.module.css";
-const cx = makeCx(styles);
 
-export default function GarageModal({ gar, onClose, goTab }) {
+// garage  = the garage being shown (from lib/data.js)
+// onClose = closes the pop-up
+// goTab   = switches the Hero tab and scrolls to the top (from page.jsx)
+export default function GarageModal({ garage, onClose, goTab }) {
+  // If the photo file is missing, a blue gradient is shown instead
+  const photo = `url(/images/garage-${garage.id}.jpg), linear-gradient(135deg,#2a5aa0,#0a2342)`;
+
   return (
     <Modal wide onClose={onClose}>
-      <div className={cx("img")} style={{ backgroundImage: `url(/images/garage-${gar.id}.jpg), linear-gradient(135deg,#2a5aa0,#0a2342)` }} />
-      <div className={cx("body")}>
-        <div className={cx("top")}><h3>{gar.name}</h3><span className={cx("ver")}><Icon name="check" size={13} sw={3} /> Verified</span></div>
-        <p className={cx("meta")}><Icon name="star" size={16} fill="#f5a623" sw={0} /> <b>{gar.rating}</b> ({gar.reviews} reviews) &nbsp;·&nbsp; <Icon name="pin" size={14} fill="currentColor" sw={0} /> {gar.address}</p>
-        <p className={cx("mtxt")}>{gar.about}</p>
-        <div className={cx("cols")}>
-          <div><h4>Services offered</h4><ul className={cx("mpts")}>{gar.offers.map((o) => <li key={o}><Icon name="check" size={16} sw={3} />{o}</li>)}</ul></div>
-          <div><h4>Hours</h4><p className={cx("mtxt")}>{gar.hours}</p><h4>Prices</h4><p className={cx("mtxt")}>From <b>AED {gar.from}</b></p></div>
+
+      {/* PHOTO */}
+      <div className={styles.photo} style={{ backgroundImage: photo }} />
+
+      <div className={styles.body}>
+
+        {/* NAME and "Verified" badge */}
+        <div className={styles.titleRow}>
+          <h3>{garage.name}</h3>
+          <span className={styles.badge}><Icon name="check" size={13} sw={3} /> Verified</span>
         </div>
-        <div className={cx("two")}>
-          <div className={cx("opt")}><span className={cx("mico")}><Icon name="tag" size={20} /></span><b>Fixed-price booking</b><p>See the price upfront and book an exact time slot instantly.</p><button className="btn" onClick={() => goTab("book")}>Book Now</button></div>
-          <div className={cx("opt")}><span className={cx("mico")}><Icon name="scale" size={20} /></span><b>Competitive quotation</b><p>Garages compete with their best price. Compare up to 5 quotes.</p><button className="btn line" onClick={() => goTab("quote")}>Request a Quote</button></div>
+
+        {/* RATING and ADDRESS */}
+        <p className={styles.meta}>
+          <Icon name="star" size={16} fill="#f5a623" sw={0} /> <b>{garage.rating}</b> ({garage.reviews} reviews)
+          &nbsp;·&nbsp;
+          <Icon name="pin" size={14} fill="currentColor" sw={0} /> {garage.address}
+        </p>
+
+        {/* DESCRIPTION */}
+        <p className={styles.description}>{garage.about}</p>
+
+        {/* TWO COLUMNS: services offered | hours and price */}
+        <div className={styles.columns}>
+          <div>
+            <h4>Services offered</h4>
+            <ul className={styles.checkList}>
+              {garage.offers.map((offer) => (
+                <li key={offer}><Icon name="check" size={16} sw={3} />{offer}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4>Hours</h4>
+            <p className={styles.description}>{garage.hours}</p>
+            <h4>Prices</h4>
+            <p className={styles.description}>From <b>AED {garage.from}</b></p>
+          </div>
         </div>
+
+        {/* TWO BOOKING OPTIONS */}
+        <div className={styles.bookingOptions}>
+          <div className={styles.option}>
+            <span className={styles.iconBox}><Icon name="tag" size={20} /></span>
+            <b>Fixed-price booking</b>
+            <p>See the price upfront and book an exact time slot instantly.</p>
+            <button className="btn" onClick={() => goTab("book")}>Book Now</button>
+          </div>
+
+          <div className={styles.option}>
+            <span className={styles.iconBox}><Icon name="scale" size={20} /></span>
+            <b>Competitive quotation</b>
+            <p>Garages compete with their best price. Compare up to 5 quotes.</p>
+            <button className="btn line" onClick={() => goTab("quote")}>Request a Quote</button>
+          </div>
+        </div>
+
       </div>
     </Modal>
   );
