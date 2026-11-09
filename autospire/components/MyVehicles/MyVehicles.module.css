@@ -1,0 +1,163 @@
+/* ==========================================================
+   MY VEHICLES PAGE STYLES
+   Sections below follow the page from top to bottom:
+   1 shared parts, 2 banner, 3 vehicle card, 4 tabs,
+   5 service history, 6 upcoming service, 7 bottom row,
+   8 tablets and phones.
+   (Colours like var(--ink) are defined in DashboardLayout.module.css.)
+   ========================================================== */
+
+/* ---------- 1. SHARED PARTS ---------- */
+/* space around everything under the banner */
+.page{display:grid;gap:16px;padding:16px 18px 24px}
+
+/* the white card used all over the page */
+.card{background:#fff;border:1px solid #e8eef5;border-radius:16px;box-shadow:0 4px 16px #0a2a5214;padding:18px 20px}
+
+/* card title row: title on the left, "View All" on the right */
+.cardHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.cardHead h3{color:var(--ink);font-size:1.4rem;font-weight:700;display:flex;align-items:center;gap:12px}
+.cardHead h3 svg{color:var(--blue)}
+.cardHead .smallTitle{font-size:1.1rem}                    /* smaller title for the bottom cards */
+.viewAll{display:inline-flex;align-items:center;gap:6px;color:var(--blue);font-weight:600;font-size:.92rem;white-space:nowrap}
+
+/* blank picture slot (shown until you add a real image) */
+.emptyPicture{background:#f1f5f9;border-radius:10px}
+
+/* little teal pill: "In 45 days" */
+.daysPill{background:#d6f0f2;color:#0b6e7c;font-size:.78rem;font-weight:600;border-radius:999px;padding:3px 10px;white-space:nowrap}
+
+/* ---------- 2. BANNER ---------- */
+/* plain dark blue, the same colour as the top bar */
+.banner{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:128px;padding:0 28px 0 40px;background:#0a2348;color:#fff}
+
+/* the picture: only the right 55% of the banner.
+   55% = how much of the banner the picture covers (smaller = picture further right) */
+.bannerPicture{position:absolute;top:0;right:0;bottom:0;width:55%;background-size:cover;background-position:right center}
+
+/* fade on the picture's left edge: dark blue to see-through.
+   45% = how far the fade reaches into the picture */
+.bannerPicture::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a2348 0%,rgba(10,35,72,0) 45%)}
+
+/* title and button stay on top of the picture */
+.bannerText,.addButton{position:relative;z-index:1}
+
+.banner h1{color:#fff;font-size:2.5rem;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.banner p{color:#fff;font-size:1.05rem;line-height:1.35}
+.addButton{display:inline-flex;align-items:center;gap:10px;border:1.5px solid #2ad4e6;border-radius:10px;padding:11px 22px;background:#0a234899;color:#fff;font-weight:600;font-size:1rem;white-space:nowrap}
+.addButton:hover{background:#2ad4e633}
+
+/* ---------- 3. VEHICLE CARD: photo | details | 4 buttons ---------- */
+.vehicleCard{display:grid;grid-template-columns:280px minmax(0,1fr) 360px;gap:20px;align-items:center;padding:14px 18px}
+.carPicture{width:100%;height:150px;object-fit:contain}
+
+/* green "Primary Vehicle" pill */
+.primaryBadge{display:inline-flex;align-items:center;gap:8px;background:#dff3e8;color:#11603a;font-weight:600;font-size:.88rem;border-radius:999px;padding:3px 14px 3px 5px;margin-bottom:8px}
+.badgeCheck{width:22px;height:22px;border-radius:50%;background:#1fa463;color:#fff;display:grid;place-items:center}
+
+.vehicleName{color:var(--ink);font-size:1.9rem;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.vehicleDetails{font-size:1rem;margin-bottom:16px}
+
+/* "Registration No." and "Next Service Due" side by side */
+.facts{display:flex;gap:12px 28px;flex-wrap:wrap}
+.fact small{display:block;color:var(--muted);font-size:.88rem;margin-bottom:2px}
+.fact b{display:inline-flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:700;flex-wrap:wrap}
+.copyButton{display:inline-grid;color:var(--blue)}
+
+/* the 4 quick buttons (2 x 2) */
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;border-left:1px solid var(--line);padding-left:20px}
+.action{display:flex;align-items:center;gap:10px;min-height:72px;padding:12px;background:#f1f6fb;border:1px solid #dfe8f1;border-radius:12px;color:var(--ink);font-weight:600;font-size:.92rem;line-height:1.25;transition:.2s}
+.action:hover{border-color:var(--teal-dark);background:#e8f4fa}
+.action svg:first-child{color:var(--blue);flex:none;width:28px;height:28px}
+.action span{flex:1}
+
+/* ---------- 4. TABS ---------- */
+.tabs{display:flex;gap:40px;border-bottom:1px solid var(--line);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{display:flex;align-items:center;gap:10px;padding:12px 4px;margin-bottom:-1px;font-weight:600;font-size:1rem;color:var(--ink);border-bottom:3px solid transparent;white-space:nowrap}
+.tab svg{color:var(--blue)}
+.tab.tabActive{border-bottom-color:var(--teal-dark)}      /* teal line under the open tab */
+.tab.tabActive svg{color:var(--teal-dark)}
+
+/* ---------- 5. SERVICE HISTORY AND UPCOMING SERVICE SIDE BY SIDE ---------- */
+.twoColumns{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* one row of the service history list: logo | text | price | arrow */
+.row{display:grid;grid-template-columns:76px minmax(0,1fr) auto 20px;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);color:var(--ink)}
+.row:last-child{border-bottom:0}
+.rowLogo{width:76px;height:44px;object-fit:contain}
+.rowTitle{font-weight:600;font-size:1rem}
+.rowSub{color:var(--muted);font-size:.88rem}
+.rowPrice{font-size:1.1rem;font-weight:700}
+
+/* ---------- 6. UPCOMING SERVICE (light blue panel) ---------- */
+.upcoming{background:#e2f2f5;border-color:#cfe8ee;box-shadow:none}
+
+/* white card inside: date | details | days + button */
+.upcomingCard{display:grid;grid-template-columns:100px minmax(0,1fr) auto;gap:18px;align-items:center;background:#fff;border:1px solid #e1edf2;border-radius:14px;padding:14px 16px}
+
+.dateBlock{text-align:center;border-right:1px solid var(--line);padding-right:16px}
+.dateMonth{font-size:.95rem;font-weight:600;letter-spacing:.5px}
+.dateDay{font-size:2.4rem;font-weight:800;line-height:1.05}
+.dateWeekday{font-size:.92rem}
+
+.upcomingTitle{font-size:1.3rem;font-weight:700;margin-bottom:2px}
+.upcomingGarage{font-size:.98rem;margin-bottom:6px}
+.upcomingArea{display:flex;align-items:center;gap:8px;font-size:.9rem}
+
+.upcomingRight{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;align-self:stretch;gap:12px}
+.navyButton{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(180deg,#0e4a86,#0a3a6d);color:#fff;font-weight:700;font-size:.98rem;border-radius:10px;padding:11px 22px}
+.navyButton:hover{filter:brightness(1.12)}
+
+/* reminder note under the card */
+.reminderNote{display:flex;align-items:center;gap:10px;margin-top:12px;background:#d3ebf0;border-radius:10px;padding:11px 14px;font-size:.9rem}
+.reminderNote svg{color:var(--blue);flex:none}
+
+/* ---------- 7. BOTTOM ROW: documents | stats | good hands ---------- */
+.threeColumns{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:16px}
+
+/* documents */
+.docRow{display:flex;align-items:center;gap:14px}
+.docThumb{width:84px;height:62px;object-fit:cover;border-radius:6px;border:1px solid var(--line);flex:none}
+.docName{font-weight:700;font-size:1.02rem;margin-bottom:4px}
+.docValid{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.88rem}
+.docValid svg{color:#1fa463}
+
+/* quick stats: 3 columns with thin lines between */
+.stats{display:grid;grid-template-columns:repeat(3,1fr)}
+.stat{display:grid;justify-items:center;gap:4px;text-align:center;padding:0 8px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0}
+.statValue{font-size:1.5rem;font-weight:800}
+.statLabel{color:var(--muted);font-size:.8rem}
+
+/* good hands banner: one solid colour.
+   To change the colour, change #d9eff3 below. */
+.goodHands{display:flex;align-items:center;gap:20px;background:#d9eff3;border-color:#d9eff3;box-shadow:none}
+.goodHandsIcon{color:#0f8fb0;flex:none}
+.goodHandsTitle{font-size:1.25rem;font-weight:700;margin-bottom:4px;color:var(--ink)}
+.goodHandsText p{font-size:.88rem;color:var(--muted);line-height:1.4}
+
+/* ---------- 8. TABLETS AND PHONES ---------- */
+@media(max-width:1180px){
+  /* the 4 buttons move under the car and details */
+  .vehicleCard{grid-template-columns:260px minmax(0,1fr)}
+  .actions{grid-column:1/-1;border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:16px}
+}
+@media(max-width:1100px){
+  .twoColumns,.threeColumns{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .bannerPicture{width:100%;opacity:.35}
+  .banner{flex-wrap:wrap;padding:20px}
+  .banner h1{font-size:2rem}
+  .page{padding:12px 12px 20px}
+  .vehicleCard{grid-template-columns:1fr}
+  .actions{grid-template-columns:1fr}
+  .upcomingCard{grid-template-columns:1fr}
+  .dateBlock{border-right:0;border-bottom:1px solid var(--line);padding:0 0 12px}
+  .upcomingRight{flex-direction:row;align-items:center;justify-content:space-between}
+  .row{grid-template-columns:56px minmax(0,1fr) auto}
+  .row>svg{display:none}
+  .rowLogo{width:56px}
+  .tabs{gap:24px}
+}

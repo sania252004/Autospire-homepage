@@ -1,3 +1,10 @@
+/* ==========================================================
+   DROPDOWN STYLES
+   Sections below: shared parts, "field" look (Hero search),
+   "mini" look (Header), "pill" look (Dashboard top bar),
+   the open list.
+   ========================================================== */
+
 /* ---------- 1. Shared parts ---------- */
 .dropdown{position:relative;min-width:0}
 .button{display:flex;align-items:center;gap:10px;width:100%;text-align:left}
@@ -15,12 +22,17 @@
 .mini .button{color:var(--white);font-size:.8rem;font-weight:700;gap:6px;width:auto}
 .mini .button>svg{color:var(--teal);flex:none}
 
-/* ---------- 4. The open list ---------- */
+/* ---------- 4. "pill" look: rounded outlined button used in the Dashboard top bar ---------- */
+.pill .button{width:auto;gap:8px;color:#fff;font-size:.98rem;font-weight:600;padding:8px 16px;border:1px solid #ffffff3d;border-radius:999px;background:#0b2c58}
+.pill .button>svg{color:#fff;flex:none}
+.pill .button>svg:first-child{width:16px;height:16px}                /* smaller pin icon */
+
+/* ---------- 5. The open list ---------- */
 .list{position:absolute;top:calc(100% + 8px);left:0;min-width:100%;max-height:min(420px,70vh);overflow-y:auto;z-index:90;margin:0;list-style:none;display:grid;gap:4px;padding:10px;background:#fff;color:var(--navy);border-radius:16px;box-shadow:0 18px 40px #000a;scrollbar-width:thin;scrollbar-color:#14e8cf66 transparent}
 .list li{margin:0;padding:0;list-style:none}
 .list button{display:block;width:100%;padding:12px 16px;border-radius:10px;font-weight:500;font-size:.92rem;line-height:1.25;text-align:left;white-space:nowrap}
 .list button:hover,.list button[aria-selected=true]{background:#14e8cf26}
 
-/* the list under the Header's mini dropdown is dark and opens to the left */
-.mini .list{left:auto;right:0;min-width:250px;background:var(--navy2);color:var(--white);border:1px solid #14e8cf44}
-.mini .list button:hover{color:var(--teal)}
+/* the list under the Header's mini dropdown and the Dashboard pill is dark and opens to the left */
+.mini .list,.pill .list{left:auto;right:0;min-width:250px;background:var(--navy2);color:var(--white);border:1px solid #14e8cf44}
+.mini .list button:hover,.pill .list button:hover{color:var(--teal)}

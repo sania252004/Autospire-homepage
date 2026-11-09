@@ -27,6 +27,16 @@ const ICONS = {
   quote: <path d="M9 7H6a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2a1 1 0 0 1 1 1 3 3 0 0 1-3 3M19 7h-3a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2a1 1 0 0 1 1 1 3 3 0 0 1-3 3" />,
   tag: (<><path d="M20 12 12 20a2 2 0 0 1-2.8 0L3 13.8V4h9.8L20 11.2a1.2 1.2 0 0 1 0 .8Z" /><circle cx="8" cy="8" r="1.2" /></>),
 
+  /* ----- dashboard (My Vehicles page) ----- */
+  home: <path d="M3 11l9-8 9 8M5 10v10h14V10M10 20v-6h4v6" />,
+  document: (<><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5M9 13h6M9 17h6" /></>),
+  bell: <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0" />,
+  crown: <path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5z" />,
+  copy: (<><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V6a2 2 0 0 1 2-2h9" /></>),
+  info: (<><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></>),
+  plus: <path d="M12 5v14M5 12h14" />,
+  bars: <path d="M5 21V12M12 21V4M19 21v-6" />,
+
   /* ----- arrows and controls ----- */
   down: <path d="m6 9 6 6 6-6" />,
   left: <path d="m15 18-6-6 6-6" />,

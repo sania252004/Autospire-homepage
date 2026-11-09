@@ -1,0 +1,19 @@
+.layout{
+  --ink:#0d2240;        /* dark text */
+  --muted:#5a6b82;      /* grey text (labels, small text) */
+  --line:#e4eaf1;       /* thin divider lines */
+  --blue:#0f56a3;       /* links and blue icons */
+  --teal-dark:#14a8b8;  /* teal used on the light background */
+  --page:#edf2f7;       /* light grey page background */
+
+  min-height:100vh;
+  background:var(--page);
+  color:var(--ink);
+}
+
+/* left menu (236px) | content */
+.body{display:grid;grid-template-columns:clamp(200px,15.4vw,236px) minmax(0,1fr)}
+.content{min-width:0}
+
+/* tablets and phones: the menu moves above the content */
+@media(max-width:900px){.body{grid-template-columns:1fr}}

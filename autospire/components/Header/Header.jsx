@@ -1,9 +1,23 @@
 "use client";
+/* ==========================================================
+   HEADER (the menu bar at the top of every page)
+   Left: logo and menu. Right: location, user icon and the
+   "My Account" button. On phones the menu becomes a ☰ button.
+
+   WHERE TO EDIT:
+   - Menu names and links -> the <nav> part (desktop) and the
+                             "mobileMenu" part (phone) below
+   - Items in the My Account dropdown -> lib/myVehiclesData.js ("accountLinks")
+   - Service names in the Services menu -> lib/data.js
+   - Colours and sizes -> Header.module.css
+   ========================================================== */
+
 import { useState } from "react";
 import Icon from "@/components/Icon/Icon";
 import Logo from "@/components/Logo/Logo";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import { services, emirates } from "@/lib/data";
+import { accountLinks } from "@/lib/myVehiclesData";
 import styles from "./Header.module.css";
 
 // Values below come from page.jsx:
@@ -14,6 +28,9 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
   // is the phone menu open? (true = open)
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeMobileMenu = () => setMobileOpen(false);
+
+  // is the My Account menu open because it was clicked? (it also opens when you hover)
+  const [accountOpen, setAccountOpen] = useState(false);
 
   return (
     <header className={styles.header}>
@@ -70,7 +87,25 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
           />
           <span className={styles.divider} />
           <a href="#enquiry" className={styles.userIcon} aria-label="Account"><Icon name="user" size={22} /></a>
-          <a href="#enquiry" className={styles.accountButton}>My Account <Icon name="down" size={12} sw={2.6} /></a>
+
+          {/* MY ACCOUNT: click it (or hover) to see the account menu; move the mouse away to close it */}
+          <div className={styles.account} onMouseLeave={() => setAccountOpen(false)}>
+            <button
+              type="button"
+              className={styles.accountButton}
+              onClick={() => setAccountOpen(!accountOpen)}
+              aria-expanded={accountOpen}
+            >
+              My Account <Icon name="down" size={12} sw={2.6} />
+            </button>
+
+            {/* the menu: same look as the location dropdown */}
+            <div className={`${styles.accountMenu} ${accountOpen ? styles.open : ""}`}>
+              {accountLinks.map((link) => (
+                <a key={link.label} href={link.href}>{link.label}</a>
+              ))}
+            </div>
+          </div>
 
           <button className={styles.burger} onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menu">
             <Icon name={mobileOpen ? "close" : "menu"} size={26} />
@@ -86,7 +121,7 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
           <button onClick={() => { goTab("quote"); closeMobileMenu(); }}>Compare Quotes</button>
           <a href="#how" onClick={closeMobileMenu}>About</a>
           <a href="#enquiry" onClick={closeMobileMenu}>Support</a>
-          <a href="#enquiry" onClick={closeMobileMenu} className="btn">My Account</a>
+          <a href="/my-vehicles" onClick={closeMobileMenu} className="btn">My Vehicles</a>
         </div>
       )}
     </header>
