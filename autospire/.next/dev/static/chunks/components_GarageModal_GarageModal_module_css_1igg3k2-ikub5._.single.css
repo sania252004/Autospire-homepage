@@ -137,4 +137,59 @@
   }
 }
 
+.GarageModal-module__Xokaxa__facts {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 14px 0 8px;
+  display: grid;
+}
+
+.GarageModal-module__Xokaxa__fact {
+  color: #0a2342;
+  background: #f4f8fb;
+  border: 1px solid #e3eaf2;
+  border-radius: 12px;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  display: flex;
+}
+
+.GarageModal-module__Xokaxa__fact svg {
+  color: #0f56a3;
+  flex: none;
+}
+
+.GarageModal-module__Xokaxa__fact small {
+  color: #5b6b80;
+  font-size: .76rem;
+  display: block;
+}
+
+.GarageModal-module__Xokaxa__fact b {
+  font-size: .92rem;
+}
+
+.GarageModal-module__Xokaxa__chips {
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 6px 0 12px;
+  display: flex;
+}
+
+.GarageModal-module__Xokaxa__chip {
+  color: #1f3350;
+  background: #eef3f8;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .GarageModal-module__Xokaxa__facts {
+    grid-template-columns: 1fr;
+  }
+}
+
 /*# sourceMappingURL=components_GarageModal_GarageModal_module_css_1igg3k2-ikub5._.single.css.map*/

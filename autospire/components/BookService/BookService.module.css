@@ -1,0 +1,101 @@
+.banner{padding:32px 40px;background:#0c2d5b;color:#fff}
+.banner h1{color:#fff;font-size:2.5rem;font-weight:800;margin-bottom:4px}
+.banner p{color:#fff;font-size:1.05rem}
+.page{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;padding:16px 18px 28px}
+.page>*{min-width:0}
+
+/* progress */
+.progress{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0;padding:0}
+.progress li{display:flex;align-items:center;gap:10px;font-weight:600;font-size:.9rem;color:var(--muted);border-top:4px solid #e2e8f0;padding-top:8px}
+.progress li span{width:24px;height:24px;border-radius:50%;background:#e2e8f0;color:#64748b;display:grid;place-items:center;font-size:.78rem;font-weight:800}
+.progressDone{color:var(--ink)!important;border-top-color:var(--teal-dark)!important}
+.progressDone span{background:var(--teal-dark)!important;color:#fff!important}
+
+/* cards and text */
+.card{background:#fff;border:1px solid #e8eef5;border-radius:16px;box-shadow:0 4px 16px #0a2a5214;padding:18px 20px;display:grid;gap:14px}
+.cardHead,.headRow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.cardHead h3{color:var(--ink);font-size:1.3rem;font-weight:700}
+.title{color:var(--ink);font-size:1.6rem;font-weight:800}
+.sub{color:var(--muted);margin-top:2px}
+.label{color:var(--ink);font-size:1rem;font-weight:700;margin:0}
+.hint{color:var(--muted);font-size:.9rem}
+.note{display:flex;align-items:center;gap:8px;background:#e6fbf9;color:#064e49;border-radius:10px;padding:10px 14px;font-size:.92rem}
+.error{color:#b91c1c;font-weight:600;font-size:.9rem}
+.linkBtn{color:var(--blue);font-weight:600;font-size:.9rem;text-decoration:underline}
+
+/* form */
+.formGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.field{display:grid;gap:6px;font-size:.84rem;font-weight:700;color:#4b5b70}
+.field select{border:1.5px solid #dbe5ef;background:#f4f8fb;border-radius:10px;padding:11px 12px;color:var(--ink);font-size:.95rem;font-weight:500}
+
+/* buttons */
+.primaryBtn{display:inline-flex;align-items:center;justify-content:center;justify-self:start;background:#0a9d96;color:#fff;font-weight:700;font-size:.98rem;border-radius:10px;padding:12px 22px;text-align:center;white-space:nowrap}
+.primaryBtn:hover{filter:brightness(1.08)}
+.outlineBtn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border:1.5px solid var(--blue);color:var(--blue);border-radius:10px;font-weight:600;background:#fff}
+.outlineBtn:hover{background:#eef5fb}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+
+/* quote-only message */
+.quoteBox{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#eef5fb;border:1px solid #cfe0f1;border-radius:12px;padding:14px 16px;color:var(--ink)}
+.quoteBox svg{color:var(--blue);flex:none}
+.quoteBox div{flex:1;min-width:220px}
+.quoteBox p{color:var(--muted);font-size:.9rem;margin-top:2px}
+
+/* garage cards */
+.garageCard{display:flex;justify-content:space-between;align-items:stretch;gap:20px;background:#fff;border:1px solid #e3eaf2;border-radius:16px;box-shadow:0 4px 16px #0a2a5214;padding:18px 20px;color:var(--ink)}
+.gMain{display:grid;gap:10px;flex:1;min-width:0;align-content:start}
+.gName{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.gName b{font-size:1.15rem}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:700;color:#0a8f80;border:1px solid #14c8b8;background:#14e8cf1f;border-radius:999px;padding:2px 9px}
+.other{font-size:.72rem;font-weight:700;color:#92400e;background:#fef3c7;border-radius:999px;padding:2px 9px}
+.gMeta,.gFacts{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.9rem;color:#2a3b52}
+.gMeta span,.gFacts span{display:inline-flex;align-items:center;gap:6px}
+.gMeta b{color:#c77f00}
+.gFacts svg{color:var(--blue)}
+.chipOk,.chipWarn{justify-self:start;font-size:.78rem;font-weight:700;border-radius:999px;padding:3px 12px}
+.chipOk{background:#dff3e8;color:#11603a}
+.chipWarn{background:#fef3c7;color:#92400e}
+.gPrice{display:grid;gap:2px;justify-items:end;align-content:center;text-align:right;border-left:1px solid var(--line);padding-left:20px;min-width:170px}
+.gPrice small{color:var(--muted);font-size:.8rem}
+.gPrice b{font-size:1.7rem;font-weight:800}
+.gPrice .primaryBtn{margin-top:10px;justify-self:end}
+
+/* date and time */
+.dayRow{display:flex;flex-wrap:wrap;gap:8px}
+.dayBtn,.timeBtn{border:1.5px solid #dbe5ef;background:#f4f8fb;color:var(--ink);font-weight:600;border-radius:12px;padding:10px 16px}
+.dayBtn:hover,.timeBtn:hover:not(:disabled){border-color:#0a9d96}
+.on{border-color:#0a9d96!important;background:#e6fbf9!important;box-shadow:0 0 0 2px #14c8b855}
+.timeGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.timeBtn{display:grid;gap:2px;justify-items:center}
+.timeBtn:disabled{opacity:.5;cursor:not-allowed;background:#eef1f5}
+.timeBtn small{font-size:.7rem;color:var(--muted);font-weight:500}
+.check{display:flex;align-items:center;gap:10px;color:var(--ink);font-size:.95rem}
+
+/* review */
+.summary,.breakdown{margin:0;display:grid;gap:8px;padding:14px 16px;background:#f1f6fb;border-radius:12px;color:var(--ink)}
+.summary div,.breakdown div{display:flex;justify-content:space-between;gap:16px}
+.summary dt,.breakdown dt{color:var(--muted)}
+.summary dd,.breakdown dd{margin:0;font-weight:600;text-align:right}
+.totalRow{border-top:1px solid #cfdbe8;padding-top:8px;font-size:1.2rem}
+.totalRow dt{color:var(--ink)!important;font-weight:700}
+.totalRow dd{font-weight:800!important}
+
+/* done */
+.success{display:flex;align-items:center;gap:14px;background:#dff3e8;color:#11603a;border-radius:12px;padding:14px 16px;flex-wrap:wrap}
+.success svg{flex:none}
+.success h3{color:#11603a;font-size:1.2rem}
+.success p{font-size:.92rem}
+.successTotal{margin-left:auto;font-size:1.3rem}
+
+@media(max-width:900px){
+  .formGrid{grid-template-columns:minmax(0,1fr)}
+  .garageCard{flex-direction:column}
+  .gPrice{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:12px;justify-items:start;text-align:left}
+  .gPrice .primaryBtn{justify-self:start}
+}
+@media(max-width:700px){
+  .banner{padding:20px}.banner h1{font-size:2rem}
+  .page{padding:12px 12px 20px}
+  .progress{grid-template-columns:1fr 1fr}
+  .successTotal{margin-left:0}
+}

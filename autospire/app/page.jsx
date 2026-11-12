@@ -9,24 +9,33 @@ import Enquiry from "@/components/Enquiry/Enquiry";
 import Footer from "@/components/Footer/Footer";
 import ServiceModal from "@/components/ServiceModal/ServiceModal";
 import GarageModal from "@/components/GarageModal/GarageModal";
-import { services, garages } from "@/lib/data";
+import { services, garages, savedVehicles, vehicleLabel } from "@/lib/data";
+import { useRouter } from "next/navigation";
 
 // Smoothly scrolls to the section with this id.
-// The tiny delay lets the page finish updating first.
 function scrollToSection(id) {
   setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }), 30);
 }
 
 export default function Page() {
   /* ---------- choices shared by the Hero search and the Enquiry form ---------- */
+  const router = useRouter();
   const [emirate, setEmirate] = useState("Dubai");
-  const [vehicle, setVehicle] = useState("");
   const [service, setService] = useState("");
+
+  // the saved (primary) vehicle is pre-selected, so returning customers don't re-enter it
+  const [vehicle, setVehicle] = useState(() => {
+    const primary = savedVehicles.find((v) => v.primary) || savedVehicles[0];
+    return primary ? vehicleLabel(primary) : "";
+  });
+
+  // written description of the problem (Request Quotations tab)
+  const [problem, setProblem] = useState("");
 
   /* ---------- which Hero tab is open: "book" | "quote" | "garage" ---------- */
   const [tab, setTab] = useState("book");
 
-  /* ---------- pop-ups: the id of the open service or garage (null = closed) ---------- */
+  /* ---------- pop-ups ---------- */
   const [openServiceId, setOpenServiceId] = useState(null);
   const [openGarageId, setOpenGarageId] = useState(null);
   const openService = services.find((s) => s.id === openServiceId);
@@ -35,11 +44,9 @@ export default function Page() {
   /* ---------- message shown above the garages after a search ---------- */
   const [garageNote, setGarageNote] = useState("");
 
-  /* ---------- car noise recording and video from the Hero "Book a Service" tab ---------- */
-  // { audio, video }. Send these with the booking once you add a backend.
+  /* ---------- car noise recording and video (Request Quotations tab only) ---------- */
   const [issue, setIssue] = useState({ audio: null, video: null });
 
-  // Opens a Hero tab (optionally pre-selecting a service), closes any pop-up, scrolls to the top
   function goToTab(tabId, serviceTitle) {
     setTab(tabId);
     if (serviceTitle) setService(serviceTitle);
@@ -48,12 +55,25 @@ export default function Page() {
     scrollToSection("top");
   }
 
-  // Runs when the Hero search button is clicked
+  // Runs when the Hero main button is clicked
   function handleSearch() {
     if (tab === "quote") {
-      scrollToSection("enquiry");
+      // send the request to the quotation journey
+      const params = new URLSearchParams({ vehicle, service, problem, emirate });
+      if (issue.audio) params.set("noise", "1");
+      if (issue.video) params.set("video", "1");
+      router.push(`/my-quotes?${params.toString()}`);
       return;
     }
+
+    if (tab === "book") {
+      // send the choices to the booking flow
+      const params = new URLSearchParams({ vehicle, service, emirate });
+      router.push(`/book?${params.toString()}`);
+      return;
+    }
+
+    // "garage" tab: stay on this page and show the garages
     setGarageNote(`Showing garages for ${service || "all services"} in ${emirate}.`);
     scrollToSection("garages");
   }
@@ -68,11 +88,12 @@ export default function Page() {
           vehicle={vehicle} setVehicle={setVehicle}
           service={service} setService={setService}
           emirate={emirate} setEmirate={setEmirate}
+          problem={problem} setProblem={setProblem}
           onSearch={handleSearch}
           onIssueChange={setIssue}
         />
         <Services open={setOpenServiceId} />
-        <Garages open={setOpenGarageId} note={garageNote} />
+        <Garages open={setOpenGarageId} note={garageNote} goTab={goToTab} />
         <HowItWorks />
         <Enquiry
           vehicle={vehicle} setVehicle={setVehicle}
@@ -83,9 +104,8 @@ export default function Page() {
 
       <Footer />
 
-      {/* pop-ups (only rendered while one is open) */}
-        {openService && <ServiceModal service={openService} onClose={() => setOpenServiceId(null)} goTab={goToTab} />}
-        {openGarage && <GarageModal garage={openGarage} onClose={() => setOpenGarageId(null)} goTab={goToTab} />}
+      {openService && <ServiceModal service={openService} onClose={() => setOpenServiceId(null)} goTab={goToTab} />}
+      {openGarage && <GarageModal garage={openGarage} onClose={() => setOpenGarageId(null)} goTab={goToTab} />}
     </>
   );
 }

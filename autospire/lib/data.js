@@ -80,37 +80,54 @@ export const services = [
    from    = starting price in AED
    address, hours, about, offers = shown in the pop-up */
 export const garages = [
-  { id: 1, name: "AutoPro Garage", rating: 4.8, reviews: "2.4k", area: "Dubai Marina", emirate: "Dubai", from: 199,
-    address: "Dubai Marina, Dubai", hours: "Open daily, 8am to 8pm",
+  { id: 1, name: "AutoPro Garage", premium: true, rating: 4.8, reviews: "2.4k", area: "Dubai Marina", emirate: "Dubai", from: 199,
+    address: "Dubai Marina, Dubai", hours: "Open daily 8am to 8pm",
     about: "Full-service workshop covering routine servicing, brakes, AC and diagnostics for all major brands, with itemised quotes and a written warranty.",
-    offers: ["General Servicing", "Brake Service", "AC & Climate Control", "Diagnostics & Electrical"] },
+    offers: ["General Servicing", "Brake Service", "AC & Climate Control", "Diagnostics & Electrical"],
+    distanceKm: 2.5, nextSlot: "Today 5:00 PM", warranty: "12 months", collection: true, completion: "2 hours", jobs: 1840,
+    brands: ["BMW", "Mercedes-Benz", "Audi", "Toyota", "Lexus"], specialities: ["European cars", "Brakes", "AC"],
+    included: ["Oil & filter change", "Multi-point inspection", "Fluid top-up"] },
   { id: 2, name: "Elite Auto Care", rating: 4.7, reviews: "1.8k", area: "Al Quoz", emirate: "Dubai", from: 179,
-    address: "Al Quoz Industrial Area, Dubai", hours: "Open Mon to Sat, 8am to 7pm",
+    address: "Al Quoz Industrial Area, Dubai", hours: "Open Mon to Sat 8am to 7pm",
     about: "Trade-licensed Al Quoz workshop known for fast turnaround on mechanical repairs, tyres and pre-purchase checks.",
-    offers: ["Mechanical Repair", "Tyres & Alignment", "Diagnostics & Electrical", "General Servicing"] },
+    offers: ["Mechanical Repair", "Tyres & Alignment", "Diagnostics & Electrical", "General Servicing"],
+    distanceKm: 4.1, nextSlot: "Today 6:30 PM", warranty: "6 months", collection: false, completion: "3 hours", jobs: 1320,
+    brands: ["Toyota", "Nissan", "Honda", "Hyundai"], specialities: ["Japanese cars", "Mechanical repair", "Tyres"],
+    included: ["Oil & filter change", "Tyre rotation", "Brake check"] },
   { id: 3, name: "SpeedFit Garage", rating: 4.8, reviews: "1.1k", area: "Business Bay", emirate: "Dubai", from: 189,
-    address: "Business Bay, Dubai", hours: "Open daily, 9am to 8pm",
+    address: "Business Bay, Dubai", hours: "Open daily 9am to 8pm",
     about: "Mobile and in-garage service with doorstep pickup and delivery, specialising in batteries, tyres and quick servicing.",
-    offers: ["Battery Service", "Tyres & Alignment", "General Servicing", "RTA Pre-Inspection"] },
+    offers: ["Battery Service", "Tyres & Alignment", "General Servicing", "RTA Pre-Inspection"],
+    distanceKm: 5.8, nextSlot: "Tomorrow 9:00 AM", warranty: "12 months", collection: true, completion: "2-3 hours", jobs: 960,
+    brands: ["BMW", "Audi", "Porsche", "Toyota"], specialities: ["Batteries", "Quick service", "Mobile van"],
+    included: ["Oil & filter change", "Battery test", "Tyre pressure check"] },
   { id: 4, name: "Prime Motors Workshop", rating: 4.6, reviews: "980", area: "Industrial Area", emirate: "Sharjah", from: 169,
-    address: "Industrial Area, Sharjah", hours: "Open Mon to Sat, 8am to 7pm",
+    address: "Industrial Area, Sharjah", hours: "Open Mon to Sat 8am to 7pm",
     about: "Experienced Sharjah workshop for engine, transmission and suspension work, with photo updates during every job.",
-    offers: ["Mechanical Repair", "Brake Service", "Body & Paint", "General Servicing"] },
+    offers: ["Mechanical Repair", "Brake Service", "Body & Paint", "General Servicing"],
+    distanceKm: 18, nextSlot: "Tomorrow 10:00 AM", warranty: "6 months", collection: false, completion: "4 hours", jobs: 720,
+    brands: ["Nissan", "Mitsubishi", "Ford", "Chevrolet"], specialities: ["Engine & gearbox", "Suspension"],
+    included: ["Oil & filter change", "Suspension check", "Photo updates"] },
   { id: 5, name: "Gulf Wheels Service", rating: 4.9, reviews: "3.1k", area: "Mussafah", emirate: "Abu Dhabi", from: 209,
-    address: "Mussafah, Abu Dhabi", hours: "Open daily, 8am to 9pm",
+    address: "Mussafah, Abu Dhabi", hours: "Open daily 8am to 9pm",
     about: "Large Abu Dhabi service centre with RTA test preparation, bodywork and paint, and certified technicians.",
-    offers: ["RTA Pre-Inspection", "Body & Paint", "AC & Climate Control", "Mechanical Repair"] },
+    offers: ["RTA Pre-Inspection", "Body & Paint", "AC & Climate Control", "Mechanical Repair"],
+    distanceKm: 140, nextSlot: "Today 4:00 PM", warranty: "24 months", collection: true, completion: "1 day", jobs: 3050,
+    brands: ["Toyota", "Lexus", "Land Rover", "Mercedes-Benz", "BMW"], specialities: ["RTA tests", "Body & paint", "Luxury cars"],
+    included: ["Full inspection", "Oil & filter change", "Free car wash"] },
   { id: 6, name: "Crown Auto Works", rating: 4.7, reviews: "760", area: "Al Jurf", emirate: "Ajman", from: 159,
-    address: "Al Jurf, Ajman", hours: "Open Mon to Sat, 8am to 6pm",
+    address: "Al Jurf, Ajman", hours: "Open Mon to Sat 8am to 6pm",
     about: "Friendly Ajman garage offering affordable servicing, brakes and battery replacement with clear upfront pricing.",
-    offers: ["General Servicing", "Brake Service", "Battery Service", "Tyres & Alignment"] },
+    offers: ["General Servicing", "Brake Service", "Battery Service", "Tyres & Alignment"],
+    distanceKm: 38, nextSlot: "Tomorrow 11:30 AM", warranty: "3 months", collection: false, completion: "3 hours", jobs: 540,
+    brands: ["Hyundai", "Kia", "Nissan", "Honda"], specialities: ["Budget servicing", "Brakes"],
+    included: ["Oil & filter change", "Brake inspection"] },
 ];
-
 /* ---------- 5. REVIEWS (SAMPLES: replace with real customer reviews) ---------- */
 export const reviews = [
   { name: "Ahmed K.",  text: "Autospire makes it so easy to compare garages and book car services. Highly recommended!" },
   { name: "Fatima R.", text: "Got three quotes within an hour and saved nearly 30% on my brake job. The photo updates were a great touch." },
-  { name: "Rahul M.",  text: "Battery died at my office in Business Bay. A mobile technician arrived in 25 minutes. Brilliant service." },
+  { name: "Rahul M.",  text: "Battery died at my office in Business Bay. A car technician arrived in 25 minutes. Brilliant service." },
   { name: "Sarah L.",  text: "Clear fixed prices and no surprises at the end. I booked my annual service in under two minutes." },
   { name: "Omar A.",   text: "The RTA pre-inspection saved me a failed test. They fixed everything and took the car through for me." },
   { name: "Priya S.",  text: "I love having my whole service history in one place. Easy to compare garages and trust the reviews." },
@@ -125,4 +142,69 @@ export const steps = [
   { icon: "scale",    line1: "Compare Garages",       line2: "& Prices" },
   { icon: "calendar", line1: "Book Your Appointment", line2: "" },
   { icon: "check",    line1: "Track & Manage",        line2: "Your Service" },
+];
+
+/* ---------- 7. VEHICLE PICKER ----------
+   carModels = makes and their models. Add more as needed. */
+export const carModels = {
+  "Toyota": ["Camry", "Corolla", "Land Cruiser", "Prado", "Hilux", "RAV4", "Yaris", "Fortuner", "Innova"],
+  "Nissan": ["Patrol", "Altima", "Sunny", "X-Trail", "Kicks", "Pathfinder"],
+  "Honda": ["Accord", "Civic", "CR-V", "City", "Pilot"],
+  "Hyundai": ["Elantra", "Sonata", "Tucson", "Santa Fe", "Accent", "Creta"],
+  "Kia": ["Sportage", "Sorento", "Cerato", "Picanto", "Seltos", "Telluride"],
+  "Ford": ["Explorer", "Edge", "Mustang", "F-150", "Territory", "Ranger"],
+  "Chevrolet": ["Tahoe", "Suburban", "Malibu", "Captiva", "Camaro"],
+  "Mitsubishi": ["Pajero", "Outlander", "ASX", "L200", "Attrage"],
+  "Mazda": ["Mazda3", "Mazda6", "CX-5", "CX-9", "CX-30"],
+  "Lexus": ["ES", "LS", "RX", "LX", "NX", "GX", "IS"],
+  "BMW": ["3 Series", "5 Series", "7 Series", "X3", "X5", "X6"],
+  "Mercedes-Benz": ["A-Class", "C-Class", "E-Class", "S-Class", "GLC", "GLE", "GLS", "G-Class"],
+  "Audi": ["A3", "A4", "A6", "Q3", "Q5", "Q7", "Q8"],
+  "Land Rover": ["Range Rover", "Range Rover Sport", "Defender", "Discovery", "Evoque"],
+  "Porsche": ["911", "Cayenne", "Macan", "Panamera", "Taycan"],
+  "Other": ["Other"],
+};
+export const carMakes = Object.keys(carModels);
+export const carYears = Array.from({ length: 28 }, (_, i) => String(2027 - i));   // 2027 down to 2000
+
+/* ---------- 8. SAVED VEHICLES (SAMPLE: later this comes from the customer's account) ----------
+   primary: true = the one pre-selected on the homepage. Make this list empty ([]) to test a new visitor. */
+export const savedVehicles = [
+  { id: 1, year: 2023, make: "Mercedes-Benz", model: "GLC",          reg: "Dubai • 12345",   primary: true },
+  { id: 2, year: 2020, make: "Toyota",        model: "Land Cruiser", reg: "Dubai • A 67890" },
+];
+export const vehicleLabel = (v) => `${v.year} ${v.make} ${v.model}`;
+
+/* ---------- 9. THE STEPS SHOWN FOR EACH HERO JOURNEY ---------- */
+export const bookJourney = [
+  "Select your vehicle and service",
+  "Choose a garage at a fixed price",
+  "Pick your time slot and confirm",
+  "Track your service live",
+];
+export const quoteJourney = [
+  "Describe the problem, add photos, video or noise",
+  "Your request goes to 3 suitable garages",
+  "Compare itemised quotes (valid 48 hours)",
+  "Select a garage, book and track the job",
+];
+export const garageJourney = [
+  "Choose your location",
+  "Browse verified garages",
+  "Check ratings, prices and availability",
+  "Book a service or request a quote",
+];
+
+/* ---------- 10. HOW IT WORKS: one list for each journey ---------- */
+export const howBook = [
+  { icon: "car",      line1: "Choose Your Vehicle",    line2: "& Service" },
+  { icon: "scale",    line1: "Compare Fixed-Price",    line2: "Garages" },
+  { icon: "calendar", line1: "Pick a Time Slot",       line2: "& Confirm" },
+  { icon: "check",    line1: "Track & Manage",         line2: "Your Service" },
+];
+export const howQuote = [
+  { icon: "chat",     line1: "Describe the Problem,",  line2: "Add Photos or Video" },
+  { icon: "garage",   line1: "3 Garages Send",         line2: "Itemised Quotes" },
+  { icon: "scale",    line1: "Compare & Choose",       line2: "Your Garage" },
+  { icon: "check",    line1: "Book, Track",            line2: "& Pay" },
 ];

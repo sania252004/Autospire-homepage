@@ -3,13 +3,15 @@
    Sections below follow the page from top to bottom:
    1 shared parts, 2 banner, 3 vehicle card, 4 tabs,
    5 service history, 6 upcoming service, 7 bottom row,
-   8 tablets and phones.
+   8 tablets and phones, 9 vehicles dashboard (switcher, tabs content).
    (Colours like var(--ink) are defined in DashboardLayout.module.css.)
    ========================================================== */
 
 /* ---------- 1. SHARED PARTS ---------- */
-/* space around everything under the banner */
-.page{display:grid;gap:16px;padding:16px 18px 24px}
+/* space around everything under the banner.
+   minmax(0,1fr) keeps the page from growing wider than the screen. */
+.page{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;padding:16px 18px 24px}
+.page>*{min-width:0}
 
 /* the white card used all over the page */
 .card{background:#fff;border:1px solid #e8eef5;border-radius:16px;box-shadow:0 4px 16px #0a2a5214;padding:18px 20px}
@@ -18,7 +20,7 @@
 .cardHead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
 .cardHead h3{color:var(--ink);font-size:1.4rem;font-weight:700;display:flex;align-items:center;gap:12px}
 .cardHead h3 svg{color:var(--blue)}
-.cardHead .smallTitle{font-size:1.1rem}                    /* smaller title for the bottom cards */
+.cardHead .smallTitle{font-size:1.1rem}
 .viewAll{display:inline-flex;align-items:center;gap:6px;color:var(--blue);font-weight:600;font-size:.92rem;white-space:nowrap}
 
 /* blank picture slot (shown until you add a real image) */
@@ -28,20 +30,10 @@
 .daysPill{background:#d6f0f2;color:#0b6e7c;font-size:.78rem;font-weight:600;border-radius:999px;padding:3px 10px;white-space:nowrap}
 
 /* ---------- 2. BANNER ---------- */
-/* plain dark blue, the same colour as the top bar */
 .banner{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:128px;padding:0 28px 0 40px;background:#0a2348;color:#fff}
-
-/* the picture: only the right 55% of the banner.
-   55% = how much of the banner the picture covers (smaller = picture further right) */
 .bannerPicture{position:absolute;top:0;right:0;bottom:0;width:55%;background-size:cover;background-position:right center}
-
-/* fade on the picture's left edge: dark blue to see-through.
-   45% = how far the fade reaches into the picture */
 .bannerPicture::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a2348 0%,rgba(10,35,72,0) 45%)}
-
-/* title and button stay on top of the picture */
 .bannerText,.addButton{position:relative;z-index:1}
-
 .banner h1{color:#fff;font-size:2.5rem;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
 .banner p{color:#fff;font-size:1.05rem;line-height:1.35}
 .addButton{display:inline-flex;align-items:center;gap:10px;border:1.5px solid #2ad4e6;border-radius:10px;padding:11px 22px;background:#0a234899;color:#fff;font-weight:600;font-size:1rem;white-space:nowrap}
@@ -51,20 +43,17 @@
 .vehicleCard{display:grid;grid-template-columns:280px minmax(0,1fr) 360px;gap:20px;align-items:center;padding:14px 18px}
 .carPicture{width:100%;height:150px;object-fit:contain}
 
-/* green "Primary Vehicle" pill */
 .primaryBadge{display:inline-flex;align-items:center;gap:8px;background:#dff3e8;color:#11603a;font-weight:600;font-size:.88rem;border-radius:999px;padding:3px 14px 3px 5px;margin-bottom:8px}
 .badgeCheck{width:22px;height:22px;border-radius:50%;background:#1fa463;color:#fff;display:grid;place-items:center}
 
 .vehicleName{color:var(--ink);font-size:1.9rem;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
 .vehicleDetails{font-size:1rem;margin-bottom:16px}
 
-/* "Registration No." and "Next Service Due" side by side */
 .facts{display:flex;gap:12px 28px;flex-wrap:wrap}
 .fact small{display:block;color:var(--muted);font-size:.88rem;margin-bottom:2px}
 .fact b{display:inline-flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:700;flex-wrap:wrap}
 .copyButton{display:inline-grid;color:var(--blue)}
 
-/* the 4 quick buttons (2 x 2) */
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;border-left:1px solid var(--line);padding-left:20px}
 .action{display:flex;align-items:center;gap:10px;min-height:72px;padding:12px;background:#f1f6fb;border:1px solid #dfe8f1;border-radius:12px;color:var(--ink);font-weight:600;font-size:.92rem;line-height:1.25;transition:.2s}
 .action:hover{border-color:var(--teal-dark);background:#e8f4fa}
@@ -76,13 +65,14 @@
 .tabs::-webkit-scrollbar{display:none}
 .tab{display:flex;align-items:center;gap:10px;padding:12px 4px;margin-bottom:-1px;font-weight:600;font-size:1rem;color:var(--ink);border-bottom:3px solid transparent;white-space:nowrap}
 .tab svg{color:var(--blue)}
-.tab.tabActive{border-bottom-color:var(--teal-dark)}      /* teal line under the open tab */
+.tab.tabActive{border-bottom-color:var(--teal-dark)}
 .tab.tabActive svg{color:var(--teal-dark)}
 
-/* ---------- 5. SERVICE HISTORY AND UPCOMING SERVICE SIDE BY SIDE ---------- */
-.twoColumns{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+/* ---------- 5. TWO CARDS SIDE BY SIDE ---------- */
+/* minmax(0,1fr) lets each column shrink so nothing runs off the screen */
+.twoColumns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.twoColumns>*{min-width:0}
 
-/* one row of the service history list: logo | text | price | arrow */
 .row{display:grid;grid-template-columns:76px minmax(0,1fr) auto 20px;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);color:var(--ink)}
 .row:last-child{border-bottom:0}
 .rowLogo{width:76px;height:44px;object-fit:contain}
@@ -92,46 +82,35 @@
 
 /* ---------- 6. UPCOMING SERVICE (light blue panel) ---------- */
 .upcoming{background:#e2f2f5;border-color:#cfe8ee;box-shadow:none}
-
-/* white card inside: date | details | days + button */
 .upcomingCard{display:grid;grid-template-columns:100px minmax(0,1fr) auto;gap:18px;align-items:center;background:#fff;border:1px solid #e1edf2;border-radius:14px;padding:14px 16px}
-
 .dateBlock{text-align:center;border-right:1px solid var(--line);padding-right:16px}
 .dateMonth{font-size:.95rem;font-weight:600;letter-spacing:.5px}
 .dateDay{font-size:2.4rem;font-weight:800;line-height:1.05}
 .dateWeekday{font-size:.92rem}
-
 .upcomingTitle{font-size:1.3rem;font-weight:700;margin-bottom:2px}
 .upcomingGarage{font-size:.98rem;margin-bottom:6px}
 .upcomingArea{display:flex;align-items:center;gap:8px;font-size:.9rem}
-
 .upcomingRight{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;align-self:stretch;gap:12px}
 .navyButton{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(180deg,#0e4a86,#0a3a6d);color:#fff;font-weight:700;font-size:.98rem;border-radius:10px;padding:11px 22px}
 .navyButton:hover{filter:brightness(1.12)}
-
-/* reminder note under the card */
 .reminderNote{display:flex;align-items:center;gap:10px;margin-top:12px;background:#d3ebf0;border-radius:10px;padding:11px 14px;font-size:.9rem}
 .reminderNote svg{color:var(--blue);flex:none}
 
-/* ---------- 7. BOTTOM ROW: documents | stats | good hands ---------- */
+/* ---------- 7. BOTTOM ROW: stats | good hands ---------- */
 .threeColumns{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:16px}
 
-/* documents */
 .docRow{display:flex;align-items:center;gap:14px}
 .docThumb{width:84px;height:62px;object-fit:cover;border-radius:6px;border:1px solid var(--line);flex:none}
 .docName{font-weight:700;font-size:1.02rem;margin-bottom:4px}
 .docValid{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.88rem}
 .docValid svg{color:#1fa463}
 
-/* quick stats: 3 columns with thin lines between */
 .stats{display:grid;grid-template-columns:repeat(3,1fr)}
 .stat{display:grid;justify-items:center;gap:4px;text-align:center;padding:0 8px;border-left:1px solid var(--line)}
 .stat:first-child{border-left:0}
 .statValue{font-size:1.5rem;font-weight:800}
 .statLabel{color:var(--muted);font-size:.8rem}
 
-/* good hands banner: one solid colour.
-   To change the colour, change #d9eff3 below. */
 .goodHands{display:flex;align-items:center;gap:20px;background:#d9eff3;border-color:#d9eff3;box-shadow:none}
 .goodHandsIcon{color:#0f8fb0;flex:none}
 .goodHandsTitle{font-size:1.25rem;font-weight:700;margin-bottom:4px;color:var(--ink)}
@@ -139,12 +118,11 @@
 
 /* ---------- 8. TABLETS AND PHONES ---------- */
 @media(max-width:1180px){
-  /* the 4 buttons move under the car and details */
   .vehicleCard{grid-template-columns:260px minmax(0,1fr)}
   .actions{grid-column:1/-1;border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:16px}
 }
 @media(max-width:1100px){
-  .twoColumns,.threeColumns{grid-template-columns:1fr}
+  .twoColumns,.threeColumns{grid-template-columns:minmax(0,1fr)}
 }
 @media(max-width:700px){
   .bannerPicture{width:100%;opacity:.35}
@@ -161,3 +139,135 @@
   .rowLogo{width:56px}
   .tabs{gap:24px}
 }
+
+/* ---------- 9. VEHICLES DASHBOARD ---------- */
+
+/* preset car picture */
+.carArt{display:block;width:100%;height:150px;background:#f1f5f9;border-radius:10px;padding:14px 10px}
+
+/* vehicle switcher */
+.switcher{display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding:10px 10px 4px 2px}
+.switcher::-webkit-scrollbar{display:none}
+.switchCard{position:relative;display:flex;align-items:center;gap:12px;flex:none;min-width:250px;padding:10px 14px;background:#fff;border:1.5px solid #dfe8f1;border-radius:14px;color:var(--ink);text-align:left;transition:.15s}
+.switchCard:hover{border-color:var(--teal-dark)}
+.switchOn{border-color:var(--teal-dark);background:#e6fbf9;box-shadow:0 0 0 2px #00c2b833}
+.switchThumb{width:64px;height:44px;object-fit:contain;border-radius:8px;background:#f1f5f9;flex:none}
+.switchCard .carArt{height:44px;width:64px;padding:4px}
+.switchText b{display:block;font-size:.98rem}
+.switchText small{color:var(--muted);font-size:.8rem}
+
+/* red number badge: always a perfect circle */
+.alertDot{position:absolute;top:-8px;right:-8px;width:24px;height:24px;padding:0;border-radius:50%;background:#dc2626;color:#fff;font-size:.78rem;font-weight:800;line-height:1;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+
+/* status pills */
+.pill{display:inline-block;font-size:.78rem;font-weight:700;border-radius:999px;padding:3px 10px;white-space:nowrap}
+.ok{background:#dff3e8;color:#11603a}
+.warn{background:#fef3c7;color:#92400e}
+.bad{background:#fee2e2;color:#991b1b}
+
+/* tools row under the vehicle card */
+.cardTools{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:14px}
+.inlineForm{display:flex;flex-wrap:wrap;align-items:center;gap:10px;color:var(--ink);font-weight:600;font-size:.92rem}
+.inlineForm input,.recForm input,.uploadRow select,.intervalRow select,.renewForm input{border:1.5px solid #dbe5ef;background:#f4f8fb;border-radius:10px;padding:8px 12px;color:var(--ink);font-size:.92rem}
+.inlineForm input{width:150px}
+.toolButtons{display:flex;gap:10px;flex-wrap:wrap}
+.smallBtn{display:inline-flex;align-items:center;gap:6px;background:var(--blue);color:#fff;font-weight:700;font-size:.88rem;border-radius:10px;padding:8px 16px;white-space:nowrap}
+.smallBtn:hover{filter:brightness(1.12)}
+.ghostBtn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid #c5d3e2;color:var(--ink);font-weight:600;font-size:.88rem;border-radius:10px;padding:7px 14px;background:#fff}
+.ghostBtn:hover{border-color:var(--blue)}
+.dangerBtn{color:#b91c1c;border-color:#f1b4b4}
+.error{color:#b91c1c;font-weight:600;font-size:.86rem}
+.okText{color:#11603a;font-weight:600;font-size:.86rem}
+.hint{color:var(--muted);font-size:.86rem;margin-top:10px}
+.empty{color:var(--muted);font-size:.95rem;padding:12px 0}
+
+/* change-picture panel */
+.photoPanel{flex-basis:100%;display:grid;grid-template-columns:1fr 2fr;gap:20px;background:#f4f8fb;border-radius:12px;padding:14px 16px;color:var(--ink)}
+.photoPanel b{display:block;margin-bottom:8px}
+.photoPanel small{display:block;color:var(--muted);margin-top:6px}
+.presetRow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.preset{display:grid;gap:4px;justify-items:center;padding:8px;border:1.5px solid #dbe5ef;border-radius:12px;background:#fff;font-size:.82rem;font-weight:600;color:var(--ink)}
+.preset .carArt{height:46px;padding:2px;background:none}
+.presetOn{border-color:var(--teal-dark);background:#e6fbf9}
+
+/* add vehicle form */
+.addForm{display:grid;gap:14px}
+.formGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.field{display:grid;gap:6px;font-size:.84rem;font-weight:700;color:#4b5b70}
+.field input,.field select{border:1.5px solid #dbe5ef;background:#f4f8fb;border-radius:10px;padding:10px 12px;color:var(--ink);font-size:.95rem;font-weight:500}
+.preview{width:160px;height:100px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.addForm .navyButton{justify-self:start;border:0}
+
+/* needs-attention strip */
+.alertStrip{display:flex;align-items:center;gap:12px;width:100%;background:#fef3c7;border:1px solid #f3d27a;color:#7a4a00;border-radius:12px;padding:12px 16px;text-align:left;font-size:.92rem}
+.alertStrip svg{flex:none}
+.alertStrip span{flex:1}
+
+/* timeline */
+.timeline{list-style:none;margin:0;padding:0;position:relative}
+.timeline::before{content:"";position:absolute;left:19px;top:8px;bottom:8px;width:2px;background:#e2e8f0}
+.tlItem{position:relative;display:flex;align-items:center;gap:14px;padding:10px 0;color:var(--ink)}
+.tlDot{position:relative;z-index:1;width:40px;height:40px;border-radius:50%;background:#e6f0fa;color:var(--blue);display:grid;place-items:center;flex:none;border:3px solid #fff}
+.tlBody{flex:1;min-width:0}
+.tlBody small{color:var(--muted);font-size:.86rem}
+.tlTop{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tlTag{font-size:.7rem;font-weight:800;background:#eef3f8;color:#44566c;border-radius:999px;padding:2px 9px}
+.tl_service .tlDot{background:#d6f0f2;color:#0b6e7c}
+.tl_tyres .tlDot{background:#ede9fe;color:#5b21b6}
+.tl_battery .tlDot{background:#fef3c7;color:#92400e}
+.tl_inspection .tlDot{background:#dff3e8;color:#11603a}
+.tl_mileage .tlDot{background:#e5e7eb;color:#374151}
+.tl_upcoming .tlDot{background:#dbeafe;color:#1d4ed8}
+
+/* record rows (service, tyres, battery) */
+.recRow,.fileRow,.reminderRow{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);color:var(--ink)}
+.recRow:last-of-type,.fileRow:last-child,.reminderRow:last-of-type{border-bottom:0}
+.recMain{flex:1;min-width:0}
+.docTags{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+.docTag{font-size:.74rem;font-weight:700;color:var(--blue);border:1px solid #bcd3ea;background:#eef5fb;border-radius:999px;padding:2px 10px}
+.docTag:hover{background:#dbeafe}
+
+/* add-record form (tyres, battery): fields shrink instead of overflowing */
+.recForm{display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) auto;gap:8px;margin-top:14px;padding-top:14px;border-top:1px dashed #cfd9e4}
+.recForm input{min-width:0;width:100%}
+.recForm .error{grid-column:1/-1}
+
+/* documents */
+.uploadRow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:12px}
+.uploadBtn{display:inline-flex;align-items:center;gap:6px;background:var(--blue);color:#fff;font-weight:700;font-size:.9rem;border-radius:10px;padding:9px 16px;cursor:pointer}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.chip{border:1.5px solid #dbe5ef;background:#fff;color:var(--ink);font-weight:600;font-size:.82rem;border-radius:999px;padding:6px 14px}
+.chip:hover{border-color:var(--teal-dark)}
+.chipOn{background:var(--teal-dark);border-color:var(--teal-dark);color:#fff}
+.fileIcon{width:42px;height:42px;border-radius:10px;background:#e6f0fa;color:var(--blue);display:grid;place-items:center;flex:none}
+.sample{font-size:.74rem;font-weight:700;color:var(--muted);background:#eef3f8;border-radius:999px;padding:3px 10px}
+
+/* reminders */
+.reminderRow{flex-wrap:wrap}
+.renewForm{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+.intervalRow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px dashed #cfd9e4;color:var(--ink);font-weight:600;font-size:.92rem}
+
+@media(max-width:1280px){
+  .recForm{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:1100px){
+  .formGrid{grid-template-columns:1fr 1fr}
+  .photoPanel{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .formGrid,.recForm{grid-template-columns:minmax(0,1fr)}
+  .presetRow{grid-template-columns:1fr 1fr}
+  .switchCard{min-width:220px}
+  .cardTools{flex-direction:column;align-items:flex-start}
+}
+
+/* add-record form (tyres, battery): description on its own row, other fields two per row */
+.recForm{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px;padding-top:14px;border-top:1px dashed #cfd9e4}
+.recForm input{min-width:0;width:100%}
+.recForm input:nth-child(2){order:1;grid-column:1/-1}   /* what was fitted */
+.recForm input:nth-child(1){order:2}                    /* date */
+.recForm input:nth-child(3){order:3}                    /* garage */
+.recForm input:nth-child(4){order:4}                    /* mileage */
+.recForm input:nth-child(5){order:5}                    /* price */
+.recForm .smallBtn{order:6;grid-column:1/-1;justify-self:start;padding:10px 24px}
+.recForm .error{order:7;grid-column:1/-1}

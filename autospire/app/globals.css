@@ -1,4 +1,4 @@
-:root{--navy:#011631;--navy2:#002745;--card:#0d2a52;--teal:#00F5E9;--grey:#f4f6fa;--slate:#9db2c9;--white:#fff;--max:1240px}
+:root{--navy:#011631;--navy2:#002745;--card:#0d2a52;--teal:#1cf4f0;--grey:#f4f6fa;--slate:#9db2c9;--white:#fff;--max:1240px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:76px}
 body{background:var(--navy);color:var(--grey);line-height:1.55;overflow-x:hidden}

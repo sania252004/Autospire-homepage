@@ -61,3 +61,10 @@
   .step:not(:last-child):after{top:64px;left:31px;right:auto;width:1.5px;height:22px;background:var(--teal)}
   .avatar{width:58px;height:58px;font-size:1.4rem}
 }
+
+/* Book / Quote switch: two stacked pill buttons */
+.modeToggle{display:grid;gap:10px;margin-top:16px;max-width:240px}
+.modeButton{display:block;width:100%;text-align:center;white-space:nowrap;padding:10px 16px;border:1.5px solid #0fc9bd;border-radius:999px;font-weight:700;font-size:.88rem;color:#0fc9bd;transition:.2s}
+.modeButton:hover{background:#00f5e91a}
+.modeActive{background:#00f5e9;border-color:#00f5e9;color:#011631}
+.modeNote{margin-top:12px;font-size:.84rem;opacity:.85}
