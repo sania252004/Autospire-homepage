@@ -95,3 +95,6 @@
   .facts{grid-template-columns:1fr}
   .successTotal{margin-left:0}
 }
+
+.photoRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.photoThumb{width:88px;height:88px;object-fit:cover;border-radius:10px;border:1px solid #dbe5ef}

@@ -7,6 +7,7 @@ import { priceFor, hasFixedPrice, COLLECTION_FEE, VAT, TIMES, garagePhone } from
 import { money } from "@/lib/quotesData";
 import { addBooking, newBookingId } from "@/lib/bookingStore";
 import styles from "./BookService.module.css";
+import { addNotification } from "@/lib/notificationStore";
 
 const STEPS = ["Service", "Garage", "Time slot", "Confirm"];
 const STAGE_INDEX = { details: 0, garage: 1, slot: 2, review: 3, done: 3 };
@@ -129,6 +130,7 @@ export default function BookService() {
       date: `${day.full}, ${time}`, price: money(total),
       status: "confirmed", step: 1, phone: garagePhone(garage),
     });
+    addNotification({ title: "Booking confirmed", text: `${service} at ${garage.name} · ${day.full}, ${time}`, href: "/my-bookings" });
     setBookingId(id);
     setStage("done");
     window.scrollTo({ top: 0, behavior: "smooth" });

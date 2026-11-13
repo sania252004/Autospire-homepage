@@ -9,7 +9,7 @@
    Move the mouse away to close a menu.
 
    WHERE TO EDIT:
-   - Avatar letters and notification number -> lib/myVehiclesData.js ("user")
+   - Avatar letters -> lib/myVehiclesData.js ("user")
    - Items in the avatar menu -> lib/myVehiclesData.js ("accountLinks")
    - Service names -> lib/data.js ("services")
    - Colours and sizes -> DashboardHeader.module.css
@@ -21,6 +21,7 @@ import Logo from "@/components/Logo/Logo";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import { services, emirates } from "@/lib/data";
 import { user, accountLinks } from "@/lib/myVehiclesData";
+import { useUnreadCount } from "@/lib/notificationStore";
 import styles from "./DashboardHeader.module.css";
 
 export default function DashboardHeader() {
@@ -30,7 +31,9 @@ export default function DashboardHeader() {
   // the chosen location (only changes this top bar for now)
   const [emirate, setEmirate] = useState("Dubai");
 
-  // click a menu button: open it, or close it if it was already open
+  // the real number of unread notifications
+  const unread = useUnreadCount();
+
   function toggleMenu(name) {
     setOpenMenu(openMenu === name ? null : name);
   }
@@ -88,11 +91,11 @@ export default function DashboardHeader() {
           <Icon name="search" size={22} sw={1.8} />
         </button>
 
-        {/* notifications (the red number only shows when there are unread ones) */}
-        <button className={styles.iconButton} aria-label="Notifications">
+        {/* notifications: opens the Notifications page. The red number only shows when something is unread. */}
+        <a href="/notifications" className={styles.iconButton} aria-label={`Notifications${unread > 0 ? `, ${unread} unread` : ""}`}>
           <Icon name="bell" size={22} sw={1.8} />
-          {user.unreadNotifications > 0 && <span className={styles.badge}>{user.unreadNotifications}</span>}
-        </button>
+          {unread > 0 && <span className={styles.badge}>{unread}</span>}
+        </a>
 
         {/* avatar: click to open the account menu */}
         <div className={styles.menuWrap} onMouseLeave={closeMenu}>

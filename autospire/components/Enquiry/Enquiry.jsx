@@ -1,10 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "@/components/Icon/Icon";
-import { services, emirates, vehicles, PHONE, TEL, EMAIL, ADDRESS, HOURS } from "@/lib/data";
+import { services, emirates, carModels, carMakes, carYears, PHONE, TEL, EMAIL, ADDRESS, HOURS } from "@/lib/data";
 import styles from "./Enquiry.module.css";
 
-/* ---------- ONE LINE OF CONTACT DETAILS (icon + small label + value) ---------- */
+/* turns "2023 Mercedes-Benz GLC" into { year, make, model } */
+function parseVehicle(text) {
+  const parts = (text || "").split(" ");
+  const year = /^\d{4}$/.test(parts[0]) ? parts[0] : "";
+  const rest = year ? parts.slice(1).join(" ") : text || "";
+  const make = carMakes.find((m) => rest.startsWith(m)) || "";
+  const model = make ? rest.slice(make.length).trim() : "";
+  return { year, make, model };
+}
+
 function ContactItem({ icon, label, children }) {
   return (
     <li>
@@ -17,7 +26,6 @@ function ContactItem({ icon, label, children }) {
   );
 }
 
-/* ---------- THE "THANK YOU" MESSAGE (shown after sending) ---------- */
 function ThankYou({ onSendAnother }) {
   return (
     <div className={`${styles.form} ${styles.success}`}>
@@ -29,21 +37,37 @@ function ThankYou({ onSendAnother }) {
   );
 }
 
-/* ---------- THE WHOLE SECTION ---------- */
-// vehicle, service and emirate are shared with the Hero search box (they come from page.jsx),
-// so choosing one in the Hero also fills it in here.
+// vehicle, service and emirate are shared with the Hero search box (they come from page.jsx)
 export default function Enquiry({ vehicle, setVehicle, service, setService, emirate, setEmirate }) {
-  // true after the form has been sent
   const [sent, setSent] = useState(false);
 
-  // If the vehicle was chosen elsewhere and isn't in the list, add it so the dropdown can show it
-  const vehicleOptions = vehicle && !vehicles.includes(vehicle) ? [...vehicles, vehicle] : vehicles;
+  // make / model / year are kept here so a half-finished choice is not lost
+  const first = parseVehicle(vehicle);
+  const [make, setMake] = useState(first.make);
+  const [model, setModel] = useState(first.model);
+  const [year, setYear] = useState(first.year);
 
-  // Runs when the customer clicks "Send Enquiry"
+  // when the Hero picks a full vehicle, fill the three dropdowns to match
+  useEffect(() => {
+    const p = parseVehicle(vehicle);
+    if (p.make && p.model && p.year) {
+      setMake(p.make);
+      setModel(p.model);
+      setYear(p.year);
+    }
+  }, [vehicle]);
+
+  // change one dropdown and tell the page (the shared vehicle is only set when all three are chosen)
+  function update(nextMake, nextModel, nextYear) {
+    setMake(nextMake);
+    setModel(nextModel);
+    setYear(nextYear);
+    setVehicle(nextMake && nextModel && nextYear ? `${nextYear} ${nextMake} ${nextModel}` : "");
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     // TODO: send the enquiry to your server or email service here
-    // (for example a POST request to /api/enquiry)
     setSent(true);
   }
 
@@ -51,7 +75,6 @@ export default function Enquiry({ vehicle, setVehicle, service, setService, emir
     <section id="enquiry" className={styles.section}>
       <div className={`wrap ${styles.layout}`}>
 
-        {/* LEFT SIDE: title and contact details */}
         <div className={styles.intro}>
           <h2>Enquiry</h2>
           <p>Tell us what your car needs and we will get back to you fast.</p>
@@ -66,19 +89,16 @@ export default function Enquiry({ vehicle, setVehicle, service, setService, emir
           </ul>
         </div>
 
-        {/* RIGHT SIDE: the form, or the thank-you message after sending */}
         {sent ? (
           <ThankYou onSendAnother={() => setSent(false)} />
         ) : (
           <form className={styles.form} onSubmit={handleSubmit}>
 
-            {/* name and phone */}
             <div className={styles.twoColumns}>
               <label>Full name<input required placeholder="Your name" /></label>
               <label>Phone<input required type="tel" placeholder="+971 5X XXX XXXX" /></label>
             </div>
 
-            {/* email and emirate */}
             <div className={styles.twoColumns}>
               <label>Email<input type="email" placeholder="you@email.com" /></label>
               <label>Emirate
@@ -88,12 +108,27 @@ export default function Enquiry({ vehicle, setVehicle, service, setService, emir
               </label>
             </div>
 
-            {/* vehicle and service */}
+            {/* vehicle: make and model, then year and service */}
             <div className={styles.twoColumns}>
-              <label>Vehicle
-                <select value={vehicle} onChange={(e) => setVehicle(e.target.value)}>
-                  <option value="">Select your vehicle</option>
-                  {vehicleOptions.map((name) => <option key={name}>{name}</option>)}
+              <label>Make
+                <select value={make} onChange={(e) => update(e.target.value, "", year)}>
+                  <option value="">Select make</option>
+                  {carMakes.map((m) => <option key={m}>{m}</option>)}
+                </select>
+              </label>
+              <label>Model
+                <select value={model} disabled={!make} onChange={(e) => update(make, e.target.value, year)}>
+                  <option value="">Select model</option>
+                  {(carModels[make] || []).map((m) => <option key={m}>{m}</option>)}
+                </select>
+              </label>
+            </div>
+
+            <div className={styles.twoColumns}>
+              <label>Year
+                <select value={year} onChange={(e) => update(make, model, e.target.value)}>
+                  <option value="">Select year</option>
+                  {carYears.map((y) => <option key={y}>{y}</option>)}
                 </select>
               </label>
               <label>Service
@@ -104,7 +139,6 @@ export default function Enquiry({ vehicle, setVehicle, service, setService, emir
               </label>
             </div>
 
-            {/* message */}
             <label>Message<textarea rows={4} placeholder="Describe the problem or what you need" /></label>
 
             <button className="btn" type="submit">Send Enquiry <Icon name="arrow" size={18} sw={2.2} /></button>

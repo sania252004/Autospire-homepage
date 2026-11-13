@@ -8,14 +8,13 @@ export const accountLinks = [
   { label: "My Vehicles", href: "/my-vehicles" },
 ];
 
-/* ---------- LEFT MENU ---------- */
 export const sidebarLinks = [
   { label: "Home",               icon: "home",     href: "/" },
   { label: "My Vehicles",        icon: "car",      href: "/my-vehicles" },
   { label: "My Bookings",        icon: "calendar", href: "/my-bookings" },
   { label: "My Quotes",          icon: "document", href: "/my-quotes" },
   { label: "My Garage",          icon: "garage",   href: "#" },
-  { label: "Notifications",      icon: "bell",     href: "#", badge: 2 },
+  { label: "Notifications",      icon: "bell",     href: "/notifications" },
   { label: "Profile & Settings", icon: "user",     href: "#" },
   { label: "Help & Support",     icon: "headset",  href: "#" },
 ];

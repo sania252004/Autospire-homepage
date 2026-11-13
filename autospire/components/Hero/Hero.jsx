@@ -4,6 +4,7 @@ import Icon from "@/components/Icon/Icon";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import IssueCapture from "./IssueCapture";
 import VehiclePicker from "./VehiclePicker";
+import PhotoUpload from "./PhotoUpload";
 import { services, emirates, bookJourney, quoteJourney, garageJourney } from "@/lib/data";
 import styles from "./Hero.module.css";
 
@@ -55,6 +56,7 @@ export default function Hero({
   problem, setProblem,   // the written description (Quotation tab)
   onSearch,              // runs when the main button is clicked
   onIssueChange,         // receives the recorded noise / uploaded video
+  onPhotosChange,        // receives the photos of the problem (Quotation tab)
 }) {
   const [error, setError] = useState("");
   const activeTab = TABS.find((t) => t.id === tab);
@@ -124,7 +126,7 @@ export default function Hero({
             <Dropdown icon="pin" placeholder="Select Location" value={emirate} onChange={setEmirate} options={emirates} format={(e) => `${e}, UAE`} />
           </div>
 
-          {/* QUOTATION ONLY: describe the problem + record noise / upload video */}
+          {/* QUOTATION ONLY: describe the problem + photos + record noise / upload video */}
           {tab === "quote" && (
             <>
               <textarea
@@ -133,6 +135,7 @@ export default function Hero({
                 value={problem}
                 onChange={(e) => setProblem(e.target.value)}
               />
+              <PhotoUpload onChange={onPhotosChange} />
               <IssueCapture onChange={onIssueChange} />
             </>
           )}

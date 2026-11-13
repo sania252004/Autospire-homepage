@@ -11,6 +11,7 @@ import ServiceModal from "@/components/ServiceModal/ServiceModal";
 import GarageModal from "@/components/GarageModal/GarageModal";
 import { services, garages, savedVehicles, vehicleLabel } from "@/lib/data";
 import { useRouter } from "next/navigation";
+import { saveQuoteDraft } from "@/lib/quoteDraft";
 
 // Smoothly scrolls to the section with this id.
 function scrollToSection(id) {
@@ -46,6 +47,7 @@ export default function Page() {
 
   /* ---------- car noise recording and video (Request Quotations tab only) ---------- */
   const [issue, setIssue] = useState({ audio: null, video: null });
+  const [photos, setPhotos] = useState([]);
 
   function goToTab(tabId, serviceTitle) {
     setTab(tabId);
@@ -59,6 +61,7 @@ export default function Page() {
   function handleSearch() {
     if (tab === "quote") {
       // send the request to the quotation journey
+      saveQuoteDraft({ photos });
       const params = new URLSearchParams({ vehicle, service, problem, emirate });
       if (issue.audio) params.set("noise", "1");
       if (issue.video) params.set("video", "1");
@@ -91,6 +94,7 @@ export default function Page() {
           problem={problem} setProblem={setProblem}
           onSearch={handleSearch}
           onIssueChange={setIssue}
+          onPhotosChange={setPhotos}
         />
         <Services open={setOpenServiceId} />
         <Garages open={setOpenGarageId} note={garageNote} goTab={goToTab} />
