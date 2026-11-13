@@ -1,23 +1,10 @@
 "use client";
-/* ==========================================================
-   HEADER (the menu bar at the top of every page)
-   Left: logo and menu. Right: location, user icon and the
-   "My Account" button. On phones the menu becomes a ☰ button.
-
-   WHERE TO EDIT:
-   - Menu names and links -> the <nav> part (desktop) and the
-                             "mobileMenu" part (phone) below
-   - Items in the My Account dropdown -> lib/myVehiclesData.js ("accountLinks")
-   - Service names in the Services menu -> lib/data.js
-   - Colours and sizes -> Header.module.css
-   ========================================================== */
-
 import { useState } from "react";
 import Icon from "@/components/Icon/Icon";
 import Logo from "@/components/Logo/Logo";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import { services, emirates } from "@/lib/data";
-import { accountLinks } from "@/lib/myVehiclesData";
+import { useAuth, logout, firstName } from "@/lib/authStore";
 import styles from "./Header.module.css";
 
 // Values below come from page.jsx:
@@ -25,12 +12,16 @@ import styles from "./Header.module.css";
 // openService          = opens a service pop-up
 // goTab                = switches the Hero tab and scrolls to the top
 export default function Header({ emirate, setEmirate, openService, goTab }) {
+  // the logged-in customer (null when logged out)
+  const { user } = useAuth();
+
   // is the phone menu open? (true = open)
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeMobileMenu = () => setMobileOpen(false);
 
   // is the My Account menu open because it was clicked? (it also opens when you hover)
   const [accountOpen, setAccountOpen] = useState(false);
+  const closeAccount = () => setAccountOpen(false);
 
   return (
     <header className={styles.header}>
@@ -86,24 +77,37 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
             label="Location"
           />
           <span className={styles.divider} />
-          <a href="#enquiry" className={styles.userIcon} aria-label="Account"><Icon name="user" size={22} /></a>
+
+          {/* user icon: goes to the dashboard when logged in, otherwise to the login page */}
+          <a href={user ? "/my-vehicles" : "/login"} className={styles.userIcon} aria-label={user ? "My vehicles" : "Log in"}>
+            <Icon name="user" size={22} />
+          </a>
 
           {/* MY ACCOUNT: click it (or hover) to see the account menu; move the mouse away to close it */}
-          <div className={styles.account} onMouseLeave={() => setAccountOpen(false)}>
+          <div className={styles.account} onMouseLeave={closeAccount}>
             <button
               type="button"
               className={styles.accountButton}
               onClick={() => setAccountOpen(!accountOpen)}
               aria-expanded={accountOpen}
             >
-              My Account <Icon name="down" size={12} sw={2.6} />
+              {user ? firstName(user.name) : "My Account"} <Icon name="down" size={12} sw={2.6} />
             </button>
 
             {/* the menu: same look as the location dropdown */}
             <div className={`${styles.accountMenu} ${accountOpen ? styles.open : ""}`}>
-              {accountLinks.map((link) => (
-                <a key={link.label} href={link.href}>{link.label}</a>
-              ))}
+              {user ? (
+                <>
+                  <a href="/my-vehicles" onClick={closeAccount}>My Vehicles</a>
+                  <a href="/my-bookings" onClick={closeAccount}>My Bookings</a>
+                  <button type="button" onClick={() => { closeAccount(); logout(); }}>Log out</button>
+                </>
+              ) : (
+                <>
+                  <a href="/login" onClick={closeAccount}>Log in</a>
+                  <a href="/register" onClick={closeAccount}>Create account</a>
+                </>
+              )}
             </div>
           </div>
 
@@ -121,7 +125,17 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
           <button onClick={() => { goTab("quote"); closeMobileMenu(); }}>Compare Quotes</button>
           <a href="#how" onClick={closeMobileMenu}>About</a>
           <a href="#enquiry" onClick={closeMobileMenu}>Support</a>
-          <a href="/my-vehicles" onClick={closeMobileMenu} className="btn">My Vehicles</a>
+          {user ? (
+            <>
+              <a href="/my-vehicles" onClick={closeMobileMenu} className="btn">My Vehicles</a>
+              <button onClick={() => { logout(); closeMobileMenu(); }}>Log out</button>
+            </>
+          ) : (
+            <>
+              <a href="/login" onClick={closeMobileMenu} className="btn">Log in</a>
+              <a href="/register" onClick={closeMobileMenu}>Create account</a>
+            </>
+          )}
         </div>
       )}
     </header>

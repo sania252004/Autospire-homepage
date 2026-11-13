@@ -207,4 +207,19 @@
   }
 }
 
+.Header-module__arFiJq__accountMenu button {
+  color: #ff9a9a;
+  text-align: left;
+  border-radius: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: .92rem;
+  font-weight: 500;
+  display: block;
+}
+
+.Header-module__arFiJq__accountMenu button:hover {
+  background: #ff7b7b1f;
+}
+
 /*# sourceMappingURL=components_Header_Header_module_css_1igg3k2-ikub5._.single.css.map*/

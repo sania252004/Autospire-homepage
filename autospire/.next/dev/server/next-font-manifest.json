@@ -1,18 +1,18 @@
 {
   "app": {
-    "[project]/app/my-bookings/page": [
+    "[project]/app/login/page": [
       "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
     ],
-    "[project]/app/my-quotes/page": [
+    "[project]/app/my-bookings/page": [
       "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
     ],
     "[project]/app/my-vehicles/page": [
       "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
     ],
-    "[project]/app/notifications/page": [
+    "[project]/app/page": [
       "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
     ],
-    "[project]/app/page": [
+    "[project]/app/register/page": [
       "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
     ]
   },

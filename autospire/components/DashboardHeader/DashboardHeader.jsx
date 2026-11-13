@@ -8,23 +8,29 @@
    Click "Dubai" to choose another emirate.
    Move the mouse away to close a menu.
 
+   The avatar shows the logged-in customer's initials. When nobody is
+   logged in it falls back to the sample initials in lib/myVehiclesData.js.
+
    WHERE TO EDIT:
-   - Avatar letters -> lib/myVehiclesData.js ("user")
    - Items in the avatar menu -> lib/myVehiclesData.js ("accountLinks")
    - Service names -> lib/data.js ("services")
    - Colours and sizes -> DashboardHeader.module.css
    ========================================================== */
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Icon from "@/components/Icon/Icon";
 import Logo from "@/components/Logo/Logo";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import { services, emirates } from "@/lib/data";
-import { user, accountLinks } from "@/lib/myVehiclesData";
+import { user as sampleUser, accountLinks } from "@/lib/myVehiclesData";
 import { useUnreadCount } from "@/lib/notificationStore";
+import { useAuth, logout } from "@/lib/authStore";
 import styles from "./DashboardHeader.module.css";
 
 export default function DashboardHeader() {
+  const router = useRouter();
+
   // which menu is open: "services", "garages", "account", or null (none)
   const [openMenu, setOpenMenu] = useState(null);
 
@@ -34,11 +40,20 @@ export default function DashboardHeader() {
   // the real number of unread notifications
   const unread = useUnreadCount();
 
+  // the logged-in customer (null when logged out)
+  const { user: account } = useAuth();
+  const initials = account ? account.initials : sampleUser.initials;
+
   function toggleMenu(name) {
     setOpenMenu(openMenu === name ? null : name);
   }
   function closeMenu() {
     setOpenMenu(null);
+  }
+  function handleLogout() {
+    closeMenu();
+    logout();
+    router.push("/");
   }
 
   return (
@@ -100,14 +115,23 @@ export default function DashboardHeader() {
         {/* avatar: click to open the account menu */}
         <div className={styles.menuWrap} onMouseLeave={closeMenu}>
           <button className={styles.avatarButton} onClick={() => toggleMenu("account")} aria-label="Account menu">
-            <span className={styles.avatar}>{user.initials}</span>
+            <span className={styles.avatar}>{initials}</span>
             <Icon name="down" size={13} sw={2.6} />
           </button>
           {openMenu === "account" && (
             <div className={`${styles.menu} ${styles.menuRight}`}>
+              {account && (
+                <div className={styles.menuUser}>
+                  <b>{account.name}</b>
+                  <small>{account.email}</small>
+                </div>
+              )}
               {accountLinks.map((link) => (
                 <a key={link.label} href={link.href} onClick={closeMenu}>{link.label}</a>
               ))}
+              {account
+                ? <button type="button" onClick={handleLogout}>Log out</button>
+                : <a href="/login" onClick={closeMenu}>Log in</a>}
             </div>
           )}
         </div>

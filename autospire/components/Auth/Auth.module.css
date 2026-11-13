@@ -1,0 +1,186 @@
+/* ==========================================================
+   LOGIN AND REGISTER PAGES
+   COLOURS: change them in the first block (".auth") below.
+   Sections: 1 colours and page, 2 glowing background, 3 top bar,
+   4 left side, 5 glass card, 6 form fields, 7 glass dropdown,
+   8 buttons and extras, 9 phones.
+   ========================================================== */
+
+/* ---------- 1. COLOURS AND PAGE ---------- */
+.auth{
+  --navy:#011631;                               /* page background */
+  --teal:#00f5e9;                               /* accent: links, focus, strong password, icons on hover */
+  --white:#ffffff;                              /* main text */
+  --slate:#9db2c9;                              /* secondary text and icons */
+  --soft:#cfe0ef;                               /* labels and body text on glass */
+  --glass:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.04));   /* glass fill */
+  --glass-edge:rgba(255,255,255,.18);           /* glass border */
+  --field:rgba(255,255,255,.07);                /* input fill */
+  --field-edge:rgba(255,255,255,.18);           /* input border */
+  --error:#ff7b7b;                              /* errors and weak password */
+  --warn:#ffb84d;                               /* fair password */
+  --ok:#2fe3a0;                                 /* good password */
+
+  position:relative;overflow:hidden;min-height:100vh;
+  display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:center;
+  gap:clamp(24px,5vw,80px);padding:110px clamp(16px,6vw,96px) 56px;
+  color:var(--white);
+  background:
+    radial-gradient(900px 520px at 85% 18%,rgba(15,181,196,.33),transparent 62%),
+    radial-gradient(700px 420px at 8% 92%,rgba(29,84,212,.30),transparent 60%),
+    var(--navy);
+}
+
+/* ---------- 2. GLOWING BACKGROUND (this is what the glass blurs) ---------- */
+.orb{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;animation:drift 16s ease-in-out infinite alternate}
+.orbA{width:380px;height:380px;top:-90px;right:6%;background:#00f5e9;opacity:.30}
+.orbB{width:440px;height:440px;bottom:-140px;left:-80px;background:#1d54d4;opacity:.38;animation-delay:-6s}
+.orbC{width:230px;height:230px;top:52%;right:40%;background:#1cf4f0;opacity:.16;animation-delay:-10s}
+@keyframes drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-26px,34px,0)}}
+@media(prefers-reduced-motion:reduce){.orb{animation:none}}
+
+/* ---------- 3. TOP BAR ---------- */
+.top{position:absolute;top:22px;left:clamp(16px,4vw,56px);right:clamp(16px,4vw,56px);display:flex;justify-content:space-between;align-items:center;z-index:2}
+.back{color:var(--slate);font-weight:600;font-size:.92rem;transition:color .2s}
+.back:hover{color:var(--teal)}
+
+/* ---------- 4. LEFT SIDE ---------- */
+.brand{position:relative;z-index:1;max-width:560px}
+.brand h1{font-size:clamp(2.3rem,4.2vw,3.6rem);font-weight:800;letter-spacing:-1.2px;line-height:1.06}
+.hl{color:var(--teal)}
+.lead2{margin:18px 0 28px;font-size:1.12rem;color:var(--soft)}
+.benefits{list-style:none;display:grid;gap:12px;margin:0;padding:0}
+.benefit{display:flex;align-items:center;gap:16px;padding:14px 18px;border-radius:18px;background:var(--glass);border:1px solid var(--glass-edge);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.benefit b{display:block;color:var(--white);font-size:1rem}
+.benefit small{display:block;color:var(--slate);font-size:.88rem;margin-top:1px}
+.benefitIcon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:none;background:rgba(0,245,233,.12);border:1px solid rgba(0,245,233,.35);color:var(--teal)}
+
+/* ---------- 5. THE GLASS CARD ---------- */
+.card{
+  position:relative;z-index:1;width:100%;max-width:480px;justify-self:center;
+  padding:clamp(24px,3.2vw,38px);border-radius:28px;
+  background:var(--glass);border:1px solid var(--glass-edge);
+  -webkit-backdrop-filter:blur(24px) saturate(150%);backdrop-filter:blur(24px) saturate(150%);
+  box-shadow:0 30px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.22);
+}
+/* thin teal light along the top edge */
+.card::before{content:"";position:absolute;left:12%;right:12%;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,245,233,.85),transparent)}
+
+/* browsers without blur get a solid card so the text stays readable */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .card{background:rgba(10,35,72,.94)}
+  .benefit{background:rgba(10,35,72,.8)}
+}
+
+.cardHead{margin-bottom:22px}
+.cardHead h2{font-size:1.85rem;font-weight:800;letter-spacing:-.5px}
+.cardHead p{margin-top:6px;color:var(--soft);font-size:.96rem;line-height:1.45}
+
+.form{display:grid;gap:14px}
+.footer{margin-top:22px;text-align:center;color:var(--soft);font-size:.94rem}
+
+/* ---------- 6. FORM FIELDS ---------- */
+.field{display:grid;gap:7px}
+.label{font-size:.82rem;font-weight:700;color:var(--soft);letter-spacing:.2px}
+.control{position:relative;display:flex;align-items:center}
+
+/* left padding makes room for the icon; fields with an eye get extra room on the right (.hasTrail) */
+.input{
+  width:100%;height:50px;padding:0 16px 0 44px;border-radius:14px;
+  background:var(--field);border:1.5px solid var(--field-edge);
+  color:var(--white);font-size:.98rem;outline:0;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+.hasTrail .input{padding-right:46px}
+.input::placeholder{color:#8aa3bf}
+.input:hover{border-color:rgba(255,255,255,.32)}
+.input:focus{border-color:var(--teal);background:rgba(255,255,255,.10);box-shadow:0 0 0 4px rgba(0,245,233,.16)}
+.hasError .input{border-color:rgba(255,123,123,.85)}
+.hasError .input:focus{box-shadow:0 0 0 4px rgba(255,123,123,.18)}
+
+/* Chrome's autofill paints fields white or yellow: keep them dark */
+.input:-webkit-autofill,.input:-webkit-autofill:hover,.input:-webkit-autofill:focus{
+  -webkit-text-fill-color:var(--white);caret-color:var(--white);
+  -webkit-box-shadow:0 0 0 100px #0d2a52 inset;transition:background-color 9999s ease-in-out 0s;
+}
+
+/* icon on the left, eye / arrow on the right */
+.lead{position:absolute;left:14px;top:50%;transform:translateY(-50%);display:grid;color:var(--slate);pointer-events:none;transition:color .2s;z-index:1}
+.control:focus-within .lead{color:var(--teal)}
+.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:38px;height:38px;display:grid;place-items:center;border-radius:10px;color:var(--slate);transition:color .2s,background .2s}
+.eye:hover{color:var(--white);background:rgba(255,255,255,.08)}
+.eye:focus-visible{outline:2px solid var(--teal)}
+
+.fieldError{color:var(--error);font-size:.84rem;font-weight:600}
+
+/* password strength */
+.strength{display:grid;gap:6px;margin-top:-4px}
+.strength small{color:var(--slate);font-size:.82rem}
+.strength b{color:var(--white)}
+.meter{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.meter i{height:5px;border-radius:3px;background:rgba(255,255,255,.16);transition:background .2s}
+.meter[data-level="1"] i:nth-child(-n+1){background:var(--error)}
+.meter[data-level="2"] i:nth-child(-n+2){background:var(--warn)}
+.meter[data-level="3"] i:nth-child(-n+3){background:var(--ok)}
+.meter[data-level="4"] i:nth-child(-n+4){background:var(--teal)}
+
+/* ---------- 7. GLASS DROPDOWN (Emirate) ---------- */
+/* the closed box: looks like the other fields */
+.selectBtn{display:flex;align-items:center;text-align:left;cursor:pointer;padding-right:44px}
+.selectBtn[aria-expanded="true"]{border-color:var(--teal);background:rgba(255,255,255,.10);box-shadow:0 0 0 4px rgba(0,245,233,.16)}
+
+/* arrow on the right, flips up when open */
+.chev{position:absolute;right:16px;top:50%;transform:translateY(-50%);display:grid;color:var(--slate);pointer-events:none;transition:transform .2s,color .2s}
+.chevUp{transform:translateY(-50%) rotate(180deg);color:var(--teal)}
+
+/* the open list: 8px gap below the box */
+.menu{
+  position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:30;
+  list-style:none;margin:0;padding:6px;max-height:330px;overflow-y:auto;
+  border-radius:16px;
+  background:rgba(10,35,72,.96);border:1px solid rgba(0,245,233,.30);
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  box-shadow:0 20px 44px rgba(0,0,0,.55);
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.25) transparent;
+  animation:menuIn .16s ease;
+}
+@keyframes menuIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.menu{animation:none}}
+
+.option{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:10px;color:var(--white);font-size:.95rem;cursor:pointer;transition:background .12s,color .12s}
+.optionActive{background:rgba(0,245,233,.12)}      /* row under the mouse or keyboard */
+.optionOn{color:var(--teal);font-weight:600}       /* the chosen city */
+
+/* ---------- 8. BUTTONS AND EXTRAS ---------- */
+.link{color:var(--teal);font-weight:600;transition:opacity .2s}
+.link:hover{text-decoration:underline}
+
+.checks{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:.9rem}
+.check{display:flex;align-items:flex-start;gap:10px;color:var(--soft);font-size:.9rem;line-height:1.4;cursor:pointer}
+.check input{accent-color:var(--teal);width:18px;height:18px;margin-top:1px;flex:none;cursor:pointer}
+
+/* main button: uses the site's .btn teal gradient; this only sets its size */
+.submit{width:100%;height:52px;margin-top:4px;font-size:1.02rem}
+.submit:disabled{opacity:.6;cursor:wait;filter:none;box-shadow:none}
+
+.alert{padding:12px 14px;border-radius:12px;background:rgba(255,123,123,.12);border:1px solid rgba(255,123,123,.45);color:#ffc2c2;font-size:.9rem;font-weight:600}
+.info{padding:12px 14px;border-radius:12px;background:rgba(0,245,233,.10);border:1px solid rgba(0,245,233,.40);color:var(--soft);font-size:.9rem}
+
+/* shown when already logged in */
+.already{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:12px 14px;margin-bottom:18px;padding:14px;border-radius:16px;background:rgba(0,245,233,.08);border:1px solid rgba(0,245,233,.35)}
+.already b{display:block;color:var(--white)}
+.already small{color:var(--slate)}
+.already .submit,.already .link{grid-column:1/-1}
+.already .link{justify-self:center}
+.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#25f2d8,#0fa8c0);color:#0a2348;font-weight:800;font-size:.9rem}
+
+/* ---------- 9. TABLETS AND PHONES ---------- */
+@media(max-width:960px){
+  .auth{grid-template-columns:minmax(0,1fr);padding-top:96px}
+  .brand{display:none}
+}
+@media(max-width:560px){
+  .auth{padding:88px 14px 36px}
+  .card{border-radius:22px}
+  .top{top:16px}
+}

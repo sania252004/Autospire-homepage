@@ -47,3 +47,12 @@
   .nav{display:none}
   .right{gap:16px}
 }
+
+/* name and email at the top of the avatar menu (only when logged in) */
+.menuUser{padding:10px 16px 12px;margin-bottom:4px;border-bottom:1px solid #ffffff1f}
+.menuUser b{display:block;color:#fff;font-size:.95rem}
+.menuUser small{display:block;color:#9db2c9;font-size:.8rem;margin-top:1px;white-space:nowrap}
+
+/* Log out button */
+.menu button{display:block;width:100%;text-align:left;padding:12px 16px;border-radius:10px;font-weight:500;font-size:.92rem;color:#ff9a9a;white-space:nowrap}
+.menu button:hover{background:#ff7b7b1f}

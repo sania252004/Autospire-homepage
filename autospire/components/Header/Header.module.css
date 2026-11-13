@@ -57,3 +57,7 @@
   .mobileMenu a:not(:global(.btn)),.mobileMenu button{padding:12px 4px;font-weight:600;border-bottom:1px solid #ffffff14}
   .mobileMenu :global(.btn){margin-top:12px}
 }
+
+/* Log out button inside the My Account menu */
+.accountMenu button{display:block;width:100%;padding:10px 12px;border-radius:8px;font-weight:500;font-size:.92rem;color:#ff9a9a;text-align:left}
+.accountMenu button:hover{background:#ff7b7b1f}

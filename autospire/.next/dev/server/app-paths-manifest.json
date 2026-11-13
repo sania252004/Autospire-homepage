@@ -1,7 +1,7 @@
 {
+  "/login/page": "app/login/page.js",
   "/my-bookings/page": "app/my-bookings/page.js",
-  "/my-quotes/page": "app/my-quotes/page.js",
   "/my-vehicles/page": "app/my-vehicles/page.js",
-  "/notifications/page": "app/notifications/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/register/page": "app/register/page.js"
 }
