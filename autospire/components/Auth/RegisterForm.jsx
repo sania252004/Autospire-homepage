@@ -102,11 +102,6 @@ export default function RegisterForm() {
             aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "phone-error" : undefined} />
         </Field>
 
-        <GlassSelect
-          id="emirate" label="Emirate" value={f.emirate} onChange={(v) => set("emirate", v)}
-          options={emirates} lead={<Icon name="pin" size={20} sw={1.8} />}
-        />
-
         <PasswordField id="password" label="Password" value={f.password} onChange={(e) => set("password", e.target.value)} error={errors.password} autoComplete="new-password" placeholder="At least 8 characters" />
 
         {f.password && (
@@ -115,8 +110,6 @@ export default function RegisterForm() {
             <small>Password strength: <b>{LABELS[strength]}</b></small>
           </div>
         )}
-
-        <PasswordField id="confirm" label="Confirm password" value={f.confirm} onChange={(e) => set("confirm", e.target.value)} error={errors.confirm} autoComplete="new-password" placeholder="Repeat your password" />
 
         <div>
           <label className={styles.check}>
