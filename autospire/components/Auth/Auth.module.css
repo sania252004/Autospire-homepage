@@ -57,7 +57,7 @@
 
 /* ---------- 5. THE GLASS CARD ---------- */
 .card{
-  position:relative;z-index:1;width:100%;max-width:480px;justify-self:center;
+  position:relative;top:60px;z-index:1;width:100%;max-width:480px;justify-self:center;
   padding:clamp(24px,3.2vw,38px);border-radius:28px;
   background:var(--glass);border:1px solid var(--glass-edge);
   -webkit-backdrop-filter:blur(24px) saturate(150%);backdrop-filter:blur(24px) saturate(150%);
@@ -184,3 +184,15 @@
   .card{border-radius:22px}
   .top{top:16px}
 }
+
+/* ---------- OTP (enter your code) ---------- */
+.otpLabel{font-size:.9rem;font-weight:700;color:var(--soft)}
+.otpInput{
+  width:100%;height:56px;padding:0 16px;text-align:center;
+  font-size:1.6rem;font-weight:800;letter-spacing:.7em;text-indent:.7em; /* spaces the digits out; indent keeps them centred */
+  color:var(--white);background:var(--field);border:1.5px solid var(--field-edge);border-radius:14px;outline:0;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+.otpInput::placeholder{color:#8aa3bf;letter-spacing:.5em}
+.otpInput:focus{border-color:var(--teal);background:rgba(255,255,255,.10);box-shadow:0 0 0 4px rgba(0,245,233,.16)}
+.link:disabled{opacity:.5;cursor:default;text-decoration:none}

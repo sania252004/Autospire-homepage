@@ -1,4 +1,6 @@
+
 "use client";
+
 import { useState } from "react";
 import Icon from "@/components/Icon/Icon";
 import Logo from "@/components/Logo/Logo";
@@ -7,19 +9,14 @@ import { services, emirates } from "@/lib/data";
 import { useAuth, logout, firstName } from "@/lib/authStore";
 import styles from "./Header.module.css";
 
-// Values below come from page.jsx:
-// emirate / setEmirate = the chosen location and the function that changes it
-// openService          = opens a service pop-up
-// goTab                = switches the Hero tab and scrolls to the top
 export default function Header({ emirate, setEmirate, openService, goTab }) {
-  // the logged-in customer (null when logged out)
   const { user } = useAuth();
 
-  // is the phone menu open? (true = open)
+  // Mobile menu
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeMobileMenu = () => setMobileOpen(false);
 
-  // is the My Account menu open because it was clicked? (it also opens when you hover)
+  // Account dropdown
   const [accountOpen, setAccountOpen] = useState(false);
   const closeAccount = () => setAccountOpen(false);
 
@@ -27,37 +24,61 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
     <header className={styles.header}>
       <div className={`wrap ${styles.bar}`}>
 
-        {/* LOGO (click to go back to the top) */}
-        <a href="#top" onClick={closeMobileMenu}><Logo /></a>
+        {/* LOGO */}
+        <a href="#top" onClick={closeMobileMenu}>
+          <Logo />
+        </a>
 
-        {/* DESKTOP MENU: appears on large screens, hidden on phones */}
+        {/* DESKTOP NAVIGATION */}
         <nav className={styles.nav} aria-label="Main">
 
-          {/* Services: hover to see the list of services */}
+          {/* SERVICES */}
           <div className={styles.dropdown}>
-            <a href="#services">Services <Icon name="down" size={14} sw={2.6} /></a>
+            <a href="#services">
+              Services <Icon name="down" size={14} sw={2.6} />
+            </a>
+
             <div className={styles.dropdownMenu}>
               {services.map((service) => (
-                <button key={service.id} onClick={() => openService(service.id)}>{service.title}</button>
+                <button
+                  key={service.id}
+                  type="button"
+                  onClick={() => openService(service.id)}
+                >
+                  {service.title}
+                </button>
               ))}
             </div>
           </div>
 
-          {/* Garages: hover for two choices */}
+          {/* GARAGES */}
           <div className={styles.dropdown}>
-            <a href="#garages">Garages <Icon name="down" size={14} sw={2.6} /></a>
+            <a href="#garages">
+              Garages <Icon name="down" size={14} sw={2.6} />
+            </a>
+
             <div className={styles.dropdownMenu}>
               <a href="#garages">Featured Garages</a>
-              <button onClick={() => goTab("garage")}>Find a Garage</button>
+              <button type="button" onClick={() => goTab("garage")}>
+                Find a Garage
+              </button>
             </div>
           </div>
 
-          <button onClick={() => goTab("quote")}>Compare Quotes</button>
+          {/* COMPARE QUOTES */}
+          <button type="button" onClick={() => goTab("quote")}>
+            Compare Quotes
+          </button>
+
+          {/* ABOUT */}
           <a href="#how">About</a>
 
-          {/* Support: hover for two choices */}
+          {/* SUPPORT */}
           <div className={styles.dropdown}>
-            <a href="#enquiry">Support <Icon name="down" size={14} sw={2.6} /></a>
+            <a href="#enquiry">
+              Support <Icon name="down" size={14} sw={2.6} />
+            </a>
+
             <div className={styles.dropdownMenu}>
               <a href="#enquiry">Enquiry &amp; Contact</a>
               <a href="#how">How It Works</a>
@@ -65,8 +86,10 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
           </div>
         </nav>
 
-        {/* RIGHT SIDE: location, user icon, My Account, and the ☰ button for phones */}
+        {/* RIGHT SIDE */}
         <div className={styles.right}>
+
+          {/* LOCATION */}
           <Dropdown
             variant="mini"
             icon="pin"
@@ -76,64 +99,153 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
             format={(e) => `${e}, UAE`}
             label="Location"
           />
+
           <span className={styles.divider} />
 
-          {/* user icon: goes to the dashboard when logged in, otherwise to the login page */}
-          <a href={user ? "/my-vehicles" : "/login"} className={styles.userIcon} aria-label={user ? "My vehicles" : "Log in"}>
+          {/* USER ICON */}
+          <a
+            href={user ? "/my-vehicles" : "/login"}
+            className={styles.userIcon}
+            aria-label={user ? "My vehicles" : "Log in"}
+          >
             <Icon name="user" size={22} />
           </a>
 
-          {/* MY ACCOUNT: click it (or hover) to see the account menu; move the mouse away to close it */}
-          <div className={styles.account} onMouseLeave={closeAccount}>
-            <button
-              type="button"
-              className={styles.accountButton}
-              onClick={() => setAccountOpen(!accountOpen)}
-              aria-expanded={accountOpen}
+          {/* LOGGED OUT */}
+          {!user && (
+            <a href="/login" className={styles.accountButton}>
+              Login
+            </a>
+          )}
+
+          {/* LOGGED IN */}
+          {user && (
+            <div
+              className={styles.account}
+              onMouseLeave={closeAccount}
             >
-              {user ? firstName(user.name) : "My Account"} <Icon name="down" size={12} sw={2.6} />
-            </button>
+              <button
+                type="button"
+                className={styles.accountButton}
+                onClick={() => setAccountOpen((prev) => !prev)}
+                aria-expanded={accountOpen}
+                aria-haspopup="true"
+              >
+                {firstName(user)}
+                <Icon name="down" size={12} sw={2.6} />
+              </button>
 
-            {/* the menu: same look as the location dropdown */}
-            <div className={`${styles.accountMenu} ${accountOpen ? styles.open : ""}`}>
-              {user ? (
-                <>
-                  <a href="/my-vehicles" onClick={closeAccount}>My Vehicles</a>
-                  <a href="/my-bookings" onClick={closeAccount}>My Bookings</a>
-                  <button type="button" onClick={() => { closeAccount(); logout(); }}>Log out</button>
-                </>
-              ) : (
-                <>
-                  <a href="/login" onClick={closeAccount}>Log in</a>
-                  <a href="/register" onClick={closeAccount}>Create account</a>
-                </>
-              )}
+              <div
+                className={`${styles.accountMenu} ${
+                  accountOpen ? styles.open : ""
+                }`}
+              >
+                <a href="/my-vehicles" onClick={closeAccount}>
+                  My Vehicles
+                </a>
+
+                <a href="/my-bookings" onClick={closeAccount}>
+                  My Bookings
+                </a>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    closeAccount();
+                    logout();
+                  }}
+                >
+                  Log out
+                </button>
+              </div>
             </div>
-          </div>
+          )}
 
-          <button className={styles.burger} onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menu">
-            <Icon name={mobileOpen ? "close" : "menu"} size={26} />
+          {/* MOBILE MENU BUTTON */}
+          <button
+            type="button"
+            className={styles.burger}
+            onClick={() => setMobileOpen((prev) => !prev)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+          >
+            <Icon
+              name={mobileOpen ? "close" : "menu"}
+              size={26}
+            />
           </button>
         </div>
       </div>
 
-      {/* PHONE MENU: shown only after tapping ☰ */}
+      {/* MOBILE MENU */}
       {mobileOpen && (
         <div className={styles.mobileMenu}>
-          <a href="#services" onClick={closeMobileMenu}>Services</a>
-          <a href="#garages" onClick={closeMobileMenu}>Garages</a>
-          <button onClick={() => { goTab("quote"); closeMobileMenu(); }}>Compare Quotes</button>
-          <a href="#how" onClick={closeMobileMenu}>About</a>
-          <a href="#enquiry" onClick={closeMobileMenu}>Support</a>
+          <a href="#services" onClick={closeMobileMenu}>
+            Services
+          </a>
+
+          <a href="#garages" onClick={closeMobileMenu}>
+            Garages
+          </a>
+
+          <button
+            type="button"
+            onClick={() => {
+              goTab("quote");
+              closeMobileMenu();
+            }}
+          >
+            Compare Quotes
+          </button>
+
+          <a href="#how" onClick={closeMobileMenu}>
+            About
+          </a>
+
+          <a href="#enquiry" onClick={closeMobileMenu}>
+            Support
+          </a>
+
           {user ? (
             <>
-              <a href="/my-vehicles" onClick={closeMobileMenu} className="btn">My Vehicles</a>
-              <button onClick={() => { logout(); closeMobileMenu(); }}>Log out</button>
+              <a
+                href="/my-vehicles"
+                onClick={closeMobileMenu}
+                className="btn"
+              >
+                My Vehicles
+              </a>
+
+              <a
+                href="/my-bookings"
+                onClick={closeMobileMenu}
+              >
+                My Bookings
+              </a>
+
+              <button
+                type="button"
+                onClick={() => {
+                  logout();
+                  closeMobileMenu();
+                }}
+              >
+                Log out
+              </button>
             </>
           ) : (
             <>
-              <a href="/login" onClick={closeMobileMenu} className="btn">Log in</a>
-              <a href="/register" onClick={closeMobileMenu}>Create account</a>
+              <a
+                href="/login"
+                onClick={closeMobileMenu}
+                className="btn"
+              >
+                Log in
+              </a>
+
+              <a href="/register" onClick={closeMobileMenu}>
+                Create account
+              </a>
             </>
           )}
         </div>

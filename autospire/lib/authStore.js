@@ -1,99 +1,117 @@
+// lib/authStore.js
+// DEMO login: accounts and the login session are kept in the browser (localStorage).
+// Replace the functions below with calls to a real backend later.
 import { useEffect, useState } from "react";
 
-/* Demo accounts, saved in the browser (localStorage). A real backend replaces this later. */
-const USERS = "autospire.users.v1";
-const SESSION = "autospire.session.v1";
-const EVENT = "autospire-auth";
+const USERS_KEY = "autospire-users";
+const SESSION_KEY = "autospire-session";
+const AUTH_EVENT = "autospire-auth";   // tells the header / login pages that login changed
 
-/* demo account for client presentations (works on the login page with "Use demo account") */
-export const DEMO = { name: "Sania Khandakar", email: "demo@autospire.ae", password: "Demo@1234", phone: "+971 50 123 4567", emirate: "Dubai" };
+// true = logging in with a new number creates the account automatically (easy testing)
+// false = the number must be registered first
+const AUTO_CREATE = true;
 
-/* turns a password into a scrambled code so it is never stored as plain text */
-async function scramble(text) {
-  try {
-    if (globalThis.crypto?.subtle) {
-      const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("autospire:" + text));
-      return "s:" + [...new Uint8Array(bytes)].map((b) => b.toString(16).padStart(2, "0")).join("");
-    }
-  } catch {}
-  // simple fallback for pages opened over plain http (not secure)
-  let h = 5381;
-  for (const c of "autospire:" + text) h = ((h << 5) + h + c.charCodeAt(0)) | 0;
-  return "f:" + h;
+/* ---------- small helpers ---------- */
+
+// "050 123 4567" -> "0501234567"
+export function cleanPhone(phone) {
+  return String(phone || "").replace(/\D/g, "");
 }
 
-const read = (key, store = localStorage) => {
-  try { return JSON.parse(store.getItem(key)); } catch { return null; }
-};
-const getUsers = () => read(USERS) || [];
-const saveUsers = (list) => { try { localStorage.setItem(USERS, JSON.stringify(list)); } catch {} };
-const tell = () => window.dispatchEvent(new Event(EVENT));
+// only allow redirects to pages on this site (stops ?next=https://evil.com)
+export function safeNext(next) {
+  return next && next.startsWith("/") && !next.startsWith("//") ? next : "/";
+}
 
-export const initialsOf = (name) => name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase() || "U";
-export const firstName = (name) => name.trim().split(/\s+/)[0];
+// "Ahmed Ali" -> "Ahmed". Used for "Hi, Ahmed" in the header.
+export function firstName(user) {
+  if (!user) return "";
+  const name = (user.name || "").trim().split(/\s+/)[0];
+  return name || "there";
+}
 
-/* only allow redirects to pages on this site */
-export const safeNext = (next, fallback = "/my-vehicles") =>
-  next && next.startsWith("/") && !next.startsWith("//") ? next : fallback;
+function read(storage, key, fallback) {
+  try { return JSON.parse(storage.getItem(key)) ?? fallback; } catch { return fallback; }
+}
 
+function announce() {
+  if (typeof window !== "undefined") window.dispatchEvent(new Event(AUTH_EVENT));
+}
+
+/* ---------- accounts ---------- */
+
+export function registerUser({ name = "", phone, email = "" }) {
+  const p = cleanPhone(phone);
+  const users = read(localStorage, USERS_KEY, []);
+  if (users.some((u) => u.phone === p)) {
+    return { ok: false, error: "An account with this number already exists. Please log in." };
+  }
+  const user = { id: Date.now(), name, email, phone: p };
+  localStorage.setItem(USERS_KEY, JSON.stringify([...users, user]));
+  startSession(user, true);
+  return { ok: true, user };
+}
+
+export function loginUser({ phone, remember = true }) {
+  const p = cleanPhone(phone);
+  const users = read(localStorage, USERS_KEY, []);
+  let user = users.find((u) => u.phone === p);
+
+  if (!user) {
+    if (!AUTO_CREATE) return { ok: false, error: "No account found for this number. Please create an account." };
+    user = { id: Date.now(), name: "", email: "", phone: p };
+    localStorage.setItem(USERS_KEY, JSON.stringify([...users, user]));
+  }
+
+  startSession(user, remember);
+  return { ok: true, user };
+}
+
+/* ---------- login session ---------- */
+
+// "Keep me logged in" -> stays after the browser closes. Otherwise it ends with the tab.
 function startSession(user, remember) {
-  const session = { id: user.id, name: user.name, email: user.email, initials: initialsOf(user.name) };
-  try {
-    localStorage.removeItem(SESSION);
-    sessionStorage.removeItem(SESSION);
-    (remember ? localStorage : sessionStorage).setItem(SESSION, JSON.stringify(session));
-  } catch {}
-  tell();
-  return session;
+  const where = remember ? localStorage : sessionStorage;
+  localStorage.removeItem(SESSION_KEY);
+  sessionStorage.removeItem(SESSION_KEY);
+  where.setItem(SESSION_KEY, JSON.stringify(user));
+  announce();
 }
 
-export const currentUser = () => read(SESSION, sessionStorage) || read(SESSION);
-
-export async function registerUser({ name, email, phone, emirate, password }) {
-  const clean = email.trim().toLowerCase();
-  const users = getUsers();
-  if (users.some((u) => u.email === clean)) {
-    return { ok: false, field: "email", error: "An account with this email already exists. Try logging in." };
-  }
-  const user = { id: "u" + Date.now(), name: name.trim(), email: clean, phone: phone.trim(), emirate, pass: await scramble(password), created: Date.now() };
-  saveUsers([...users, user]);
-  return { ok: true, user: startSession(user, true) };
-}
-
-export async function loginUser({ email, password, remember }) {
-  const clean = email.trim().toLowerCase();
-  let users = getUsers();
-
-  // create the demo account the first time it is used
-  if (clean === DEMO.email && password === DEMO.password && !users.some((u) => u.email === clean)) {
-    const demo = { id: "u-demo", name: DEMO.name, email: DEMO.email, phone: DEMO.phone, emirate: DEMO.emirate, pass: await scramble(DEMO.password), created: Date.now() };
-    users = [...users, demo];
-    saveUsers(users);
-  }
-
-  const user = users.find((u) => u.email === clean);
-  // same message for "no such email" and "wrong password" on purpose
-  if (!user || user.pass !== (await scramble(password))) return { ok: false, error: "Email or password is incorrect." };
-  return { ok: true, user: startSession(user, remember) };
+export function getCurrentUser() {
+  if (typeof window === "undefined") return null;
+  return read(sessionStorage, SESSION_KEY, null) || read(localStorage, SESSION_KEY, null);
 }
 
 export function logout() {
-  try { localStorage.removeItem(SESSION); sessionStorage.removeItem(SESSION); } catch {}
-  tell();
+  localStorage.removeItem(SESSION_KEY);
+  sessionStorage.removeItem(SESSION_KEY);
+  announce();
 }
 
-/* use anywhere: const { user, ready } = useAuth();  (user is null when logged out) */
+// same thing with other names, in case other files use them
+export const logoutUser = logout;
+export const getSession = getCurrentUser;
+export const isLoggedIn = () => !!getCurrentUser();
+
+/* ---------- React hook: who is logged in right now ---------- */
+
+// Use it like:   const { user, ready } = useAuth();
+//   user  = the logged-in user, or null
+//   ready = false for the first instant (before the browser has been checked)
 export function useAuth() {
   const [state, setState] = useState({ user: null, ready: false });
+
   useEffect(() => {
-    const update = () => setState({ user: currentUser(), ready: true });
-    update();
-    window.addEventListener(EVENT, update);
-    window.addEventListener("storage", update);
+    const sync = () => setState({ user: getCurrentUser(), ready: true });
+    sync();
+    window.addEventListener(AUTH_EVENT, sync);
+    window.addEventListener("storage", sync);
     return () => {
-      window.removeEventListener(EVENT, update);
-      window.removeEventListener("storage", update);
+      window.removeEventListener(AUTH_EVENT, sync);
+      window.removeEventListener("storage", sync);
     };
   }, []);
+
   return state;
 }
