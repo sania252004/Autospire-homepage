@@ -6,6 +6,7 @@ export const user = {
 
 export const accountLinks = [
   { label: "My Vehicles", href: "/my-vehicles" },
+  { label: "Profile & Settings", href: "/account" },
 ];
 
 export const sidebarLinks = [
@@ -15,7 +16,7 @@ export const sidebarLinks = [
   { label: "My Quotes",          icon: "document", href: "/my-quotes" },
   { label: "My Garage",          icon: "garage",   href: "#" },
   { label: "Notifications",      icon: "bell",     href: "/notifications" },
-  { label: "Profile & Settings", icon: "user",     href: "#" },
+  { label: "Profile & Settings", icon: "user",     href: "/account" },
   { label: "Help & Support",     icon: "headset",  href: "#" },
 ];
 

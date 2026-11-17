@@ -139,7 +139,11 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
                 className={`${styles.accountMenu} ${
                   accountOpen ? styles.open : ""
                 }`}
-              >
+              > 
+                <a href="/account" onClick={closeAccount}>
+                  My Account
+                </a>
+
                 <a href="/my-vehicles" onClick={closeAccount}>
                   My Vehicles
                 </a>

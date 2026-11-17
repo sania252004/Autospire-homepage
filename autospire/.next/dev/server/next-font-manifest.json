@@ -1,9 +1,18 @@
 {
   "app": {
+    "[project]/app/account/page": [
+      "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
+    ],
     "[project]/app/login/page": [
       "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
     ],
+    "[project]/app/my-bookings/page": [
+      "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
+    ],
     "[project]/app/page": [
+      "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
+    ],
+    "[project]/app/verify/page": [
       "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
     ]
   },
