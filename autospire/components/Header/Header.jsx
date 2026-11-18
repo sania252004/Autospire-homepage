@@ -1,13 +1,11 @@
-
 "use client";
-
 import { useState } from "react";
 import Icon from "@/components/Icon/Icon";
 import Logo from "@/components/Logo/Logo";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import { services, emirates } from "@/lib/data";
-import { useAuth, logout, firstName } from "@/lib/authStore";
 import styles from "./Header.module.css";
+import { useAuth, logout, getFirstName } from "@/lib/authStore";
 
 export default function Header({ emirate, setEmirate, openService, goTab }) {
   const { user } = useAuth();
@@ -111,14 +109,14 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
             <Icon name="user" size={22} />
           </a>
 
-          {/* LOGGED OUT */}
+          {/* LOGGED OUT: Login button */}
           {!user && (
             <a href="/login" className={styles.accountButton}>
               Login
             </a>
           )}
 
-          {/* LOGGED IN */}
+          {/* LOGGED IN: first name with a dropdown menu */}
           {user && (
             <div
               className={styles.account}
@@ -131,7 +129,7 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
                 aria-expanded={accountOpen}
                 aria-haspopup="true"
               >
-                {firstName(user)}
+                {getFirstName(user) || "My Account"}
                 <Icon name="down" size={12} sw={2.6} />
               </button>
 
@@ -139,17 +137,17 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
                 className={`${styles.accountMenu} ${
                   accountOpen ? styles.open : ""
                 }`}
-              > 
-                <a href="/account" onClick={closeAccount}>
-                  My Account
-                </a>
-
+              >
                 <a href="/my-vehicles" onClick={closeAccount}>
                   My Vehicles
                 </a>
 
                 <a href="/my-bookings" onClick={closeAccount}>
                   My Bookings
+                </a>
+
+                <a href="/account" onClick={closeAccount}>
+                  Profile & Settings
                 </a>
 
                 <button
@@ -220,11 +218,12 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
                 My Vehicles
               </a>
 
-              <a
-                href="/my-bookings"
-                onClick={closeMobileMenu}
-              >
+              <a href="/my-bookings" onClick={closeMobileMenu}>
                 My Bookings
+              </a>
+
+              <a href="/account" onClick={closeMobileMenu}>
+                Profile & Settings
               </a>
 
               <button

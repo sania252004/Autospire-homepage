@@ -5,7 +5,8 @@ export const user = {
 };
 
 export const accountLinks = [
-  { label: "My Vehicles", href: "/my-vehicles" },
+  { label: "My Vehicles",        href: "/my-vehicles" },
+  { label: "My Bookings",        href: "/my-bookings" },
   { label: "Profile & Settings", href: "/account" },
 ];
 

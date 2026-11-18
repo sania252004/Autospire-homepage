@@ -115,3 +115,49 @@ export function useAuth() {
 
   return state;
 }
+
+/* The customer's full name. Works with both field names: "fullName" (backend) or "name" (older login). */
+export function getName(user) {
+  if (!user) return "";
+  return (user.fullName || user.name || "").trim();
+}
+
+/* "Sania Khandakar" -> "Sania" */
+export function getFirstName(user) {
+  return getName(user).split(" ")[0] || "";
+}
+
+/* "Sania Khandakar" -> "SK" */
+export function getInitials(user) {
+  const words = getName(user).split(" ").filter(Boolean);
+  return words.slice(0, 2).map((word) => word[0]).join("").toUpperCase();
+}
+
+/* email if there is one, otherwise the mobile number */
+export function getContact(user) {
+  if (!user) return "";
+  return user.email || user.mobileNumber || user.phone || "";
+}
+
+/* Saves the customer's name into the login, so the header can show their initials (SK).
+   Call it whenever you know the name. */
+export function rememberName(fullName) {
+  if (!fullName) return;
+
+  // the login can be kept in sessionStorage or localStorage, so check both
+  for (const store of [sessionStorage, localStorage]) {
+    try {
+      const saved = store.getItem(SESSION_KEY);
+      if (!saved) continue;
+
+      const session = JSON.parse(saved);
+      if (session.fullName === fullName) return;   // already saved, nothing to do
+
+      session.fullName = fullName;
+      session.name = fullName;
+
+      store.setItem(SESSION_KEY, JSON.stringify(session));
+      announce();                                  // tells the header to update
+    } catch {}
+  }
+}
