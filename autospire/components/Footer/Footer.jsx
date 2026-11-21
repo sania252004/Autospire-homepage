@@ -1,3 +1,4 @@
+import Logo from "@/components/Logo/Logo"; // adjust the path to wherever your Logo file lives
 import styles from "./Footer.module.css";
 
 export default function Footer() {
@@ -5,7 +6,7 @@ export default function Footer() {
     <footer className={styles.footer}>
 
       {/* COPYRIGHT (the year is filled in automatically) */}
-      <p className={styles.copyright}>© {new Date().getFullYear()} Autospire. All rights reserved.</p>
+      <p className={styles.copyright}>© {new Date().getFullYear()} Karevo. All rights reserved.</p>
 
       {/* TEAL SHAPE ON THE RIGHT, with the tagline on top of it */}
       <div className={styles.panel}>
@@ -28,13 +29,10 @@ export default function Footer() {
           <path d="M260 142 L338 34 Q346 24 362 21 L545 0 L600 0 L600 142 Z" fill="url(#footerShape)" />
         </svg>
 
-        {/* tagline and the small "A" logo mark */}
+        {/* tagline and the small "K" logo mark */}
         <div className={styles.tagline}>
           <span>Drive Better. Service Smarter.</span>
-          <svg className={styles.logoMark} viewBox="0 0 100 94" aria-hidden="true">
-            <path d="M8 94 L46 4 Q50 -2 54 4 L92 94 L72 94 L50 40 L28 94 Z" fill="#0b3558" />
-            <path d="M20 72 L78 54 L84 68 L26 86 Z" fill="#0b3558" />
-          </svg>
+          <Logo size={72} text={false} color="#0b3558" />
         </div>
 
       </div>

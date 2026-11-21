@@ -1,15 +1,4 @@
 "use client";
-/* ==========================================================
-   ACCOUNT PAGE CONTENT
-   Top to bottom, the page is made of these parts:
-     1) PageBanner      the dark blue title banner
-     2) ProfileCard     the customer's details (with "Edit Profile")
-     3) SavedVehicles   one card per vehicle (VehicleCard)
-
-   WHERE TO EDIT:
-   - All the text and numbers -> lib/accountData.js
-   - Colours, sizes and spacing -> Account.module.css
-   ========================================================== */
 
 import { useState } from "react";
 import Icon from "@/components/Icon/Icon";
@@ -33,7 +22,6 @@ function niceText(text) {
   return text.charAt(0) + text.slice(1).toLowerCase();
 }
 
-// "Ahmed Al Ameri"  becomes  "AA"
 function getInitials(name) {
   return name.split(" ").filter(Boolean).slice(0, 2).map((word) => word[0]).join("").toUpperCase();
 }

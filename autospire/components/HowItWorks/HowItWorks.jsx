@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Icon from "@/components/Icon/Icon";
+import Logo from "@/components/Logo/Logo";
 import Slider from "@/components/Slider/Slider";
 import { howBook, howQuote, reviews } from "@/lib/data";
 import styles from "./HowItWorks.module.css";
@@ -40,7 +41,11 @@ function Review({ review }) {
           ))}
         </span>
       </div>
-      <span className={styles.avatar}>{review.name[0]}</span>
+
+      {/* teal circle on the right with the K mark inside */}
+      <span className={styles.avatar}>
+        <Logo size={64} text={false} color="#0b3558" />
+      </span>
     </figure>
   );
 }

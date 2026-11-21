@@ -1,8 +1,17 @@
-/* mark and name side by side. font-size controls the size of the brand name */
-.logo{display:inline-flex;align-items:center;gap:12px;flex:none;font-size:2.1rem;font-weight:600;line-height:1;color:var(--white);letter-spacing:-.6px}
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
 
-/* soft teal glow around the mark */
-.logo svg{display:block;flex:none;filter:drop-shadow(0 0 10px #1cf4f044)}
+.logo svg {
+  flex-shrink: 0;
+}
 
-/* phones: smaller */
-@media(max-width:640px){.logo{font-size:1.55rem;gap:9px}}
+.name {
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+}

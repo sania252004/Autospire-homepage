@@ -1,23 +1,24 @@
 import { BRAND } from "@/lib/data";
 import styles from "./Logo.module.css";
 
-// size = width of the "A" mark in pixels
-// text = false shows only the mark, without the name
-export default function Logo({ size = 62, text = true }) {
+// size  = width of the "K" mark in pixels
+// text  = false shows only the mark, without the name
+// color = optional, paints the whole mark one colour (used in the footer)
+export default function Logo({ size = 62, text = true, color }) {
   return (
     <span className={styles.logo}>
 
-      {/* the "A" mark, drawn from five coloured shapes */}
-      <svg viewBox="60 40 600 490" width={size} height={Math.round((size * 490) / 600)} aria-hidden="true">
-        <polygon points="345,62 410,62 425,135 375,200 280,335 190,332" fill="#1a9fb4" />
-        <polygon points="412,62 557,340 470,345 375,200 425,135" fill="#22f2f0" />
-        <polygon points="557,340 470,345 540,510 645,510" fill="#1fcfc9" />
-        <polygon points="190,335 278,338 170,510 75,510" fill="#22f2f0" />
-        <polygon points="310,342 435,352 448,372 428,402 330,415 250,432" fill="#1de8e6" />
+      {/* the "K" mark, drawn from five coloured shapes */}
+      <svg viewBox="105 57 545 458" width={size} height={Math.round((size * 458) / 545)} aria-hidden="true">
+        <polygon points="110,62 235,62 235,300 110,300" fill={color || "#1a9fb4"} />
+        <polygon points="110,300 235,300 235,510 110,510" fill={color || "#22f2f0"} />
+        <polygon points="235,300 410,62 560,62 345,345 235,400" fill={color || "#22f2f0"} />
+        <polygon points="330,335 460,335 645,510 505,510" fill={color || "#1fcfc9"} />
+        <polygon points="235,400 345,345 395,365 235,450" fill={color || "#1de8e6"} />
       </svg>
 
       {/* the brand name next to the mark */}
-      {text && <span>{BRAND}</span>}
+      {text && <span className={styles.name}>{BRAND}</span>}
     </span>
   );
 }

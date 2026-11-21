@@ -27,15 +27,29 @@
 .reviewBox{border-left:1px solid #ffffff2a;padding-left:28px;min-width:0}
 .reviewsTitle{margin:0 0 14px;font-size:1.15rem;font-weight:700;color:var(--white)}
 
-/* one review: text on the left, round letter on the right */
+/* one review: text on the left, round K badge on the right */
 .review{flex:0 0 100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;color:var(--teal)}
 .reviewText{display:grid;gap:8px;justify-items:start}
 .reviewText blockquote{color:var(--white);font-weight:600;font-size:.94rem;line-height:1.45}
 .reviewerName{color:var(--white);font-size:.88rem}
 .stars{display:flex;gap:2px}
 
-/* round circle with the first letter of the name */
-.avatar{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#25f2d8,#0fa8c0);color:var(--navy);font-weight:800;font-size:1.7rem}
+/* round teal circle holding the K mark, same size as the old Autospire one */
+.avatar{
+  width: 82px;
+  height:82px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#22f2f0,#1a9fb4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+.avatar > span{display:contents}
+
+/* K takes about half the circle; the small shift right balances its heavy left stem */
+.avatar svg{width:50%;height:auto;display:block;transform:translateX(4%)}
 
 /* ---------- 6. Smaller laptop screens ---------- */
 @media(max-width:1240px){

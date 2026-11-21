@@ -1,8 +1,8 @@
 /* ---------- 1. CONTACT DETAILS ---------- */
-export const BRAND = "Autospire";           // name next to the logo
+export const BRAND = "Karevo";           // name next to the logo
 export const PHONE = "+971 4 000 0000";     // phone number shown on the page
 export const TEL = "tel:+97140000000";      // same number, no spaces (used when someone taps to call)
-export const EMAIL = "hello@autospire.ae";
+export const EMAIL = "hello@karevo.ae";
 export const ADDRESS = "Dubai, United Arab Emirates";
 
 // opening hours shown in the Enquiry section
@@ -125,7 +125,7 @@ export const garages = [
 ];
 /* ---------- 5. REVIEWS (SAMPLES: replace with real customer reviews) ---------- */
 export const reviews = [
-  { name: "Ahmed K.",  text: "Autospire makes it so easy to compare garages and book car services. Highly recommended!" },
+  { name: "Ahmed K.",  text: "Karevo makes it so easy to compare garages and book car services. Highly recommended!" },
   { name: "Fatima R.", text: "Got three quotes within an hour and saved nearly 30% on my brake job. The photo updates were a great touch." },
   { name: "Rahul M.",  text: "Battery died at my office in Business Bay. A car technician arrived in 25 minutes. Brilliant service." },
   { name: "Sarah L.",  text: "Clear fixed prices and no surprises at the end. I booked my annual service in under two minutes." },

@@ -144,15 +144,25 @@
 }
 
 .HowItWorks-module__oom_6W__avatar {
-  width: 72px;
-  height: 72px;
-  color: var(--navy);
-  background: linear-gradient(135deg, #25f2d8, #0fa8c0);
+  background: linear-gradient(135deg, #22f2f0, #1a9fb4);
   border-radius: 50%;
-  place-items: center;
-  font-size: 1.7rem;
-  font-weight: 800;
-  display: grid;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 82px;
+  height: 82px;
+  display: flex;
+}
+
+.HowItWorks-module__oom_6W__avatar > span {
+  display: contents;
+}
+
+.HowItWorks-module__oom_6W__avatar svg {
+  width: 50%;
+  height: auto;
+  display: block;
+  transform: translateX(4%);
 }
 
 @media (max-width: 1240px) {
