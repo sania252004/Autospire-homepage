@@ -1,0 +1,40 @@
+/* dark background covering the whole screen; the box sits lower down the page */
+.overlay{position:fixed;inset:0;z-index:1000;display:grid;place-items:start center;padding:30vh 20px 20px;overflow-y:auto;background:#020b1acc}
+
+/* the pop-up box */
+.box{position:relative;width:100%;max-width:440px;padding:36px 32px;border-radius:28px;border:1.5px solid #1cf4f033;background:linear-gradient(160deg,#1b3a5f,#0b1c38);color:#fff}
+.box h2{font-size:2rem;margin:0 0 6px;padding-right:48px}
+.sub{color:#b8c4d6;margin:0 0 22px}
+
+/* X button: teal outlined circle in the top right corner, fills on hover */
+.box .close{position:absolute;top:18px;right:18px;width:40px;height:40px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#22f2f0;background:transparent;border:1.5px solid #22f2f0;cursor:pointer;transition:.2s}
+.box .close:hover{background:#22f2f0;color:#011631}
+
+/* error message */
+.alert{margin:0 0 16px;padding:10px 14px;border-radius:12px;background:#ff4d4d22;border:1px solid #ff4d4d66;color:#ffb3b3;font-size:.9rem}
+
+/* form */
+.box label{display:block;font-weight:600;margin-bottom:8px}
+.box input[type="tel"],
+.box input[type="text"]{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid #ffffff2a;background:#0a1a33;color:#fff;font-size:1rem;margin-bottom:16px}
+
+/* the 4-digit code box: big, centred numbers */
+.box .codeInput{text-align:center;font-size:1.6rem;letter-spacing:.6em;padding-left:calc(16px + .6em)}
+
+/* "Keep me logged in" and "Forgot password?" on one line */
+.row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;font-size:.92rem}
+.check{display:flex !important;align-items:center;gap:8px;margin:0 !important;font-weight:400 !important;cursor:pointer}
+.check input{width:18px;height:18px;margin:0;accent-color:#22f2f0}
+.link{color:#22f2f0;font-weight:600;text-decoration:none}
+.link:hover{text-decoration:underline}
+
+/* "Change number" and "Resend code" look like links */
+.box .linkButton{padding:0;border:0;background:none;color:#22f2f0;font-weight:600;font-size:.92rem;cursor:pointer}
+.box .linkButton:hover{text-decoration:underline}
+
+/* main button: bright teal, text centred */
+.box .button{display:flex;align-items:center;justify-content:center;width:100%;padding:14px;border:0;border-radius:14px;background:#22f2f0;color:#011631;font-weight:700;font-size:1rem;text-align:center;opacity:1;filter:none;cursor:pointer}
+.box .button:hover{background:#5ff7f5}
+
+.footer{text-align:center;margin:20px 0 0}
+.footer a{color:#22f2f0;font-weight:600}

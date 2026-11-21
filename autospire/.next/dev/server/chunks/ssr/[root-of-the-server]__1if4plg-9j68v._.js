@@ -41,7 +41,7 @@ var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$p
 ;
 ;
 const metadata = {
-    title: "Autospire — Your Complete Automotive Services Marketplace in the UAE",
+    title: "Karevo — Your Complete Automotive Services Marketplace in the UAE",
     description: "Compare garages, get competitive quotes and book car services with confidence across the UAE."
 };
 function RootLayout({ children }) {

@@ -3,6 +3,7 @@ import { useState } from "react";
 import Icon from "@/components/Icon/Icon";
 import Logo from "@/components/Logo/Logo";
 import Dropdown from "@/components/Dropdown/Dropdown";
+import LoginModal from "@/components/LoginModal/LoginModal";
 import { services, emirates } from "@/lib/data";
 import styles from "./Header.module.css";
 import { useAuth, logout, getFirstName } from "@/lib/authStore";
@@ -10,13 +11,16 @@ import { useAuth, logout, getFirstName } from "@/lib/authStore";
 export default function Header({ emirate, setEmirate, openService, goTab }) {
   const { user } = useAuth();
 
-  // Mobile menu
+  // Mobile menu: open or closed
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeMobileMenu = () => setMobileOpen(false);
 
-  // Account dropdown
+  // Account dropdown: open or closed
   const [accountOpen, setAccountOpen] = useState(false);
   const closeAccount = () => setAccountOpen(false);
+
+  // Login pop-up: open or closed
+  const [loginOpen, setLoginOpen] = useState(false);
 
   return (
     <header className={styles.header}>
@@ -101,27 +105,35 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
           <span className={styles.divider} />
 
           {/* USER ICON */}
-          <a
-            href={user ? "/my-vehicles" : "/login"}
-            className={styles.userIcon}
-            aria-label={user ? "My vehicles" : "Log in"}
-          >
-            <Icon name="user" size={22} />
-          </a>
-
-          {/* LOGGED OUT: Login button */}
-          {!user && (
-            <a href="/login" className={styles.accountButton}>
-              Login
+          {user ? (
+            <a href="/my-vehicles" className={styles.userIcon} aria-label="My vehicles">
+              <Icon name="user" size={22} />
             </a>
+          ) : (
+            <button
+              type="button"
+              className={styles.userIcon}
+              onClick={() => setLoginOpen(true)}
+              aria-label="Log in"
+            >
+              <Icon name="user" size={22} />
+            </button>
+          )}
+
+          {/* LOGGED OUT: Login button opens the pop-up */}
+          {!user && (
+            <button
+              type="button"
+              className={styles.accountButton}
+              onClick={() => setLoginOpen(true)}
+            >
+              Login
+            </button>
           )}
 
           {/* LOGGED IN: first name with a dropdown menu */}
           {user && (
-            <div
-              className={styles.account}
-              onMouseLeave={closeAccount}
-            >
+            <div className={styles.account} onMouseLeave={closeAccount}>
               <button
                 type="button"
                 className={styles.accountButton}
@@ -133,22 +145,10 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
                 <Icon name="down" size={12} sw={2.6} />
               </button>
 
-              <div
-                className={`${styles.accountMenu} ${
-                  accountOpen ? styles.open : ""
-                }`}
-              >
-                <a href="/my-vehicles" onClick={closeAccount}>
-                  My Vehicles
-                </a>
-
-                <a href="/my-bookings" onClick={closeAccount}>
-                  My Bookings
-                </a>
-
-                <a href="/account" onClick={closeAccount}>
-                  Profile & Settings
-                </a>
+              <div className={`${styles.accountMenu} ${accountOpen ? styles.open : ""}`}>
+                <a href="/my-vehicles" onClick={closeAccount}>My Vehicles</a>
+                <a href="/my-bookings" onClick={closeAccount}>My Bookings</a>
+                <a href="/account" onClick={closeAccount}>Profile & Settings</a>
 
                 <button
                   type="button"
@@ -171,10 +171,7 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
           >
-            <Icon
-              name={mobileOpen ? "close" : "menu"}
-              size={26}
-            />
+            <Icon name={mobileOpen ? "close" : "menu"} size={26} />
           </button>
         </div>
       </div>
@@ -182,13 +179,8 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
       {/* MOBILE MENU */}
       {mobileOpen && (
         <div className={styles.mobileMenu}>
-          <a href="#services" onClick={closeMobileMenu}>
-            Services
-          </a>
-
-          <a href="#garages" onClick={closeMobileMenu}>
-            Garages
-          </a>
+          <a href="#services" onClick={closeMobileMenu}>Services</a>
+          <a href="#garages" onClick={closeMobileMenu}>Garages</a>
 
           <button
             type="button"
@@ -200,31 +192,14 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
             Compare Quotes
           </button>
 
-          <a href="#how" onClick={closeMobileMenu}>
-            About
-          </a>
-
-          <a href="#enquiry" onClick={closeMobileMenu}>
-            Support
-          </a>
+          <a href="#how" onClick={closeMobileMenu}>About</a>
+          <a href="#enquiry" onClick={closeMobileMenu}>Support</a>
 
           {user ? (
             <>
-              <a
-                href="/my-vehicles"
-                onClick={closeMobileMenu}
-                className="btn"
-              >
-                My Vehicles
-              </a>
-
-              <a href="/my-bookings" onClick={closeMobileMenu}>
-                My Bookings
-              </a>
-
-              <a href="/account" onClick={closeMobileMenu}>
-                Profile & Settings
-              </a>
+              <a href="/my-vehicles" onClick={closeMobileMenu} className="btn">My Vehicles</a>
+              <a href="/my-bookings" onClick={closeMobileMenu}>My Bookings</a>
+              <a href="/account" onClick={closeMobileMenu}>Profile & Settings</a>
 
               <button
                 type="button"
@@ -238,21 +213,25 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
             </>
           ) : (
             <>
-              <a
-                href="/login"
-                onClick={closeMobileMenu}
+              <button
+                type="button"
                 className="btn"
+                onClick={() => {
+                  closeMobileMenu();
+                  setLoginOpen(true);
+                }}
               >
                 Log in
-              </a>
+              </button>
 
-              <a href="/register" onClick={closeMobileMenu}>
-                Create account
-              </a>
+              <a href="/register" onClick={closeMobileMenu}>Create account</a>
             </>
           )}
         </div>
       )}
+
+      {/* LOGIN POP-UP (shows only when loginOpen is true) */}
+      <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
     </header>
   );
 }
