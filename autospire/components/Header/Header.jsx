@@ -34,6 +34,9 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
         {/* DESKTOP NAVIGATION */}
         <nav className={styles.nav} aria-label="Main">
 
+          {/* ABOUT */}
+          <a href="#how">About</a>
+
           {/* SERVICES */}
           <div className={styles.dropdown}>
             <a href="#services">
@@ -71,9 +74,6 @@ export default function Header({ emirate, setEmirate, openService, goTab }) {
           <button type="button" onClick={() => goTab("quote")}>
             Compare Quotes
           </button>
-
-          {/* ABOUT */}
-          <a href="#how">About</a>
 
           {/* SUPPORT */}
           <div className={styles.dropdown}>

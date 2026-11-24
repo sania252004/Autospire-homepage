@@ -63,7 +63,11 @@ export const goodHands = {
    type      = "suv" | "sedan" | "hatchback" | "pickup" (used for the preset picture)
    photo     = path to a picture, or "" to show the preset for its type
    intervalKm = service every this many km; lastServiceKm = odometer at the last service
-   documents.category = "Registration" | "Insurance" | "Inspection report" | "Invoice" | "Other" */
+   documents.category = "Registration" | "Insurance" | "Inspection report" | "Invoice" | "Other"
+
+   items (on services, tyres and batteries) = the lines of the invoice:
+     { name: "what it is", qty: 1, price: price of ONE item in AED (VAT included) }
+   The items must add up to the record's price, or the bill total will not match. */
 export const initialVehicles = [
   {
     id: 1, make: "Mercedes-Benz", model: "GLC", year: 2023, type: "suv", city: "Dubai",
@@ -77,15 +81,54 @@ export const initialVehicles = [
       { date: "2026-10-28", km: 24300 },
     ],
     services: [
-      { id: 1, date: "2025-06-15", title: "Full Service & Oil Change", garage: "AutoPro Garage",   km: 18000, price: 650, invoice: true, report: true },
-      { id: 2, date: "2025-01-12", title: "Brake Service",             garage: "SpeedFit Garage",  km: 14200, price: 480, invoice: true },
-      { id: 3, date: "2024-07-20", title: "AC Service",                garage: "DriveWell Garage", km: 9800,  price: 420, invoice: true },
+      {
+        id: 1, date: "2025-06-15", title: "Full Service & Oil Change", garage: "AutoPro Garage", km: 18000, price: 650, invoice: true, report: true,
+        items: [
+          { name: "Engine oil 5W-30 (5 L)", qty: 1, price: 220 },
+          { name: "Oil filter",             qty: 1, price: 45 },
+          { name: "Air filter",             qty: 1, price: 85 },
+          { name: "Cabin filter",           qty: 1, price: 70 },
+          { name: "Labour",                 qty: 1, price: 230 },
+        ],
+      },
+      {
+        id: 2, date: "2025-01-12", title: "Brake Service", garage: "SpeedFit Garage", km: 14200, price: 480, invoice: true,
+        items: [
+          { name: "Front brake pads (set)", qty: 1, price: 190 },
+          { name: "Rear brake pads (set)",  qty: 1, price: 130 },
+          { name: "Brake fluid change",     qty: 1, price: 60 },
+          { name: "Labour",                 qty: 1, price: 100 },
+        ],
+      },
+      {
+        id: 3, date: "2024-07-20", title: "AC Service", garage: "DriveWell Garage", km: 9800, price: 420, invoice: true,
+        items: [
+          { name: "AC gas refill",          qty: 1, price: 150 },
+          { name: "AC system cleaning",     qty: 1, price: 90 },
+          { name: "Compressor oil",         qty: 1, price: 60 },
+          { name: "Labour",                 qty: 1, price: 120 },
+        ],
+      },
     ],
     tyres: [
-      { id: 1, date: "2025-09-10", detail: "4 × Michelin Latitude Sport 3 (235/60 R18)", garage: "Elite Auto Care", km: 19400, price: 1850, warranty: "Road hazard 12 months" },
+      {
+        id: 1, date: "2025-09-10", detail: "4 × Michelin Latitude Sport 3 (235/60 R18)", garage: "Elite Auto Care", km: 19400, price: 1850, warranty: "Road hazard 12 months",
+        items: [
+          { name: "Michelin Latitude Sport 3 (235/60 R18)", qty: 4, price: 400 },
+          { name: "Wheel balancing & alignment",            qty: 1, price: 150 },
+          { name: "Fitting & new valves",                   qty: 1, price: 100 },
+        ],
+      },
     ],
     batteries: [
-      { id: 1, date: "2025-03-18", detail: "Varta Silver 80Ah AGM", garage: "SpeedFit Garage", km: 16100, price: 720, warranty: "18 months" },
+      {
+        id: 1, date: "2025-03-18", detail: "Varta Silver 80Ah AGM", garage: "SpeedFit Garage", km: 16100, price: 720, warranty: "18 months",
+        items: [
+          { name: "Varta Silver 80Ah AGM battery", qty: 1, price: 600 },
+          { name: "Battery registration (coding)", qty: 1, price: 70 },
+          { name: "Fitting & old battery disposal", qty: 1, price: 50 },
+        ],
+      },
     ],
     inspections: [
       { id: 1, date: "2025-06-15", title: "Pre-service inspection report", garage: "AutoPro Garage",      result: "Passed, 2 advisories" },
@@ -109,11 +152,26 @@ export const initialVehicles = [
       { date: "2026-11-01", km: 79400 },
     ],
     services: [
-      { id: 1, date: "2025-11-20", title: "Full Service & Oil Change", garage: "Elite Auto Care", km: 70000, price: 720, invoice: true },
+      {
+        id: 1, date: "2025-11-20", title: "Full Service & Oil Change", garage: "Elite Auto Care", km: 70000, price: 720, invoice: true,
+        items: [
+          { name: "Engine oil 0W-20 (7 L)", qty: 1, price: 280 },
+          { name: "Oil filter",             qty: 1, price: 55 },
+          { name: "Air filter",             qty: 1, price: 95 },
+          { name: "Labour",                 qty: 1, price: 290 },
+        ],
+      },
     ],
     tyres: [],
     batteries: [
-      { id: 1, date: "2024-12-02", detail: "Bosch S5 100Ah", garage: "SpeedFit Garage", km: 56000, price: 690, warranty: "24 months" },
+      {
+        id: 1, date: "2024-12-02", detail: "Bosch S5 100Ah", garage: "SpeedFit Garage", km: 56000, price: 690, warranty: "24 months",
+        items: [
+          { name: "Bosch S5 100Ah battery",         qty: 1, price: 580 },
+          { name: "Battery registration (coding)",  qty: 1, price: 60 },
+          { name: "Fitting & old battery disposal", qty: 1, price: 50 },
+        ],
+      },
     ],
     inspections: [],
     documents: [

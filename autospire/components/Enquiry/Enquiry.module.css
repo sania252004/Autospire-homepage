@@ -19,6 +19,23 @@
 .form option{background:var(--navy2);color:var(--white)}
 .form input:focus,.form select:focus,.form textarea:focus{border-color:var(--teal)}
 
+/* dropdown: small box, own arrow with space from the right edge */
+.form select{
+  -webkit-appearance:none;
+  appearance:none;
+  height:42px;
+  padding:0 44px 0 16px;
+  font-size:.92rem;
+  cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314e8cf' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 18px center;
+  background-size:14px;
+}
+
+/* the options inside the open list */
+.form option{padding:10px 16px;font-size:.92rem}
+
 /* two fields side by side */
 .twoColumns{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
@@ -29,3 +46,29 @@
 /* ---------- 5. Tablets and phones ---------- */
 @media(max-width:1080px){.layout{grid-template-columns:1fr}}
 @media(max-width:640px){.twoColumns{grid-template-columns:1fr}}
+
+/* ---------- 6. "Partner with" box under the contact details ---------- */
+.partner{margin-top:30px;padding:22px;border:1px solid #14e8cf33;border-radius:16px;background:linear-gradient(160deg,#0d2a52,#0a1d3d)}
+.partner h3{margin:0 0 6px;font-size:1.15rem}
+.partner p{margin:0 0 16px;color:var(--slate);font-size:.94rem;line-height:1.5}
+
+/* ---------- 7. The partner pop-up ---------- */
+
+/* dark blurred layer behind the pop-up */
+.overlay{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px;overflow-y:auto;background:rgba(1,12,28,.6);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+
+/* the pop-up box */
+.modal{position:relative;width:100%;max-width:560px;max-height:calc(100vh - 40px);overflow-y:auto;padding:32px;border-radius:24px;background:linear-gradient(160deg,#0d2a52,#0a1d3d);border:1px solid #14e8cf55;box-shadow:0 30px 80px rgba(0,0,0,.55);color:var(--white)}
+.modal h3{margin:0 0 6px;padding-right:48px;font-size:1.7rem}
+.modalIntro{margin:0 0 20px;color:var(--slate);line-height:1.5}
+
+/* X button, top right */
+.close{position:absolute;top:18px;right:18px;width:40px;height:40px;padding:0;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);background:none;color:#fff;cursor:pointer;display:grid;place-items:center;line-height:0}
+.close svg{display:block}
+.close:hover{border-color:var(--teal);color:var(--teal)}
+
+/* the form inside the pop-up does not need a card of its own */
+.partnerForm{background:none;border:0;padding:0}
+.modal .success h3{padding-right:0}
+
+@media(max-width:640px){.modal{padding:24px 20px}}

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Icon from "@/components/Icon/Icon";
-import { services, emirates, carModels, carMakes, carYears, PHONE, TEL, EMAIL, ADDRESS, HOURS } from "@/lib/data";
+import { services, emirates, carModels, carMakes, carYears, BRAND, PHONE, TEL, EMAIL, ADDRESS, HOURS } from "@/lib/data";
 import styles from "./Enquiry.module.css";
 
 /* turns "2023 Mercedes-Benz GLC" into { year, make, model } */
@@ -37,9 +37,93 @@ function ThankYou({ onSendAnother }) {
   );
 }
 
+/* ---------- NEW: THE "PARTNER WITH" POP-UP ---------- */
+function PartnerModal({ onClose }) {
+  const [sent, setSent] = useState(false);
+
+  // pressing the Esc key closes the pop-up
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    // everything the garage typed, e.g. { name: "...", registration: "...", address: "...", ... }
+    const data = Object.fromEntries(new FormData(event.target));
+
+    // TODO: send "data" to your server or email service here
+    setSent(true);
+  }
+
+  return (
+    // clicking the dark area closes the pop-up
+    <div className={styles.overlay} onClick={onClose}>
+      {/* clicking inside the box does not close it */}
+      <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="partner-title" onClick={(e) => e.stopPropagation()}>
+
+        <button type="button" className={styles.close} onClick={onClose} aria-label="Close">✕</button>
+
+        {sent ? (
+          <div className={`${styles.form} ${styles.success} ${styles.partnerForm}`}>
+            <Icon name="check" size={40} sw={2.4} />
+            <h3 id="partner-title">Thank you!</h3>
+            <p>We have received your details. The {BRAND} partner team will review them and contact you shortly.</p>
+            <button type="button" className="btn line" onClick={onClose}>Close</button>
+          </div>
+        ) : (
+          <>
+            <h3 id="partner-title">Partner with {BRAND}</h3>
+            <p className={styles.modalIntro}>Own or manage a garage? Tell us about it and we will get in touch about joining the {BRAND} marketplace.</p>
+
+            <form className={`${styles.form} ${styles.partnerForm}`} onSubmit={handleSubmit}>
+              <label>Name
+                <input name="name" required maxLength={120} placeholder="Garage or business name" />
+              </label>
+
+              <label>Registration number
+                <input name="registration" required maxLength={60} placeholder="Trade licence or registration number" />
+              </label>
+
+              <label>Address
+                <input name="address" required maxLength={200} placeholder="Street, area and city" />
+              </label>
+
+              <label>Email
+                <input name="email" required type="email" maxLength={255} placeholder="garage@email.com" />
+              </label>
+
+              <label>Location
+                <select name="location" required defaultValue="">
+                  <option value="" disabled>Select emirate</option>
+                  {emirates.map((name) => <option key={name} value={name}>{name}</option>)}
+                </select>
+              </label>
+
+              <label>Comments
+                <textarea name="comments" rows={4} maxLength={1000} placeholder="Tell us about your garage: services, car brands, number of bays..." />
+              </label>
+
+              <button className="btn" type="submit">Send Partner Enquiry <Icon name="arrow" size={18} sw={2.2} /></button>
+            </form>
+          </>
+        )}
+
+      </div>
+    </div>
+  );
+}
+
 // vehicle, service and emirate are shared with the Hero search box (they come from page.jsx)
 export default function Enquiry({ vehicle, setVehicle, service, setService, emirate, setEmirate }) {
   const [sent, setSent] = useState(false);
+
+  // NEW: is the "Partner with" pop-up open?
+  const [partnerOpen, setPartnerOpen] = useState(false);
 
   // make / model / year are kept here so a half-finished choice is not lost
   const first = parseVehicle(vehicle);
@@ -87,6 +171,15 @@ export default function Enquiry({ vehicle, setVehicle, service, setService, emir
               {HOURS.map(({ days, time }) => <div key={days}>{days}: {time}</div>)}
             </ContactItem>
           </ul>
+
+          {/* NEW: the "Partner with" box */}
+          <div className={styles.partner}>
+            <h3>Own a garage?</h3>
+            <p>Join the {BRAND} marketplace and get new customers sending jobs your way.</p>
+            <button type="button" className="btn line" onClick={() => setPartnerOpen(true)}>
+              Partner with {BRAND}
+            </button>
+          </div>
         </div>
 
         {sent ? (
@@ -146,6 +239,9 @@ export default function Enquiry({ vehicle, setVehicle, service, setService, emir
         )}
 
       </div>
+
+      {/* NEW: the pop-up (only exists while it is open) */}
+      {partnerOpen && <PartnerModal onClose={() => setPartnerOpen(false)} />}
     </section>
   );
 }

@@ -1,12 +1,14 @@
 "use client";
 import { useState } from "react";
 import Icon from "@/components/Icon/Icon";
+import InvoiceModal from "@/components/InvoiceModal/InvoiceModal";
 import { carModels, carMakes, carYears } from "@/lib/data";
 import { pageBanner, quickActions, tabs, initialVehicles, goodHands } from "@/lib/myVehiclesData";
 import {
   BODY_TYPES, km, money, todayISO, fmtDate,
   remindersOf, attentionCount, timelineOf,
 } from "@/lib/vehicleHelpers";
+import { buildInvoice } from "@/lib/invoice";
 import styles from "./MyVehicles.module.css";
 
 const DOC_CATEGORIES = ["Registration", "Insurance", "Inspection report", "Invoice", "Other"];
@@ -46,8 +48,18 @@ function readPicture(file, done, fail) {
   reader.readAsDataURL(file);
 }
 
+/* AED price with an Invoice button under it (used in every list below) */
+function Price({ amount, onInvoice }) {
+  return (
+    <div className={styles.priceBox}>
+      <b className={styles.rowPrice}>{money(amount)}</b>
+      <button type="button" className={styles.docTag} onClick={onInvoice}>Invoice</button>
+    </div>
+  );
+}
+
 /* ---------- 1) BANNER ---------- */
-function PageBanner({ onAdd }) {
+function PageBanner() {
   return (
     <section className={styles.banner}>
       {pageBanner.image && (
@@ -57,9 +69,6 @@ function PageBanner({ onAdd }) {
         <h1>{pageBanner.title}</h1>
         <p>{pageBanner.line1}<br />{pageBanner.line2}</p>
       </div>
-      <button className={styles.addButton} onClick={onAdd}>
-        <Icon name="plus" size={20} sw={2} /> Add Vehicle
-      </button>
     </section>
   );
 }
@@ -111,7 +120,7 @@ function AddVehicleForm({ onAdd, onCancel }) {
   }
 
   return (
-    <form className={`${styles.card} ${styles.addForm}`} onSubmit={submit}>
+    <form id="add-vehicle-form" className={`${styles.card} ${styles.addForm}`} onSubmit={submit}>
       <div className={styles.cardHead}><h3>Add a vehicle</h3><button type="button" className={styles.viewAll} onClick={onCancel}>Cancel</button></div>
 
       <div className={styles.formGrid}>
@@ -163,7 +172,7 @@ function AddVehicleForm({ onAdd, onCancel }) {
 }
 
 /* ---------- 4) THE MAIN VEHICLE CARD ---------- */
-function VehicleCard({ v, canRemove, onChange, onRemove }) {
+function VehicleCard({ v, canRemove, onChange, onRemove, onAdd }) {
   const [copied, setCopied] = useState(false);
   const [kmInput, setKmInput] = useState("");
   const [kmMessage, setKmMessage] = useState({ text: "", bad: false });
@@ -243,7 +252,7 @@ function VehicleCard({ v, canRemove, onChange, onRemove }) {
         ))}
       </div>
 
-      {/* TOOLS ROW: update mileage, change picture, remove */}
+      {/* TOOLS ROW: update mileage, change picture, add vehicle, remove */}
       <div className={styles.cardTools}>
         <form className={styles.inlineForm} onSubmit={updateMileage}>
           <label htmlFor={`km-${v.id}`}>Update mileage</label>
@@ -255,6 +264,9 @@ function VehicleCard({ v, canRemove, onChange, onRemove }) {
         <div className={styles.toolButtons}>
           <button className={styles.ghostBtn} onClick={() => setShowPhoto(!showPhoto)} aria-expanded={showPhoto}>
             <Icon name="plus" size={16} sw={2} /> Change picture
+          </button>
+          <button className={styles.ghostBtn} onClick={onAdd}>
+            <Icon name="plus" size={16} sw={2} /> Add Vehicle
           </button>
           {canRemove && (
             <button className={`${styles.ghostBtn} ${styles.dangerBtn}`} onClick={onRemove}>Remove vehicle</button>
@@ -322,7 +334,7 @@ const TIMELINE_META = {
   upcoming:   { icon: "calendar",  label: "Upcoming" },
 };
 
-function Timeline({ v }) {
+function Timeline({ v, onInvoice }) {
   const items = timelineOf(v);
   return (
     <section className={styles.card}>
@@ -341,7 +353,9 @@ function Timeline({ v }) {
                 </div>
                 <small>{fmtDate(item.date)}{item.sub ? ` · ${item.sub}` : ""}</small>
               </div>
-              {item.price != null && <b className={styles.rowPrice}>{money(item.price)}</b>}
+              {item.price != null && (
+                <Price amount={item.price} onInvoice={() => onInvoice(item)} />
+              )}
             </li>
           );
         })}
@@ -351,7 +365,7 @@ function Timeline({ v }) {
 }
 
 /* ---------- 6b) SERVICE HISTORY ---------- */
-function ServiceHistory({ v, onOpenDocs }) {
+function ServiceHistory({ v, onOpenDocs, onInvoice }) {
   return (
     <section className={styles.card}>
       <div className={styles.cardHead}><h3>Service History</h3></div>
@@ -362,11 +376,10 @@ function ServiceHistory({ v, onOpenDocs }) {
             <div className={styles.rowTitle}>{s.title}</div>
             <div className={styles.rowSub}>{fmtDate(s.date)} • {s.garage} • {km(s.km)}</div>
             <div className={styles.docTags}>
-              {s.invoice && <button className={styles.docTag} onClick={() => onOpenDocs("Invoice")}>Invoice</button>}
               {s.report && <button className={styles.docTag} onClick={() => onOpenDocs("Inspection report")}>Inspection report</button>}
             </div>
           </div>
-          <b className={styles.rowPrice}>{money(s.price)}</b>
+          <Price amount={s.price} onInvoice={() => onInvoice(s)} />
         </div>
       ))}
     </section>
@@ -400,7 +413,7 @@ function RecordForm({ placeholder, onAdd }) {
   );
 }
 
-function RecordList({ title, icon, rows, placeholder, onAdd }) {
+function RecordList({ title, icon, rows, placeholder, onAdd, onInvoice }) {
   return (
     <section className={styles.card}>
       <div className={styles.cardHead}><h3 className={styles.smallTitle}><Icon name={icon} size={28} sw={1.6} /> {title}</h3></div>
@@ -411,7 +424,7 @@ function RecordList({ title, icon, rows, placeholder, onAdd }) {
             <div className={styles.rowTitle}>{r.detail}</div>
             <div className={styles.rowSub}>{fmtDate(r.date)} • {r.garage}{r.km ? ` • ${km(r.km)}` : ""}{r.warranty ? ` • Warranty: ${r.warranty}` : ""}</div>
           </div>
-          {r.price > 0 && <b className={styles.rowPrice}>{money(r.price)}</b>}
+          {r.price > 0 && <Price amount={r.price} onInvoice={() => onInvoice(r)} />}
         </div>
       ))}
       <RecordForm placeholder={placeholder} onAdd={onAdd} />
@@ -419,16 +432,18 @@ function RecordList({ title, icon, rows, placeholder, onAdd }) {
   );
 }
 
-function TyresBattery({ v, onChange }) {
+function TyresBattery({ v, onChange, onInvoice }) {
   return (
     <div className={styles.twoColumns}>
       <RecordList
         title="Tyre replacement history" icon="tyres" rows={v.tyres} placeholder="e.g. 4 × Michelin 235/60 R18"
         onAdd={(r) => onChange((x) => ({ ...x, tyres: [...x.tyres, r] }))}
+        onInvoice={onInvoice}
       />
       <RecordList
         title="Battery replacement history" icon="battery" rows={v.batteries} placeholder="e.g. Varta 80Ah AGM"
         onAdd={(r) => onChange((x) => ({ ...x, batteries: [...x.batteries, r] }))}
+        onInvoice={onInvoice}
       />
     </div>
   );
@@ -586,6 +601,7 @@ export default function MyVehicles() {
   const [tab, setTab] = useState("timeline");
   const [docFilter, setDocFilter] = useState("All");
   const [showAdd, setShowAdd] = useState(false);
+  const [invoice, setInvoice] = useState(null);   // the bill that is open (null = closed)
 
   const v = vehicles.find((x) => x.id === activeId) || vehicles[0];
   const attention = remindersOf(v).filter((r) => r.level !== "ok");
@@ -598,6 +614,14 @@ export default function MyVehicles() {
     setActiveId(newVehicle.id);
     setTab("timeline");
     setShowAdd(false);
+  }
+
+  /* opens the Add Vehicle form, which sits above the vehicle card, so scroll up to it */
+  function openAddForm() {
+    setShowAdd(true);
+    setTimeout(() => {
+      document.getElementById("add-vehicle-form")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
   }
 
   function removeVehicle() {
@@ -613,16 +637,38 @@ export default function MyVehicles() {
     document.getElementById("dashboard-tabs")?.scrollIntoView({ behavior: "smooth" });
   }
 
+  /* opens the bill for a service, tyre, battery or timeline item */
+  function openInvoice(entry) {
+    // find the full record (it has the garage and the parts list).
+    // match on date + price, because the timeline gives its items different ids
+    const all = [...v.services, ...v.tyres, ...v.batteries];
+    const record = all.find((r) => r.date === entry.date && r.price === entry.price) || entry;
+
+    setInvoice(
+      buildInvoice(
+        {
+          title: entry.title || record.title || record.detail,
+          date: fmtDate(record.date),
+          garage: record.garage || entry.sub || "",
+          amount: record.price,
+          items: record.items,
+          invoiceNo: record.invoiceNo,
+        },
+        { name: `${v.make} ${v.model}`, plate: v.reg }
+      )
+    );
+  }
+
   return (
     <>
-      <PageBanner onAdd={() => setShowAdd(true)} />
+      <PageBanner />
 
       <div className={styles.page}>
         <Switcher list={vehicles} activeId={v.id} onSelect={(id) => { setActiveId(id); setDocFilter("All"); }} />
 
         {showAdd && <AddVehicleForm onAdd={addVehicle} onCancel={() => setShowAdd(false)} />}
 
-        <VehicleCard v={v} canRemove={vehicles.length > 1} onChange={change} onRemove={removeVehicle} />
+        <VehicleCard v={v} canRemove={vehicles.length > 1} onChange={change} onRemove={removeVehicle} onAdd={openAddForm} />
 
         {/* needs-attention strip */}
         {attention.length > 0 && (
@@ -635,9 +681,9 @@ export default function MyVehicles() {
 
         <Tabs active={tab} onSelect={setTab} />
 
-        {tab === "timeline"  && <Timeline v={v} />}
-        {tab === "service"   && <ServiceHistory v={v} onOpenDocs={openDocs} />}
-        {tab === "tyres"     && <TyresBattery v={v} onChange={change} />}
+        {tab === "timeline"  && <Timeline v={v} onInvoice={openInvoice} />}
+        {tab === "service"   && <ServiceHistory v={v} onOpenDocs={openDocs} onInvoice={openInvoice} />}
+        {tab === "tyres"     && <TyresBattery v={v} onChange={change} onInvoice={openInvoice} />}
         {tab === "documents" && <Documents v={v} filter={docFilter} setFilter={setDocFilter} onChange={change} />}
         {tab === "reminders" && <Reminders v={v} onChange={change} />}
 
@@ -646,6 +692,9 @@ export default function MyVehicles() {
           <GoodHands />
         </div>
       </div>
+
+      {/* THE BILL POP-UP */}
+      <InvoiceModal invoice={invoice} onClose={() => setInvoice(null)} />
     </>
   );
 }

@@ -1,0 +1,54 @@
+/* dark blurred background */
+.overlay{position:fixed;inset:0;z-index:1000;display:grid;place-items:start center;padding:6vh 20px 20px;overflow-y:auto;background:rgba(1,12,28,.65);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+
+/* the white bill */
+.paper{position:relative;width:100%;max-width:640px;padding:34px;border-radius:20px;background:#fff;color:#0b1c38;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+
+/* X button, top right */
+.close{position:absolute;top:16px;right:16px;width:38px;height:38px;padding:0;border-radius:50%;border:1.5px solid #c9d3e0;background:none;color:#0b1c38;cursor:pointer;display:grid;place-items:center;line-height:0}
+.close svg{display:block}
+.close:hover{border-color:#0fc9bd;color:#0fc9bd}
+
+/* top: logo and invoice number */
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:0 48px 20px 0;border-bottom:2px solid #0b3558}
+.brand{display:flex;align-items:center;gap:10px;font-size:1.6rem;font-weight:700;color:#0b3558}
+.invoiceId{text-align:right}
+.invoiceId h2{margin:0;font-size:1.5rem;letter-spacing:2px;text-transform:uppercase;color:#0b3558}
+.invoiceId p{margin:2px 0 0;color:#6b7a90;font-weight:600}
+
+/* details grid */
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;padding:20px 0}
+.meta small{display:block;margin-bottom:2px;color:#6b7a90;font-size:.74rem;text-transform:uppercase;letter-spacing:.8px}
+.plate{display:block;margin-top:2px;color:#6b7a90;font-size:.9rem}
+
+/* ---------- LINE ITEMS TABLE ----------
+   fixed columns: Description takes the rest, Qty is centred,
+   Price and Amount are the same width and right-aligned */
+.tableWrap{overflow-x:auto}
+.table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:.94rem}
+
+.table th{padding:10px 0;text-align:left;color:#6b7a90;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #d5deea}
+.table td{padding:11px 0;border-bottom:1px solid #e6ecf3;vertical-align:top}
+
+/* Qty column: centred (heading and numbers) */
+.table .qty{width:56px;text-align:center}
+
+/* Price and Amount columns: right-aligned */
+.table .num{width:130px;text-align:right;white-space:nowrap}
+
+/* totals: right edge lines up with the Amount column above */
+.totals{width:280px;max-width:100%;margin:16px 0 0 auto}
+.totals div{display:flex;justify-content:space-between;gap:20px;padding:6px 0;color:#3b4a61}
+.totals .grand{margin-top:6px;padding-top:12px;border-top:2px solid #0b3558;color:#0b3558;font-size:1.2rem;font-weight:800}
+
+/* note and Paid badge */
+.note{margin:24px 0 0;color:#6b7a90;font-size:.85rem}
+.paid{display:inline-block;margin-right:10px;padding:3px 12px;border-radius:999px;background:#e3f6ef;color:#1b7a56;font-weight:700;font-size:.78rem}
+
+@media(max-width:560px){
+  .paper{padding:24px 18px}
+  .meta{grid-template-columns:1fr}
+  .table{font-size:.86rem}
+  .table .qty{width:40px}
+  .table .num{width:92px}
+}
