@@ -8,7 +8,7 @@
 
 /* status filter tabs */
 .filters{display:flex;gap:8px;flex-wrap:wrap}
-.filter{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;background:#fff;border:1px solid #dfe8f1;color:var(--ink);font-weight:600;font-size:.9rem}
+.filter{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;background:#fff;border:1px solid #dfe8f1;color:var(--ink);font-weight:600;font-size:.9rem;cursor:pointer}
 .filter:hover{border-color:var(--teal-dark)}
 .filterActive{background:var(--teal-dark);border-color:var(--teal-dark);color:#fff}
 .count{background:#0a23481a;border-radius:999px;padding:1px 8px;font-size:.78rem}
@@ -23,7 +23,20 @@
 .meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;color:var(--ink);font-size:.95rem}
 .meta span{display:inline-flex;align-items:center;gap:8px}
 .meta svg{color:var(--blue)}
-.price{margin-left:auto;font-size:1.2rem;font-weight:800}
+.price{margin-left:auto;font-size:1.2rem;font-weight:800;color:var(--ink);cursor:pointer}
+.price:hover{color:#0f56a3}
+
+/* workshop fluid-change approval banner */
+.approvalBox{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:14px 16px;border-radius:12px;background:#fffbeb;border:1.5px solid #f59e0b}
+.approvalInfo{display:flex;align-items:flex-start;gap:12px;flex:1;min-width:240px}
+.approvalIcon{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:10px;background:#fef3c7;color:#b45309}
+.approvalInfo b{display:block;color:#78350f;font-size:.96rem;margin-bottom:2px}
+.approvalInfo p{margin:0;color:#92400e;font-size:.86rem;line-height:1.4}
+.approvalActions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.acceptBtn{padding:9px 16px;border-radius:10px;border:0;background:#11603a;color:#fff;font-weight:700;font-size:.88rem;cursor:pointer}
+.acceptBtn:hover{background:#0d4d2e}
+.declineBtn{padding:9px 16px;border-radius:10px;border:1.5px solid #dc2626;background:#fff;color:#dc2626;font-weight:700;font-size:.88rem;cursor:pointer}
+.declineBtn:hover{background:#fef2f2}
 
 /* status badge colours */
 .badge{white-space:nowrap;font-size:.8rem;font-weight:700;border-radius:999px;padding:5px 12px}
@@ -42,10 +55,12 @@
 
 /* buttons */
 .actions{display:flex;flex-wrap:wrap;gap:10px;border-top:1px solid var(--line);padding-top:14px}
-.actions button,.contact{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:10px;border:1.5px solid var(--blue);color:var(--blue);font-weight:600;font-size:.92rem;background:#fff}
+.actions button,.contact{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:10px;border:1.5px solid var(--blue);color:var(--blue);font-weight:600;font-size:.92rem;background:#fff;cursor:pointer}
 .actions button:hover,.contact:hover{background:#eef5fb}
 .actions .danger{border-color:#dc2626;color:#dc2626}
 .actions .danger:hover{background:#fef2f2}
+.actions .invoiceBtn{border-color:#0f7680;color:#0f7680}
+.actions .invoiceBtn:hover{background:#f0fdfa}
 .contact{margin-left:auto}
 
 @media(max-width:700px){
@@ -56,4 +71,4 @@
   .price,.contact{margin-left:0}
 }
 
-.resetLink{justify-self:start;color:var(--muted);font-size:.82rem;text-decoration:underline}
+.resetLink{justify-self:start;color:var(--muted);font-size:.82rem;text-decoration:underline;background:none;border:0;cursor:pointer}

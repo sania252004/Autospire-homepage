@@ -128,94 +128,6 @@
   margin-top: 1px;
 }
 
-.Hero-module__PgAKtG__vehicleBlock {
-  margin-bottom: 12px;
-}
-
-.Hero-module__PgAKtG__pickerLabel {
-  color: #4b5b70;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  font-size: .82rem;
-  font-weight: 700;
-  display: flex;
-}
-
-.Hero-module__PgAKtG__pickerLink {
-  color: #0a6f86;
-  font-size: .82rem;
-  font-weight: 700;
-  text-decoration: underline;
-}
-
-.Hero-module__PgAKtG__savedList {
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 10px;
-  display: grid;
-}
-
-.Hero-module__PgAKtG__savedCard {
-  color: var(--navy);
-  text-align: left;
-  background: #f4f8fb;
-  border: 1.5px solid #dbe5ef;
-  border-radius: 12px;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  transition: all .15s;
-  display: flex;
-}
-
-.Hero-module__PgAKtG__savedCard:hover {
-  border-color: #00b8ae;
-}
-
-.Hero-module__PgAKtG__savedCard svg {
-  color: #0f56a3;
-  flex: none;
-}
-
-.Hero-module__PgAKtG__savedCard.Hero-module__PgAKtG__selected {
-  background: #e6fbf9;
-  border-color: #00b8ae;
-}
-
-.Hero-module__PgAKtG__savedName {
-  font-size: .98rem;
-  font-weight: 700;
-  display: block;
-}
-
-.Hero-module__PgAKtG__savedReg {
-  color: #5b6b80;
-  font-size: .82rem;
-  display: block;
-}
-
-.Hero-module__PgAKtG__tick {
-  color: #fff;
-  background: #00c2b8;
-  border-radius: 50%;
-  flex: none;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  margin-left: auto;
-  display: grid;
-}
-
-.Hero-module__PgAKtG__savedCard.Hero-module__PgAKtG__selected .Hero-module__PgAKtG__tick svg {
-  color: #fff;
-}
-
-.Hero-module__PgAKtG__newVehicle {
-  grid-template-columns: 1.2fr 1.2fr .8fr;
-  gap: 12px;
-  display: grid;
-}
-
 .Hero-module__PgAKtG__fieldsRow {
   grid-template-columns: 1fr 1fr;
   gap: 12px;
@@ -308,21 +220,25 @@
 }
 
 .Hero-module__PgAKtG__trustRow {
-  grid-template-columns: repeat(5, 1fr);
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 28px 56px;
   margin-top: 10px;
-  padding: 34px 0 40px;
-  display: grid;
+  padding: 38px 0 44px;
+  display: flex;
 }
 
 .Hero-module__PgAKtG__trustPoint {
   color: var(--white);
+  white-space: nowrap;
   border-left: 1px solid #ffffff2a;
   align-items: center;
   gap: 16px;
-  padding: 0 20px;
-  font-size: .88rem;
+  padding-left: 56px;
+  font-size: .94rem;
   font-weight: 500;
-  line-height: 1.25;
+  line-height: 1.3;
   display: flex;
 }
 
@@ -346,13 +262,11 @@
   }
 
   .Hero-module__PgAKtG__trustRow {
-    grid-template-columns: repeat(3, 1fr);
-    row-gap: 22px;
+    gap: 22px 32px;
   }
 
-  .Hero-module__PgAKtG__trustPoint:nth-child(4) {
-    border-left: 0;
-    padding-left: 0;
+  .Hero-module__PgAKtG__trustPoint {
+    padding-left: 32px;
   }
 }
 
@@ -369,7 +283,7 @@
     font-size: 1.02rem;
   }
 
-  .Hero-module__PgAKtG__newVehicle, .Hero-module__PgAKtG__fieldsRow, .Hero-module__PgAKtG__journey {
+  .Hero-module__PgAKtG__fieldsRow, .Hero-module__PgAKtG__journey {
     grid-template-columns: 1fr;
   }
 
@@ -383,11 +297,14 @@
 
   .Hero-module__PgAKtG__trustRow {
     grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    display: grid;
   }
 
   .Hero-module__PgAKtG__trustPoint, .Hero-module__PgAKtG__trustPoint:first-child {
+    white-space: normal;
     border-left: 0;
-    padding: 0 8px;
+    padding-left: 0;
   }
 
   .Hero-module__PgAKtG__trustPoint svg {
@@ -473,6 +390,195 @@
 
 .Hero-module__PgAKtG__addPhoto:hover {
   background: #e6fbf9;
+}
+
+.Hero-module__PgAKtG__vehiclePicker {
+  margin-bottom: 14px;
+}
+
+.Hero-module__PgAKtG__savedHeader {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.Hero-module__PgAKtG__savedLabel {
+  color: #475569;
+  font-size: .9rem;
+}
+
+.Hero-module__PgAKtG__savedLabel b {
+  color: #0f7680;
+}
+
+.Hero-module__PgAKtG__linkBtn {
+  color: #0f56a3;
+  font: inherit;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: .9rem;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.Hero-module__PgAKtG__linkBtn:hover {
+  color: #0f7680;
+}
+
+.Hero-module__PgAKtG__savedGrid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  display: grid;
+}
+
+.Hero-module__PgAKtG__savedCard {
+  cursor: pointer;
+  background: #fff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 14px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 15px;
+  transition: border-color .15s, background .15s;
+  display: flex;
+}
+
+.Hero-module__PgAKtG__savedCard:hover {
+  border-color: #14b8a6;
+}
+
+.Hero-module__PgAKtG__savedCardActive {
+  background: #f0fdfa;
+  border: 1.8px solid #14b8a6;
+}
+
+.Hero-module__PgAKtG__savedCardLeft {
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  display: flex;
+}
+
+.Hero-module__PgAKtG__savedCardLeft svg {
+  color: #0f56a3;
+  flex: none;
+}
+
+.Hero-module__PgAKtG__savedCardLeft b {
+  color: #0d2240;
+  font-size: .95rem;
+  line-height: 1.25;
+  display: block;
+}
+
+.Hero-module__PgAKtG__savedCardLeft small {
+  color: #64748b;
+  font-size: .82rem;
+  display: block;
+}
+
+.Hero-module__PgAKtG__savedCardRight {
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  display: flex;
+}
+
+.Hero-module__PgAKtG__checkBadge {
+  color: #fff;
+  background: #38a169;
+  border-radius: 50%;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  display: inline-grid;
+}
+
+.Hero-module__PgAKtG__removeBtn {
+  color: #94a3b8;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  transition: background .15s, color .15s;
+  display: inline-grid;
+}
+
+.Hero-module__PgAKtG__removeBtn:hover {
+  color: #dc2626;
+  background: #fee2e2;
+}
+
+.Hero-module__PgAKtG__pickerGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  display: grid;
+}
+
+.Hero-module__PgAKtG__addBox {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.Hero-module__PgAKtG__addBottomRow {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  display: flex;
+}
+
+.Hero-module__PgAKtG__plateInput {
+  min-width: 200px;
+  font: inherit;
+  color: #0d2240;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  flex: 1;
+  padding: 11px 14px;
+  font-size: .92rem;
+}
+
+.Hero-module__PgAKtG__saveVehicleBtn {
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+  background: #0f7680;
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 18px;
+  font-size: .92rem;
+  font-weight: 700;
+}
+
+.Hero-module__PgAKtG__saveVehicleBtn:hover {
+  background: #0c6068;
+}
+
+.Hero-module__PgAKtG__pickerError {
+  color: #dc2626;
+  margin: 8px 0 0;
+  font-size: .85rem;
+  font-weight: 600;
+}
+
+@media (max-width: 760px) {
+  .Hero-module__PgAKtG__pickerGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /*# sourceMappingURL=components_Hero_Hero_module_css_1igg3k2-ikub5._.single.css.map*/

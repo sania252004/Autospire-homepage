@@ -44,7 +44,7 @@ const TRUST_POINTS = [
   { icon: "scale",       line1: "Compare",        line2: "Prices" },
   { icon: "diagnostics", line1: "Book Instantly", line2: "" },
   { icon: "headset",     line1: "24/7 Support",   line2: "" },
-  { icon: "star",        line1: "Trusted by",     line2: "100,000+ Drivers" },
+  { icon: "check",       line1: "100% Genuine",   line2: "Parts & Warranty" },
 ];
 
 /* ---------- THE HERO ---------- */
@@ -161,7 +161,10 @@ export default function Hero({
           {TRUST_POINTS.map((point) => (
             <div key={point.line1} className={styles.trustPoint}>
               <Icon name={point.icon} size={42} sw={1.4} />
-              <span>{point.line1}<br />{point.line2}</span>
+              <span>
+                {point.line1}
+                {point.line2 && <><br />{point.line2}</>}
+              </span>
             </div>
           ))}
         </div>

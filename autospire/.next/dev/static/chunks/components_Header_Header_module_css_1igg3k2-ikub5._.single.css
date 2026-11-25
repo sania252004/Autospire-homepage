@@ -21,7 +21,8 @@
 .Header-module__arFiJq__nav {
   align-items: center;
   gap: 30px;
-  margin-left: clamp(32px, 6vw, 90px);
+  margin: 0 auto;
+  padding-left: 60px;
   font-size: .95rem;
   font-weight: 600;
   display: flex;
@@ -76,7 +77,6 @@
 .Header-module__arFiJq__right {
   align-items: center;
   gap: 16px;
-  margin-left: auto;
   display: flex;
 }
 

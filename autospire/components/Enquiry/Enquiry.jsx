@@ -52,18 +52,12 @@ function PartnerModal({ onClose }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-
-    // everything the garage typed, e.g. { name: "...", registration: "...", address: "...", ... }
     const data = Object.fromEntries(new FormData(event.target));
-
-    // TODO: send "data" to your server or email service here
     setSent(true);
   }
 
   return (
-    // clicking the dark area closes the pop-up
     <div className={styles.overlay} onClick={onClose}>
-      {/* clicking inside the box does not close it */}
       <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="partner-title" onClick={(e) => e.stopPropagation()}>
 
         <button type="button" className={styles.close} onClick={onClose} aria-label="Close">✕</button>
@@ -121,18 +115,23 @@ function PartnerModal({ onClose }) {
 // vehicle, service and emirate are shared with the Hero search box (they come from page.jsx)
 export default function Enquiry({ vehicle, setVehicle, service, setService, emirate, setEmirate }) {
   const [sent, setSent] = useState(false);
-
-  // NEW: is the "Partner with" pop-up open?
   const [partnerOpen, setPartnerOpen] = useState(false);
 
-  // make / model / year are kept here so a half-finished choice is not lost
   const first = parseVehicle(vehicle);
   const [make, setMake] = useState(first.make);
   const [model, setModel] = useState(first.model);
   const [year, setYear] = useState(first.year);
 
-  // when the Hero picks a full vehicle, fill the three dropdowns to match
+  // Sync automatically whenever a vehicle is selected in Hero (logged-in saved vehicle or manual pick)
+  // and reset to empty when logged out / cleared
   useEffect(() => {
+    if (!vehicle) {
+      setMake("");
+      setModel("");
+      setYear("");
+      return;
+    }
+
     const p = parseVehicle(vehicle);
     if (p.make && p.model && p.year) {
       setMake(p.make);
@@ -151,7 +150,6 @@ export default function Enquiry({ vehicle, setVehicle, service, setService, emir
 
   function handleSubmit(event) {
     event.preventDefault();
-    // TODO: send the enquiry to your server or email service here
     setSent(true);
   }
 
@@ -172,7 +170,6 @@ export default function Enquiry({ vehicle, setVehicle, service, setService, emir
             </ContactItem>
           </ul>
 
-          {/* NEW: the "Partner with" box */}
           <div className={styles.partner}>
             <h3>Own a garage?</h3>
             <p>Join the {BRAND} marketplace and get new customers sending jobs your way.</p>
@@ -240,7 +237,6 @@ export default function Enquiry({ vehicle, setVehicle, service, setService, emir
 
       </div>
 
-      {/* NEW: the pop-up (only exists while it is open) */}
       {partnerOpen && <PartnerModal onClose={() => setPartnerOpen(false)} />}
     </section>
   );

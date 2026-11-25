@@ -11,7 +11,7 @@
 .bar.bar{display:flex;align-items:center;gap:28px;height:84px;max-width:none;padding:0 clamp(16px,3.3vw,48px)}
 
 /* ---------- 2. Desktop menu ---------- */
-.nav{display:flex;gap:30px;margin-left:clamp(32px,6vw,90px);align-items:center;font-weight:600;font-size:.95rem}
+.nav{display:flex;gap:30px;margin:0 auto;padding-left:60px;align-items:center;font-weight:600;font-size:.95rem}
 .nav>button,.dropdown>a{display:inline-flex;gap:5px;align-items:center;padding:30px 0;font-weight:600}
 .nav>a:hover,.nav>button:hover,.dropdown:hover>a{color:var(--teal)}
 
@@ -23,7 +23,7 @@
 .dropdownMenu a:hover,.dropdownMenu button:hover{background:#1cf4f01a;color:var(--teal)}
 
 /* ---------- 4. Right side: location, user icon ---------- */
-.right{display:flex;align-items:center;gap:16px;margin-left:auto}
+.right{display:flex;align-items:center;gap:16px}
 .divider{width:1px;height:28px;background:#ffffff33}
 .userIcon{color:var(--white);display:grid;place-items:center}
 
